@@ -3,6 +3,7 @@ title: "TOPC Cohort 3 Analysis"
 author: "Elham Ali"
 format:
   html:
+    toc: true
     code-fold: true
     code-summary: "Show the code"
 editor: visual
@@ -10,7 +11,9 @@ editor: visual
 
 Graphs for post-test survey analysis for city governments.
 
-## Q3. Which city/county are you representing?
+## Goal 0: Participant Background
+
+### Q3. Which city/county are you representing?
 
 -   **Akron, OH** and **Macon-Bibb County, GA** are the most represented in the survey, each with 4 responses.
 
@@ -65,10 +68,12 @@ highest from Akron and Macon-Bibb County (n =", total_responses,")."),
         plot.title = element_text(face = "bold"))
 ```
 
-## Q4. I learned new skills in community research practices, such as leading interviews and conducting surveys, during this program.
+## Goal 1: Participant Awareness and Knowledge
+
+### Q4. I learned new skills in community research practices, such as leading interviews and conducting surveys, during this program.
 
 ```{r}
-
+#| message: false
 # Analyzing and visualizing the "q4" column
 q4_summary_df <- cohort3FinalGov %>%
   group_by(q4) %>%
@@ -91,3 +96,11 @@ practices (n =", total_responses, ")."),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
 ```
+
+### Q5. I learned skills to promote equity and foster inclusive spaces in my work.
+
+### Q6. I learned new skills in applying user testing feedback to shape the development of our solution.
+
+### Q5. I learned skills to promote equity and foster inclusive spaces in my work.
+
+### Q5. I learned skills to promote equity and foster inclusive spaces in my work.
