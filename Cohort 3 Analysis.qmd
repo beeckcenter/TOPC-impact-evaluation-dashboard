@@ -1,0 +1,93 @@
+---
+title: "TOPC Cohort 3 Analysis"
+author: "Elham Ali"
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+editor: visual
+---
+
+Graphs for post-test survey analysis for city governments.
+
+## Q3. Which city/county are you representing?
+
+-   **Akron, OH** and **Macon-Bibb County, GA** are the most represented in the survey, each with 4 responses.
+
+-   **Miami-Dade County, FL** follows with 3 responses.
+
+-   **Detroit, MI** has the fewest responses, with only 2.
+
+```{r}
+#| message: false
+# Set a CRAN mirror
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+# Install necessary packages
+# install.packages("magrittr")
+# install.packages("dplyr")
+# install.packages("ggplot2")
+
+# Load the packages
+library(magrittr)
+library(dplyr)
+library(ggplot2)
+
+# Read the data from the CSV file
+cohort3FinalGov <- read.csv("~/Documents/R Projects/TOPC-impact-evaluation-dashboard/Cohort 3/cohort3FinalGov2.csv")
+
+# Analyzing and visualizing the "q3" column
+q3_summary_df <- cohort3FinalGov %>%
+  group_by(q3) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses for the title
+total_responses <- sum(q3_summary_df$Frequency)
+
+# Renaming the column for clarity
+names(q3_summary_df)[1] <- "City"
+
+# Ordering cities by frequency and converting to factor
+q3_summary_df <- q3_summary_df %>%
+  mutate(City = factor(City, levels = City[order(-Frequency)]))
+
+# Plotting the data with bars ordered from highest to lowest number of responses
+ggplot(q3_summary_df, aes(x = City, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  labs(title = paste("All city governments participated in the survey with 
+highest from Akron and Macon-Bibb County (n =", total_responses,")."),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+## Q4. I learned new skills in community research practices, such as leading interviews and conducting surveys, during this program.
+
+```{r}
+
+# Analyzing and visualizing the "q4" column
+q4_summary_df <- cohort3FinalGov %>%
+  group_by(q4) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q4_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q4_summary_df, aes(x = q4, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  labs(title = paste("All respondents agree they learned skills in community research 
+practices (n =", total_responses, ")."),
+       subtitle = "Rating Scale: 1 - Strongly Agree to 4 - Strongly Disagree",
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
