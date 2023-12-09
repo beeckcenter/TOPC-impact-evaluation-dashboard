@@ -99,6 +99,56 @@ practices (n =", total_responses, ")."),
 
 ### Q5. I learned skills to promote equity and foster inclusive spaces in my work.
 
+```{r}
+#| message: false
+# Analyzing and visualizing the "q5" column
+q5_summary_df <- cohort3FinalGov %>%
+  group_by(q5) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q5_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q5_summary_df, aes(x = q5, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  labs(title = paste("All respondents agree they learned skills to promote equity and 
+foster inclusive spaces in their work (n =", total_responses, ")."),
+       subtitle = "Rating Scale: 1 - Strongly Agree to 4 - Strongly Disagree",
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+```{r}
+# Create a summary dataframe for q5
+q5_summary_df <- cohort3FinalGov %>%
+  group_by(q5) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q5_summary_df$Frequency)
+
+# Create a boxplot
+ggplot(q5_summary_df, aes(x = "", y = Frequency)) +
+  geom_boxplot(fill = "#6eaddc") +
+  labs(title = paste("Summary of Responses for",
+                     "Learning Skills to Promote Equity and Foster Inclusive Spaces (n =", total_responses, ")."),
+       subtitle = "Rating Scale: 1 - Strongly Agree to 4 - Strongly Disagree",
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+
+summary(q5_summary_df)
+```
+
 ### Q6. I learned new skills in applying user testing feedback to shape the development of our solution.
 
 ### Q5. I learned skills to promote equity and foster inclusive spaces in my work.
