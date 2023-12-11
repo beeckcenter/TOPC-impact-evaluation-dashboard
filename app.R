@@ -2,32 +2,63 @@
 library(shinydashboard)
 
 ui <- dashboardPage(
-  dashboardHeader(title = "TOPC dashboard"),
+  dashboardHeader(title = "TOPC Dashboard"),
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Home", tabName = "home", icon = icon("home")),
-      menuItem("Overview", tabName = "widgets", icon = icon("th"))
+      menuItem("Overview", tabName = "overview", icon = icon("dashboard")),
+      menuItem("Executive Summary", tabName = "executiveSummary", icon = icon("briefcase")),
+      menuItem("Recommendations", tabName = "recommendations", icon = icon("thumbs-up")),
+      menuItem("Cohort 3 Insights", tabName = "cohort3Insights", icon = icon("binoculars")),
+      menuItem("Methodology", tabName = "methodology", icon = icon("flask")),
+      menuItem("Discussion", tabName = "discussion", icon = icon("comments")),
+      menuItem("Limitations", tabName = "limitations", icon = icon("exclamation-triangle")),
+      menuItem("Appendix", tabName = "appendix", icon = icon("book")),
+      menuItem("References", tabName = "references", icon = icon("bookmark"))
     )
   ),
   dashboardBody(
     tabItems(
       # First tab content
-      tabItem(tabName = "home",
-              fluidRow(
-                box(plotOutput("plot1", height = 250)),
-                box(
-                  title = "Controls",
-                  sliderInput("slider", "Number of observations:", 1, 100, 50)
-                )
-              )
+      tabItem(tabName = "overview",
+              h2("Overview")
       ),
       # Second tab content
-      tabItem(tabName = "widgets",
-              h2("Widgets tab content")
+      tabItem(tabName = "executiveSummary",
+              h2("Executive Summary")
+      ),
+      # Third tab content
+      tabItem(tabName = "recommendations",
+              h2("Recommendations")
+      ),
+      # Fourth tab content
+      tabItem(tabName = "cohort3Insights",
+              h2("Cohort 3 Insights")
+      ),
+      # Fifth tab content
+      tabItem(tabName = "methodology",
+              h2("Methodology")
+      ),
+      # Sixth tab content
+      tabItem(tabName = "discussion",
+              h2("Discussion")
+      ),
+      # Seventh tab content
+      tabItem(tabName = "limitations",
+              h2("Limitations")
+      ),
+      # Eighth tab content
+      tabItem(tabName = "appendix",
+              h2("Appendix")
+      ),
+      # Ninth tab content
+      tabItem(tabName = "references",
+              h2("References")
       )
     )
   )
 )
+
+
 
 server <- function(input, output) {
   set.seed(122)
