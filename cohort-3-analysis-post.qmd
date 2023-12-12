@@ -9,6 +9,7 @@ format:
     code-fold: true
     code-summary: "Show the code"
 editor: visual
+cache: true
 ---
 
 Graphs for post-test survey analysis for city governments.
