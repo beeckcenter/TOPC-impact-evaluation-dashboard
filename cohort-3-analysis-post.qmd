@@ -14,13 +14,31 @@ cache: true
 
 Graphs for post-test survey analysis for city governments.
 
-## Design Weights
+## Design weights
 
-TBD (to align proportions for population to sample)
+Given this in the data:
 
-## Survey Question Weights
+| City Teams | Population Count | Sample Count |
+|------------|------------------|--------------|
+| Akron      | 8                | 4            |
+| Detroit    | 9                | 2            |
+| Macon      | 10               | 4            |
+| Miami      | 13               | 3            |
+| Total      | 40               | 13           |
 
-TBD (to show summary statistics for the likert scale)
+: **Table 1.** Count of population and sample participants in city governments in the TOPC program in Cohort 3
+
+The formula I used to align proportions of population to proportions of sample)
+
+$\text{Weight of strata} = \frac{\frac{\text{Strata Population}}{\text{Total Population}}}{\frac{\text{Strata Sample}}{\text{Total Sample}}}$
+
+$\text{Weight for Akron} = \frac{\frac{8}{40}}{\frac{4}{14}} = \frac{0.2}{0.2857} \approx 0.700$
+
+$\text{Weight for Detroit} = \frac{\frac{9}{40}}{\frac{2}{14}} = \frac{0.225}{0.1429} \approx 1.575$
+
+$\text{Weight for Macon} = \frac{\frac{10}{40}}{\frac{4}{14}} = \frac{0.25}{0.2857} \approx 0.875$
+
+$\text{Weight for Miami} = \frac{\frac{13}{40}}{\frac{3}{14}} = \frac{0.325}{0.2143} \approx 1.517$
 
 ## Participant Background
 
