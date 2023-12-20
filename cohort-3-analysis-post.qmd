@@ -1,0 +1,677 @@
+---
+title: "TOPC Cohort 3 Analysis"
+subtitle: "Post-test"
+author: "Elham Ali"
+date: Dec 11, 2023
+format:
+  html:
+    toc: true
+    code-fold: true
+    code-summary: "Show the code"
+editor: visual
+cache: true
+---
+
+Graphs for post-test survey analysis for city governments.
+
+## Install necessary packages
+
+```{r}
+#| label: packages-installation
+#| message: false
+
+# Set a CRAN mirror
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+# Install necessary packages
+# install.packages("magrittr")
+# install.packages("dplyr")
+# install.packages("ggplot2")
+# install.packages("knitr")
+# install.packages("KableExtra")
+# install.packages("survey")
+
+# Load the packages
+library(magrittr)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(survey)
+```
+
+## Define the survey design
+
+```{r}
+#| label: survey-design-definition
+#| message: false
+
+# Read the data from the CSV file
+cohort3FinalGov <- read.csv("~/Documents/GitHub/TOPC-impact-evaluation-dashboard/Cohort 3/cohort3FinalGov2.csv")
+
+# Define population and sample sizes
+population_counts <- c(Akron = 8, Detroit = 9, Macon = 10, Miami = 13)
+sample_counts <- c(Akron = 4, Detroit = 2, Macon = 4, Miami = 3)
+
+# Total population and sample size
+total_population <- sum(population_counts)
+total_sample <- sum(sample_counts)
+
+# Calculate the weights
+weights <- (population_counts / total_population) / (sample_counts / total_sample)
+
+# Print the calculated weights
+print(weights)
+```
+
+```{r}
+# Map between city names 
+city_map <- list(
+  "Miami-Dade County, FL" = "Miami",
+  "Akron, OH" = "Akron",
+  "Detroit, MI" = "Detroit",
+  "Macon-Bibb County, GA" = "Macon"
+)
+
+# Update dataframe to use the mapped names
+cohort3FinalGov$city_mapped <- unlist(lapply(cohort3FinalGov$q3, function(x) city_map[[x]]))
+
+# Assign weights using the mapped city names
+cohort3FinalGov$weights <- weights[cohort3FinalGov$city_mapped]
+
+# Define the survey design
+design <- svydesign(ids = ~1, 
+                    strata = ~city_mapped, 
+                    weights = ~weights, 
+                    data = cohort3FinalGov)
+```
+
+Given this in the data:
+
+| City Teams | Population Count | Sample Count |
+|------------|------------------|--------------|
+| Akron      | 8                | 4            |
+| Detroit    | 9                | 2            |
+| Macon      | 10               | 4            |
+| Miami      | 13               | 3            |
+| Total      | 40               | 13           |
+
+: **Table 1.** Count of population and sample participants in city governments in the TOPC program in Cohort 3
+
+The formula I used to align proportions of population to proportions of sample)
+
+$\text{Weight of strata} = \frac{\frac{\text{Strata Population}}{\text{Total Population}}}{\frac{\text{Strata Sample}}{\text{Total Sample}}}$
+
+$\text{Weight for Akron} = \frac{\frac{8}{40}}{\frac{4}{14}} = \frac{0.2}{0.2857} \approx 0.700$
+
+$\text{Weight for Detroit} = \frac{\frac{9}{40}}{\frac{2}{14}} = \frac{0.225}{0.1429} \approx 1.575$
+
+$\text{Weight for Macon} = \frac{\frac{10}{40}}{\frac{4}{14}} = \frac{0.25}{0.2857} \approx 0.875$
+
+$\text{Weight for Miami} = \frac{\frac{13}{40}}{\frac{3}{14}} = \frac{0.325}{0.2143} \approx 1.517$
+
+## Participant Background
+
+**Q3. Which city/county are you representing?**
+
+-   **Akron, OH** and **Macon-Bibb County, GA** are the most represented in the survey, each with 4 responses.
+
+-   **Miami-Dade County, FL** follows with 3 responses.
+
+-   **Detroit, MI** has the fewest responses, with only 2.
+
+```{r}
+#| label: q3
+#| message: false
+
+# Analyze and visualize the "q3" column
+q3_summary_df <- cohort3FinalGov %>%
+  group_by(q3) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses for the title
+total_responses <- sum(q3_summary_df$Frequency)
+names(q3_summary_df)[1] <- "City"
+
+# Order cities by frequency and converting to factor
+q3_summary_df <- q3_summary_df %>%
+  mutate(City = factor(City, levels = City[order(-Frequency)]))
+
+# Plot the data
+ggplot(q3_summary_df, aes(x = City, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  labs(title = "All city governments participated in the survey with 
+highest from Akron and Macon-Bibb County.",
+       subtitle = paste("Total number of survey respondents per city team (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+```{r}
+#| label: q3-summary
+# | echo: false
+
+summary(q3_summary_df)
+```
+
+## Goal 1: Participant Awareness and Knowledge
+
+**Q4. I learned new skills in community research practices, such as leading interviews and conducting surveys, during this program.**
+
+```{r}
+#| label: q4
+#| message: false
+
+# Analyzing and visualizing the "q4" column
+q4_summary_df <- cohort3FinalGov %>%
+  group_by(q4) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q4_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q4_summary_df, aes(x = q4, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 15), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "All respondents agree they learned new skills in community 
+research practices.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+```{r}
+#| label: q4-summary
+# | echo: false
+
+summary(q4_summary_df)
+```
+
+**Q5. I learned skills to promote equity and foster inclusive spaces in my work.**
+
+```{r}
+#| label: q5
+#| message: false
+
+# Analyze and visualize the "q5" column
+q5_summary_df <- cohort3FinalGov %>%
+  group_by(q5) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q5_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q5_summary_df, aes(x = q5, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+    scale_y_continuous(limits = c(0, 15), breaks = seq(0, 15, by = 2)) + 
+  labs(title = paste("All respondents agree they learned skills to promote equity and 
+foster inclusive spaces in their work (n =", total_responses, ")."),
+       subtitle = "Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree",
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+```{r}
+#| label: q5-summary
+# | echo: false
+
+summary(q5_summary_df)
+```
+
+**Q6. I learned new skills in applying user testing feedback to shape the development of our solution.**
+
+```{r}
+#| label: q6
+#| message: false
+
+# Analyze and visualize the "q6" column
+q6_summary_df <- cohort3FinalGov %>%
+  group_by(q6) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q6_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q6_summary_df, aes(x = q6, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 15), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "All respondents agree they learned new skills to apply user 
+testing feedback in their solution development.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+```{r}
+#| label: q6-summary
+# | echo: false
+summary(q6_summary_df)
+```
+
+**Q15. I learned new skills in collaborating with a community organization to research a problem and co-design a solution.**
+
+```{r}
+#| label: q15
+#| message: false
+
+# Analyze and visualize the "q15" column
+q15_summary_df <- cohort3FinalGov %>%
+  group_by(q15) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q15_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q15_summary_df, aes(x = q15, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "The majority of respondents agree they learned news skills to 
+collaborate with a community organization to research a problem
+and co-design a solution.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+**Q16. I learned new skills in building consensus and aligning on long-term plans with internal stakeholders.**
+
+```{r}
+#| label: q16
+#| message: false
+
+# Analyze and visualize the "q16" column
+q16_summary_df <- cohort3FinalGov %>%
+  group_by(q16) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q16_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q16_summary_df, aes(x = q16, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "The majority of respondents agree they learned news skills to 
+collaborate with a community organization to research a problem
+and co-design a solution.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+**Q9. I learned different strategies to brainstorm many ideas based on the insights taken from the community research.**
+
+```{r}
+#| label: q9
+#| message: false
+
+# Create q9_summary_df
+q9_summary_df <- cohort3FinalGov %>%
+  group_by(q9) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q9_summary_df$Frequency)
+
+# Plot the data with a fixed scale
+ggplot(q9_summary_df, aes(x = q9, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 15), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "The majority of respondents agree they learned different 
+strategies to brainstorm ideas based on community research 
+insights.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+```{r}
+#| label: q9-summary
+# | echo: false
+summary(q9_summary_df)
+```
+
+**Q10. I learned new skills in outlining and prioritizing requirements for the development of a digital product.**
+
+```{r}
+#| label: q10
+#| message: false
+
+# Analyze and visualize the "q10" column
+q10_summary_df <- cohort3FinalGov %>%
+  group_by(q10) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q10_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q10_summary_df, aes(x = q10, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 15), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "The majority of respondents agree their teams have define a 
+role for their community to design services in the future.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+```{r}
+#| label: q10-summary
+# | echo: false
+summary(q10_summary_df)
+```
+
+**Q11. I learned new skills in identifying and evaluating data to support the digital solution.**
+
+```{r}
+#| label: q11
+#| message: false
+
+# Analyze and visualize the "q11" column
+q11_summary_df <- cohort3FinalGov %>%
+  group_by(q11) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q11_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q11_summary_df, aes(x = q11, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "The majority of respondents agree their teams have define a 
+role for their community to design services in the future.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+```{r}
+#| label: q11-summary
+# | echo: false
+summary(q11_summary_df)
+```
+
+**Q12. I learned new skills for managing the development of a digital product.**
+
+```{r}
+#| label: q12
+#| message: false
+
+# Analyze and visualize the "q12" column
+q12_summary_df <- cohort3FinalGov %>%
+  group_by(q12) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q12_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q12_summary_df, aes(x = q12, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "The majority of respondents agree they learned new skills to manage
+developing a digital product.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+```{r}
+#| label: q12-summary
+# | echo: false
+summary(q12_summary_df)
+```
+
+**Q13. I learned new skills for creating a product sustainability plan to ensure that product is improved and maintained.**
+
+```{r}
+#| label: q13
+#| message: false
+
+# Analyze and visualize the "q13" column
+q13_summary_df <- cohort3FinalGov %>%
+  group_by(q13) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q13_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q13_summary_df, aes(x = q13, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "The majority of respondents agree they learned new skills to 
+create a product sustainability plan to maintain their products.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+Summary statistics of Q13 frequency count
+
+```{r}
+#| label: q13-summary
+# | echo: false
+summary(q13_summary_df)
+```
+
+## Goal 2: Participant Confidence and Competence
+
+**Q14. I have the skills and support to be able to innovate in my day-to-day work.**
+
+```{r}
+#| label: q14
+#| message: false
+
+# Analyze and visualize the "q13" column
+q14_summary_df <- cohort3FinalGov %>%
+  group_by(q14) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q14_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q14_summary_df, aes(x = q14, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "The majority of respondents agree they have the skills and 
+support to innovate in their everyday work.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+**Q17. I feel confident working with technical partners to design a tool and advance the tool's development.**
+
+```{r}
+#| label: q17
+#| message: false
+
+# Analyze and visualize the "q17" column
+q17_summary_df <- cohort3FinalGov %>%
+  group_by(q17) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q17_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q17_summary_df, aes(x = q17, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "The majority of respondents are confident about working with 
+technical partners to design and develop a tool.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+## Goal 3: Participant Recognition and Application of Methods
+
+**Q20. I am applying the skills I'm learning in this program to my day-to-day work.**
+
+```{r}
+#| label: q20
+#| message: false
+
+# Analyze and visualize the "q20" column
+q20_summary_df <- cohort3FinalGov %>%
+  group_by(q20) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q20_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q20_summary_df, aes(x = q20, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "The majority of respondents are applying the skills they learned
+in the program in their everyday work.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+**Q7. My team has defined a role for residents or the community in designing services moving forward.**
+
+```{r}
+#| label: q7
+#| message: false
+
+# Analyze and visualize the "q7" column
+q7_summary_df <- cohort3FinalGov %>%
+  group_by(q7) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q7_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q7_summary_df, aes(x = q7, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 15), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "The majority of respondents agree their teams have define a 
+role for their community to design services in the future.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+```{r}
+#| label: q7-summary
+# | echo: false
+summary(q7_summary_df)
+```
+
+## Goal 4: Participant Satisfaction and Intention to Action
+
+**Q21. I would recommend this program to my peers.**
+
+```{r}
+#| label: q21
+#| message: false
+
+# Analyze and visualize the "q21" column
+q21_summary_df <- cohort3FinalGov %>%
+  group_by(q21) %>%
+  summarise(Frequency = n())
+
+# Calculate total number of responses
+total_responses <- sum(q21_summary_df$Frequency)
+
+# Plotting the data
+ggplot(q21_summary_df, aes(x = q21, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
+  labs(title = "All respondents would recommend this program to their peers.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),  
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
