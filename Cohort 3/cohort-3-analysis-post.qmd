@@ -117,15 +117,6 @@ $\text{Weight for Miami} = \frac{\frac{13}{40}}{\frac{3}{14}} = \frac{0.325}{0.2
 
 **Q3. Which city/county are you representing?**
 
-All city governments participated in the survey with highest 
-from Akron and Macon-Bibb County. Total number of survey respondents per city team (n = total_sample).
-
--   **Akron, OH** and **Macon-Bibb County, GA** are the most represented in the survey, each with 4 responses.
-
--   **Miami-Dade County, FL** follows with 3 responses.
-
--   **Detroit, MI** has the fewest responses, with only 2.
-
 ```{r}
 #| label: q3
 #| message: false
@@ -137,7 +128,8 @@ ggplot(as.data.frame(q3_frequency), aes(x = q3, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
   labs(title = "All city governments participated in the survey with the 
-highest number of respondents from Akron and Macon-Bibb County.",
+highest number of respondents from Miami-Dade and 
+Macon-Bibb Counties.",
        subtitle = paste("Total number of survey respondents per city team (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
