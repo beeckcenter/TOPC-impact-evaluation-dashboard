@@ -39,10 +39,10 @@ library(knitr)
 library(survey)
 ```
 
-## Define the survey design
+## Calculate design weights
 
 ```{r}
-#| label: survey-design-definition
+#| label: design-weights
 #| message: false
 
 # Read the data from the CSV file
@@ -63,7 +63,11 @@ weights <- (population_counts / total_population) / (sample_counts / total_sampl
 print(weights)
 ```
 
+## Define the survey design
+
 ```{r}
+#| label: survey-design-definition
+#| message: false
 # Map between city names 
 city_map <- list(
   "Miami-Dade County, FL" = "Miami",
@@ -113,6 +117,9 @@ $\text{Weight for Miami} = \frac{\frac{13}{40}}{\frac{3}{14}} = \frac{0.325}{0.2
 
 **Q3. Which city/county are you representing?**
 
+All city governments participated in the survey with highest 
+from Akron and Macon-Bibb County. Total number of survey respondents per city team (n = total_sample).
+
 -   **Akron, OH** and **Macon-Bibb County, GA** are the most represented in the survey, each with 4 responses.
 
 -   **Miami-Dade County, FL** follows with 3 responses.
@@ -123,39 +130,59 @@ $\text{Weight for Miami} = \frac{\frac{13}{40}}{\frac{3}{14}} = \frac{0.325}{0.2
 #| label: q3
 #| message: false
 
-# Analyze and visualize the "q3" column
-q3_summary_df <- cohort3FinalGov %>%
-  group_by(q3) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q3_frequency <- svytable(~q3, design = design)
 
-# Calculate total number of responses for the title
-total_responses <- sum(q3_summary_df$Frequency)
-names(q3_summary_df)[1] <- "City"
-
-# Order cities by frequency and converting to factor
-q3_summary_df <- q3_summary_df %>%
-  mutate(City = factor(City, levels = City[order(-Frequency)]))
-
-# Plot the data
-ggplot(q3_summary_df, aes(x = City, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q3_frequency), aes(x = q3, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  labs(title = "All city governments participated in the survey with 
-highest from Akron and Macon-Bibb County.",
-       subtitle = paste("Total number of survey respondents per city team (n =", total_responses, ")"),
+  labs(title = "All city governments participated in the survey with the 
+highest number of respondents from Akron and Macon-Bibb County.",
+       subtitle = paste("Total number of survey respondents per city team (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
-        plot.title = element_text(face = "bold"))
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
-```{r}
-#| label: q3-summary
-# | echo: false
+**Compare weighted vs. unweighted counts**:
 
-summary(q3_summary_df)
+```{r}
+#| label: weighted-vs-unweighted-counts
+#| message: false
+# Unweighted count
+unweighted_counts <- table(cohort3FinalGov$q3)
+
+# Weighted count
+weighted_counts <- svytable(~q3, design = design)
+
+# Compare
+print(unweighted_counts)
+print(weighted_counts)
+```
+
+**Review weighted summary statistics**:
+
+```{r}
+#| label: weighted-summary-statistics
+#| message: false
+# Weighted mean
+weighted_mean <- svymean(~q3, design = design)
+
+# Weighted total
+weighted_total <- svytotal(~q3, design = design)
+
+# Display the results
+print(weighted_mean)
+print(weighted_total)
 ```
 
 ## Goal 1: Participant Awareness and Knowledge
@@ -166,35 +193,46 @@ summary(q3_summary_df)
 #| label: q4
 #| message: false
 
-# Analyzing and visualizing the "q4" column
-q4_summary_df <- cohort3FinalGov %>%
-  group_by(q4) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q4_frequency <- svytable(~q4, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q4_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q4_summary_df, aes(x = q4, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q4_frequency), aes(x = q4, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 15), breaks = seq(0, 15, by = 2)) + 
   labs(title = "All respondents agree they learned new skills in community 
 research practices.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
-```
 
-```{r}
-#| label: q4-summary
-# | echo: false
+# Cross-tabulation with cities
+q4_cross_tab_city <- svytable(~q4 + city_mapped, design = design)
 
-summary(q4_summary_df)
+ggplot(as.data.frame(q4_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q4)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree that they learned community research skills, and
+some strongly agreeing, particularly in Miami and Detroit.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 **Q5. I learned skills to promote equity and foster inclusive spaces in my work.**
@@ -203,35 +241,46 @@ summary(q4_summary_df)
 #| label: q5
 #| message: false
 
-# Analyze and visualize the "q5" column
-q5_summary_df <- cohort3FinalGov %>%
-  group_by(q5) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q5_frequency <- svytable(~q5, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q5_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q5_summary_df, aes(x = q5, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q5_frequency), aes(x = q5, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-    scale_y_continuous(limits = c(0, 15), breaks = seq(0, 15, by = 2)) + 
-  labs(title = paste("All respondents agree they learned skills to promote equity and 
-foster inclusive spaces in their work (n =", total_responses, ")."),
-       subtitle = "Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree",
+  labs(title = "All respondents agree they learned new skills to promote
+equity and inclusion in their work.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
-```
 
-```{r}
-#| label: q5-summary
-# | echo: false
+# Cross-tabulation with cities
+q5_cross_tab_city <- svytable(~q5 + city_mapped, design = design)
 
-summary(q5_summary_df)
+ggplot(as.data.frame(q5_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q5)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree that they learned equity and inclusion skills, and
+some strongly agreeing, particularly in Miami and Macon.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 **Q6. I learned new skills in applying user testing feedback to shape the development of our solution.**
@@ -240,34 +289,46 @@ summary(q5_summary_df)
 #| label: q6
 #| message: false
 
-# Analyze and visualize the "q6" column
-q6_summary_df <- cohort3FinalGov %>%
-  group_by(q6) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q6_frequency <- svytable(~q6, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q6_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q6_summary_df, aes(x = q6, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q6_frequency), aes(x = q6, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 15), breaks = seq(0, 15, by = 2)) + 
   labs(title = "All respondents agree they learned new skills to apply user 
 testing feedback in their solution development.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
-```
 
-```{r}
-#| label: q6-summary
-# | echo: false
-summary(q6_summary_df)
+# Cross-tabulation with cities
+q6_cross_tab_city <- svytable(~q6 + city_mapped, design = design)
+
+ggplot(as.data.frame(q6_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q6)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree that they learned user testing skills to develop their 
+solutions, with Miami strongly agreeing the most.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 **Q15. I learned new skills in collaborating with a community organization to research a problem and co-design a solution.**
@@ -276,29 +337,47 @@ summary(q6_summary_df)
 #| label: q15
 #| message: false
 
-# Analyze and visualize the "q15" column
-q15_summary_df <- cohort3FinalGov %>%
-  group_by(q15) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q15_frequency <- svytable(~q15, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q15_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q15_summary_df, aes(x = q15, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q15_frequency), aes(x = q15, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
-  labs(title = "The majority of respondents agree they learned news skills to 
-collaborate with a community organization to research a problem
-and co-design a solution.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+  labs(title = "All respondents agree they learned new skills to collaborate 
+with a community organization from problem discovery to 
+solution co-design.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
+
+# Cross-tabulation with cities
+q15_cross_tab_city <- svytable(~q15 + city_mapped, design = design)
+
+ggplot(as.data.frame(q15_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q15)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree that they learned skills to collaborate with a community 
+organization, with Akron strongly agreeing the most.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 **Q16. I learned new skills in building consensus and aligning on long-term plans with internal stakeholders.**
@@ -307,29 +386,46 @@ and co-design a solution.",
 #| label: q16
 #| message: false
 
-# Analyze and visualize the "q16" column
-q16_summary_df <- cohort3FinalGov %>%
-  group_by(q16) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q16_frequency <- svytable(~q16, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q16_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q16_summary_df, aes(x = q16, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q16_frequency), aes(x = q16, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
-  labs(title = "The majority of respondents agree they learned news skills to 
-collaborate with a community organization to research a problem
-and co-design a solution.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+  labs(title = "All respondents agree they learned news skills to build 
+consensus and align on long-term plans with internal stakeholders.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
+
+# Cross-tabulation with cities
+q16_cross_tab_city <- svytable(~q16 + city_mapped, design = design)
+
+ggplot(as.data.frame(q16_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q16)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree that they learned skills to build build internal 
+consensus, with Detroit and Akron agreeing the most.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 **Q9. I learned different strategies to brainstorm many ideas based on the insights taken from the community research.**
@@ -338,35 +434,46 @@ and co-design a solution.",
 #| label: q9
 #| message: false
 
-# Create q9_summary_df
-q9_summary_df <- cohort3FinalGov %>%
-  group_by(q9) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q9_frequency <- svytable(~q9, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q9_summary_df$Frequency)
-
-# Plot the data with a fixed scale
-ggplot(q9_summary_df, aes(x = q9, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q9_frequency), aes(x = q9, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 15), breaks = seq(0, 15, by = 2)) + 
-  labs(title = "The majority of respondents agree they learned different 
-strategies to brainstorm ideas based on community research 
-insights.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+  labs(title = "All respondents agree they learned different strategies to 
+brainstorm ideas based on community research insights.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
-```
 
-```{r}
-#| label: q9-summary
-# | echo: false
-summary(q9_summary_df)
+# Cross-tabulation with cities
+q9_cross_tab_city <- svytable(~q9 + city_mapped, design = design)
+
+ggplot(as.data.frame(q9_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q9)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree that they learned different strategories to brainstorm 
+ideas using community research, but some disagree in Miami and Macon.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 **Q10. I learned new skills in outlining and prioritizing requirements for the development of a digital product.**
@@ -375,34 +482,47 @@ summary(q9_summary_df)
 #| label: q10
 #| message: false
 
-# Analyze and visualize the "q10" column
-q10_summary_df <- cohort3FinalGov %>%
-  group_by(q10) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q10_frequency <- svytable(~q10, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q10_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q10_summary_df, aes(x = q10, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q10_frequency), aes(x = q10, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 15), breaks = seq(0, 15, by = 2)) + 
-  labs(title = "The majority of respondents agree their teams have define a 
-role for their community to design services in the future.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+  labs(title = "All respondents agree they learned new skills to prioritize 
+requirements to develop a digital product.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
-```
 
-```{r}
-#| label: q10-summary
-# | echo: false
-summary(q10_summary_df)
+# Cross-tabulation with cities
+q10_cross_tab_city <- svytable(~q10 + city_mapped, design = design)
+
+ggplot(as.data.frame(q10_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q10)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree that they learned new skills to prioritize requirements 
+to develop a digital product, with Miami and Detroit strongly agreeing
+the most.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 **Q11. I learned new skills in identifying and evaluating data to support the digital solution.**
@@ -411,34 +531,46 @@ summary(q10_summary_df)
 #| label: q11
 #| message: false
 
-# Analyze and visualize the "q11" column
-q11_summary_df <- cohort3FinalGov %>%
-  group_by(q11) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q11_frequency <- svytable(~q11, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q11_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q11_summary_df, aes(x = q11, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q11_frequency), aes(x = q11, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
-  labs(title = "The majority of respondents agree their teams have define a 
-role for their community to design services in the future.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+  labs(title = "All respondents agree they learned new skills to identify and 
+evaluate data.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
-```
 
-```{r}
-#| label: q11-summary
-# | echo: false
-summary(q11_summary_df)
+# Cross-tabulation with cities
+q11_cross_tab_city <- svytable(~q11 + city_mapped, design = design)
+
+ggplot(as.data.frame(q11_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q11)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree that they learned new skills to identify and evaluate 
+data, with Miami and Detroit strongly agreeing the most.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 **Q12. I learned new skills for managing the development of a digital product.**
@@ -447,34 +579,46 @@ summary(q11_summary_df)
 #| label: q12
 #| message: false
 
-# Analyze and visualize the "q12" column
-q12_summary_df <- cohort3FinalGov %>%
-  group_by(q12) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q12_frequency <- svytable(~q12, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q12_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q12_summary_df, aes(x = q12, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q12_frequency), aes(x = q12, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
-  labs(title = "The majority of respondents agree they learned new skills to manage
+  labs(title = "Most respondents agree they learned new skills to manage
 developing a digital product.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
-```
 
-```{r}
-#| label: q12-summary
-# | echo: false
-summary(q12_summary_df)
+# Cross-tabulation with cities
+q12_cross_tab_city <- svytable(~q12 + city_mapped, design = design)
+
+ggplot(as.data.frame(q12_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q12)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree that they learned new skills to manage developing 
+a digital product, but some disagree in Macon and Detroit.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 **Q13. I learned new skills for creating a product sustainability plan to ensure that product is improved and maintained.**
@@ -483,36 +627,46 @@ summary(q12_summary_df)
 #| label: q13
 #| message: false
 
-# Analyze and visualize the "q13" column
-q13_summary_df <- cohort3FinalGov %>%
-  group_by(q13) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q13_frequency <- svytable(~q13, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q13_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q13_summary_df, aes(x = q13, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q13_frequency), aes(x = q13, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
-  labs(title = "The majority of respondents agree they learned new skills to 
-create a product sustainability plan to maintain their products.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+  labs(title = "Most respondents agree they learned new skills to create a
+product sustainability plan.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
-```
 
-Summary statistics of Q13 frequency count
+# Cross-tabulation with cities
+q13_cross_tab_city <- svytable(~q13 + city_mapped, design = design)
 
-```{r}
-#| label: q13-summary
-# | echo: false
-summary(q13_summary_df)
+ggplot(as.data.frame(q13_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q13)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree that they learned new skills to create a product 
+sustainability plan, but some disagree in Detroit.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 ## Goal 2: Participant Confidence and Competence
@@ -523,28 +677,46 @@ summary(q13_summary_df)
 #| label: q14
 #| message: false
 
-# Analyze and visualize the "q13" column
-q14_summary_df <- cohort3FinalGov %>%
-  group_by(q14) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q14_frequency <- svytable(~q14, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q14_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q14_summary_df, aes(x = q14, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q14_frequency), aes(x = q14, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
-  labs(title = "The majority of respondents agree they have the skills and 
-support to innovate in their everyday work.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+  labs(title = "Most respondents agree they have the skills and support
+to innovate in their everyday work.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
+
+# Cross-tabulation with cities
+q14_cross_tab_city <- svytable(~q14 + city_mapped, design = design)
+
+ggplot(as.data.frame(q14_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q14)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree that they have the skills and support to innovate
+in their everyday work, but some disagree in Detroit.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 **Q17. I feel confident working with technical partners to design a tool and advance the tool's development.**
@@ -553,28 +725,46 @@ support to innovate in their everyday work.",
 #| label: q17
 #| message: false
 
-# Analyze and visualize the "q17" column
-q17_summary_df <- cohort3FinalGov %>%
-  group_by(q17) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q17_frequency <- svytable(~q17, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q17_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q17_summary_df, aes(x = q17, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q17_frequency), aes(x = q17, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
-  labs(title = "The majority of respondents are confident about working with 
-technical partners to design and develop a tool.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+  labs(title = "Most respondents agree they feel confident working with technical
+partners to design a tool.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
+
+# Cross-tabulation with cities
+q17_cross_tab_city <- svytable(~q17 + city_mapped, design = design)
+
+ggplot(as.data.frame(q17_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q17)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree that they feel confident working with technical
+partners, but some disagree in Detroit.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 ## Goal 3: Participant Recognition and Application of Methods
@@ -585,28 +775,46 @@ technical partners to design and develop a tool.",
 #| label: q20
 #| message: false
 
-# Analyze and visualize the "q20" column
-q20_summary_df <- cohort3FinalGov %>%
-  group_by(q20) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q20_frequency <- svytable(~q20, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q20_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q20_summary_df, aes(x = q20, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q20_frequency), aes(x = q20, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
-  labs(title = "The majority of respondents are applying the skills they learned
-in the program in their everyday work.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+  labs(title = "Most respondents agree they are applying the skills they have 
+learned from the program in their everyday work.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
+
+# Cross-tabulation with cities
+q20_cross_tab_city <- svytable(~q20 + city_mapped, design = design)
+
+ggplot(as.data.frame(q20_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q20)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree that they apply the skills they have learned from the 
+program, with Miami strongly agreeing the most.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 **Q7. My team has defined a role for residents or the community in designing services moving forward.**
@@ -615,34 +823,47 @@ in the program in their everyday work.",
 #| label: q7
 #| message: false
 
-# Analyze and visualize the "q7" column
-q7_summary_df <- cohort3FinalGov %>%
-  group_by(q7) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q7_frequency <- svytable(~q7, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q7_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q7_summary_df, aes(x = q7, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q7_frequency), aes(x = q7, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 15), breaks = seq(0, 15, by = 2)) + 
-  labs(title = "The majority of respondents agree their teams have define a 
-role for their community to design services in the future.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+  labs(title = "Most respondents agree their teams have defined a role for the 
+community to design services moving forward.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
-```
 
-```{r}
-#| label: q7-summary
-# | echo: false
-summary(q7_summary_df)
+# Cross-tabulation with cities
+q7_cross_tab_city <- svytable(~q7 + city_mapped, design = design)
+
+ggplot(as.data.frame(q7_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q7)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree their teams have defined a role for the community to 
+design services moving forward, with Miami and Macon strongly 
+agreeing the most.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 ## Goal 4: Participant Satisfaction and Intention to Action
@@ -653,25 +874,44 @@ summary(q7_summary_df)
 #| label: q21
 #| message: false
 
-# Analyze and visualize the "q21" column
-q21_summary_df <- cohort3FinalGov %>%
-  group_by(q21) %>%
-  summarise(Frequency = n())
+# Single-variable frequency plot
+q21_frequency <- svytable(~q21, design = design)
 
-# Calculate total number of responses
-total_responses <- sum(q21_summary_df$Frequency)
-
-# Plotting the data
-ggplot(q21_summary_df, aes(x = q21, y = Frequency)) +
-  geom_bar(stat = "identity", fill = "#6eaddc", width = 0.5) +
+ggplot(as.data.frame(q21_frequency), aes(x = q21, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 13), breaks = seq(0, 15, by = 2)) + 
-  labs(title = "All respondents would recommend this program to their peers.",
-       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_responses, ")"),
+  labs(title = "All respondents agree they would recommend this program 
+to their peers.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses") +
-  theme_minimal() +
-  theme(panel.grid.major.y = element_blank(),  
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
+
+# Cross-tabulation with cities
+q21_cross_tab_city <- svytable(~q21 + city_mapped, design = design)
+
+ggplot(as.data.frame(q21_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q21)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("Strongly agree", "Agree", "Disagree", "Strongly disagree")) + 
+  labs(title = "Majority agree they would recommend this program to their peers, 
+with Miami and Akron strongly agreeing the most.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
