@@ -2,3 +2,6 @@ magrittr
 dplyr
 ggplot2
 knitr
+Matrix
+survival
+survey

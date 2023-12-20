@@ -14,7 +14,76 @@ cache: true
 
 Graphs for post-test survey analysis for city governments.
 
-## Design weights
+## Install necessary packages
+
+```{r}
+#| label: packages-installation
+#| message: false
+
+# Set a CRAN mirror
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+# Install necessary packages
+# install.packages("magrittr")
+# install.packages("dplyr")
+# install.packages("ggplot2")
+# install.packages("knitr")
+# install.packages("KableExtra")
+# install.packages("survey")
+
+# Load the packages
+library(magrittr)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(survey)
+```
+
+## Define the survey design
+
+```{r}
+#| label: survey-design-definition
+#| message: false
+
+# Read the data from the CSV file
+cohort3FinalGov <- read.csv("~/Documents/GitHub/TOPC-impact-evaluation-dashboard/Cohort 3/cohort3FinalGov2.csv")
+
+# Define population and sample sizes
+population_counts <- c(Akron = 8, Detroit = 9, Macon = 10, Miami = 13)
+sample_counts <- c(Akron = 4, Detroit = 2, Macon = 4, Miami = 3)
+
+# Total population and sample size
+total_population <- sum(population_counts)
+total_sample <- sum(sample_counts)
+
+# Calculate the weights
+weights <- (population_counts / total_population) / (sample_counts / total_sample)
+
+# Print the calculated weights
+print(weights)
+```
+
+```{r}
+# Map between city names 
+city_map <- list(
+  "Miami-Dade County, FL" = "Miami",
+  "Akron, OH" = "Akron",
+  "Detroit, MI" = "Detroit",
+  "Macon-Bibb County, GA" = "Macon"
+)
+
+# Update dataframe to use the mapped names
+cohort3FinalGov$city_mapped <- unlist(lapply(cohort3FinalGov$q3, function(x) city_map[[x]]))
+
+# Assign weights using the mapped city names
+cohort3FinalGov$weights <- weights[cohort3FinalGov$city_mapped]
+
+# Define the survey design
+design <- svydesign(ids = ~1, 
+                    strata = ~city_mapped, 
+                    weights = ~weights, 
+                    data = cohort3FinalGov)
+```
 
 Given this in the data:
 
@@ -53,24 +122,6 @@ $\text{Weight for Miami} = \frac{\frac{13}{40}}{\frac{3}{14}} = \frac{0.325}{0.2
 ```{r}
 #| label: q3
 #| message: false
-# Set a CRAN mirror
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-
-# Install necessary packages
-# install.packages("magrittr")
-# install.packages("dplyr")
-# install.packages("ggplot2")
-# install.packages("knitr")
-# install.packages("KableExtra")
-
-# Load the packages
-library(magrittr)
-library(dplyr)
-library(ggplot2)
-library(knitr)
-
-# Read the data from the CSV file
-cohort3FinalGov <- read.csv("~/Documents/GitHub/TOPC-impact-evaluation-dashboard/Cohort 3/cohort3FinalGov2.csv")
 
 # Analyze and visualize the "q3" column
 q3_summary_df <- cohort3FinalGov %>%
