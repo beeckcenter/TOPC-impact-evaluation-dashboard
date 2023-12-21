@@ -145,36 +145,198 @@ Macon-Bibb Counties.",
   guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
-**Compare weighted vs. unweighted counts**:
+**Q25. Which title best describes your role and level of seniority at work?**
+
+```{r}
+#| label: q25
+#| message: false
+
+# Single-variable frequency plot
+q25_frequency <- svytable(~q25, design = design)
+
+ggplot(as.data.frame(q25_frequency), aes(x = q25, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  coord_flip() +
+  labs(title = "Majority of respondents are senior officials or 
+managers.",
+       subtitle = paste("Total number of survey respondents (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() + 
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
+
+# # Cross-tabulation with cities
+# colors <- c("#041e42", "#6eaddc", "#da291c", "#1B786E", "#e69138", "#5b9bd5", "#a4c739")
+# 
+# q25_cross_tab_city <- svytable(~q25 + city_mapped, design = design)
+# 
+# ggplot(as.data.frame(q25_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q25)) +
+#   geom_bar(stat = "identity", position = "stack") +
+#   coord_flip() +
+#   scale_fill_manual(values = colors) +  # Assign the colors to the categories
+#   labs(title = "Distribution of Q25 Responses Across Cities",
+#        subtitle = paste("Responses for Q25 (n =", total_sample, ")"),
+#        x = "",
+#        y = "Number of Responses",
+#        caption = "Source: TOPC Cohort 3 Survey (2023)") +
+#   theme_minimal() +
+#   theme(legend.position = "bottom",
+#         legend.box = "vertical",
+#         legend.box.margin = margin(0, 0, 0, 0),
+#         legend.title = element_blank(),
+#         panel.grid.major.y = element_blank(),
+#         panel.grid.minor.y = element_blank(),
+#         plot.title = element_text(face = "bold"),
+#         plot.caption = element_text(hjust = 0)) +
+#   guides(fill = guide_legend(nrow = 1, byrow = TRUE))
+```
+
+**Q27. How many years have you worked at your respective City or County?**
+
+```{r}
+#| label: q27
+#| message: false
+
+# Single-variable frequency plot
+q27_frequency <- svytable(~q27, design = design)
+
+ggplot(as.data.frame(q27_frequency), aes(x = q27, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  coord_flip() +
+  labs(title = "Majority are new to working in their city or county governments.",
+       subtitle = paste("Total number of survey respondents (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() + 
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
+
+# Cross-tabulation with cities
+q27_cross_tab_city <- svytable(~q27 + city_mapped, design = design)
+
+ggplot(as.data.frame(q27_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q27)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42","#6eaddc","#da291c","#1B786E"),
+                    limits = c("0-2 years", "3-5 years", "6-9 years", "10+ years")) + 
+  labs(title = "Majority are new to working to city and county governments, 
+especially in Macon and Detroit.",
+       subtitle = paste("Years of Experience: Range from 0 to 10+ years (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
+```
+
+**Q28. Please describe your racial/ethnic identity. Select all that apply.**
+
+```{r}
+#| label: q28
+#| message: false
+
+# Single-variable frequency plot
+q28_frequency <- svytable(~q28, design = design)
+
+ggplot(as.data.frame(q28_frequency), aes(x = q28, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  coord_flip() +
+  labs(title = "Majority are new to working in their city or county governments.",
+       subtitle = paste("Total number of survey respondents (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() + 
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
+```
+
+**Q29. Which gender do you most closely identify with (or self-describe in 'other')?**
+
+```{r}
+#| label: q29
+#| message: false
+
+# Single-variable frequency plot
+q29_frequency <- svytable(~q29, design = design)
+
+ggplot(as.data.frame(q29_frequency), aes(x = q29, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  coord_flip() +
+  labs(title = "More than half of respondents identify as male.",
+       subtitle = paste("Total number of survey respondents (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() + 
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
+```
 
 ```{r}
 #| label: weighted-vs-unweighted-counts
 #| message: false
-# Unweighted count
-unweighted_counts <- table(cohort3FinalGov$q3)
-
-# Weighted count
-weighted_counts <- svytable(~q3, design = design)
-
-# Compare
-print(unweighted_counts)
-print(weighted_counts)
+# Compare weighted vs. unweighted counts:
+# # Unweighted count
+# unweighted_counts <- table(cohort3FinalGov$q3)
+# 
+# # Weighted count
+# weighted_counts <- svytable(~q3, design = design)
+# 
+# # Compare
+# print(unweighted_counts)
+# print(weighted_counts)
 ```
-
-**Review weighted summary statistics**:
 
 ```{r}
 #| label: weighted-summary-statistics
 #| message: false
-# Weighted mean
-weighted_mean <- svymean(~q3, design = design)
 
-# Weighted total
-weighted_total <- svytotal(~q3, design = design)
-
-# Display the results
-print(weighted_mean)
-print(weighted_total)
+# Review weighted summary statistics:
+# # Weighted mean
+# weighted_mean <- svymean(~q3, design = design)
+# 
+# # Weighted total
+# weighted_total <- svytotal(~q3, design = design)
+# 
+# # Display the results
+# print(weighted_mean)
+# print(weighted_total)
 ```
 
 ## Goal 1: Participant Awareness and Knowledge
