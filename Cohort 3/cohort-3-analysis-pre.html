@@ -82,6 +82,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#install-necessary-packages" id="toc-install-necessary-packages" class="nav-link active" data-scroll-target="#install-necessary-packages">Install necessary packages</a></li>
+  <li><a href="#calculate-design-weights" id="toc-calculate-design-weights" class="nav-link" data-scroll-target="#calculate-design-weights">Calculate design weights</a></li>
+  <li><a href="#define-the-survey-design" id="toc-define-the-survey-design" class="nav-link" data-scroll-target="#define-the-survey-design">Define the survey design</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
   </ul>
 </nav>
 </div>
@@ -142,6 +145,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+</section>
+<section id="calculate-design-weights" class="level2">
+<h2 class="anchored" data-anchor-id="calculate-design-weights">Calculate design weights</h2>
+<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/design-weights_be8620af2be1ed02fab1b48e95f4e621">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the data from the CSV file</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cohort3BackgroundGov <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"~/Documents/R Projects/TOPC-impact-evaluation-dashboard/Cohort 3/cohort3BackgroundGov2.csv"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define population and sample sizes</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>population_counts <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Akron =</span> <span class="dv">8</span>, <span class="at">Detroit =</span> <span class="dv">9</span>, <span class="at">Macon =</span> <span class="dv">10</span>, <span class="at">Miami =</span> <span class="dv">13</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>sample_counts <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Akron =</span> <span class="dv">4</span>, <span class="at">Detroit =</span> <span class="dv">2</span>, <span class="at">Macon =</span> <span class="dv">4</span>, <span class="at">Miami =</span> <span class="dv">3</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Total population and sample size</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>total_population <span class="ot">&lt;-</span> <span class="fu">sum</span>(population_counts)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>total_sample <span class="ot">&lt;-</span> <span class="fu">sum</span>(sample_counts)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the weights</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> (population_counts <span class="sc">/</span> total_population) <span class="sc">/</span> (sample_counts <span class="sc">/</span> total_sample)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the calculated weights</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(weights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Akron  Detroit    Macon    Miami 
+0.650000 1.462500 0.812500 1.408333 </code></pre>
+</div>
+</div>
+</section>
+<section id="define-the-survey-design" class="level2">
+<h2 class="anchored" data-anchor-id="define-the-survey-design">Define the survey design</h2>
+<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/survey-design-definition_09549b3e80dcb3bd687bb91af01ccbdd">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map between city names </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>city_map <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Miami-Dade County, FL"</span> <span class="ot">=</span> <span class="st">"Miami"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Akron, OH"</span> <span class="ot">=</span> <span class="st">"Akron"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"City of Akron"</span> <span class="ot">=</span> <span class="st">"Akron"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Detroit, MI"</span> <span class="ot">=</span> <span class="st">"Detroit"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Macon-Bibb, GA"</span> <span class="ot">=</span> <span class="st">"Macon"</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Update dataframe to use the mapped names</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>cohort3BackgroundGov<span class="sc">$</span>city_mapped <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(cohort3BackgroundGov<span class="sc">$</span>q4, <span class="cf">function</span>(x) city_map[[x]]))</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign weights using the mapped city names</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>cohort3BackgroundGov<span class="sc">$</span>weights <span class="ot">&lt;-</span> weights[cohort3BackgroundGov<span class="sc">$</span>city_mapped]</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the survey design</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span><span class="dv">1</span>, </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">strata =</span> <span class="sc">~</span>city_mapped, </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                    <span class="at">weights =</span> <span class="sc">~</span>weights, </span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> cohort3BackgroundGov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
+<p>The pre-test and post-test survey questions are conceptually aligned but not directly comparable in terms of measurement scales and language of questions. The pre-test uses a 4-point Likert scale focused on agreement, while the post-test uses a 5-point scale assessing expertise levels. This difference in scales means a direct comparison or change analysis (like a t-test) is not straightforward.</p>
+<p>However, both sets of questions target similar skills and experiences. To assess changes, I looked at shifts in distribution of responses, using non-parametric methods or descriptive statistics to compare “before” and “after” without inferring statistical significance based on the Likert scale points. Qualitative analysis of open-ended responses also provided some insights into changes in participants’ experiences and perceptions.</p>
 </section>
 
 </main>

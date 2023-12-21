@@ -113,6 +113,8 @@ $\text{Weight for Macon} = \frac{\frac{10}{40}}{\frac{4}{14}} = \frac{0.25}{0.28
 
 $\text{Weight for Miami} = \frac{\frac{13}{40}}{\frac{3}{14}} = \frac{0.325}{0.2143} \approx 1.517$
 
+## Descriptive Data
+
 ## Participant Background
 
 **Q3. Which city/county are you representing?**
@@ -387,6 +389,29 @@ some strongly agreeing, particularly in Miami and Detroit.",
         plot.title = element_text(face = "bold"),
         plot.caption = element_text(hjust = 0)) +
   guides(fill = guide_legend(nrow = 1, byrow = TRUE))
+
+# Descriptive statistics
+# Convert svytable objects to data frames
+q4_frequency_df <- as.data.frame(q4_frequency)
+q4_cross_tab_city_df <- as.data.frame(q4_cross_tab_city)
+
+# Calculate descriptive statistics
+# For q4_frequency
+q4_freq_stats <- q4_frequency_df %>%
+  summarise(Mean = mean(Freq),
+            Median = median(Freq),
+            SD = sd(Freq))
+
+# For q4_cross_tab_city
+q4_cross_tab_stats <- q4_cross_tab_city_df %>%
+  group_by(city_mapped) %>%
+  summarise(Mean = mean(Freq),
+            Median = median(Freq),
+            SD = sd(Freq))
+
+# Print results
+print(q4_freq_stats)
+print(q4_cross_tab_stats)
 ```
 
 **Q5. I learned skills to promote equity and foster inclusive spaces in my work.**
