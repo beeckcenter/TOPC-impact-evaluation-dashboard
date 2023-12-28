@@ -98,7 +98,7 @@ weight_mapping <- c("Strongly agree" = 4, "Agree" = 3, "Disagree" = 2, "Strongly
 cohort3FinalGov$WeightedValue <- weight_mapping[cohort3FinalGov$q4]
 
 # Check if the mapping worked correctly
-print(head(cohort3FinalGov))
+# print(head(cohort3FinalGov))
 ```
 
 Given this in the data:

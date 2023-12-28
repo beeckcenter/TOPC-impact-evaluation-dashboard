@@ -46,11 +46,11 @@ library(survey)
 #| message: false
 
 # Read the data from the CSV file
-cohort3BackgroundGov <- read.csv("~/Documents/R Projects/TOPC-impact-evaluation-dashboard/Cohort 3/cohort3BackgroundGov2.csv")
+cohort3BackgroundGov <- read.csv("~/Documents/R Projects/TOPC-impact-evaluation-dashboard/Cohort 3/cohort3BackgroundGov3.csv")
 
 # Define population and sample sizes
 population_counts <- c(Akron = 8, Detroit = 9, Macon = 10, Miami = 13)
-sample_counts <- c(Akron = 4, Detroit = 2, Macon = 4, Miami = 3)
+sample_counts <- c(Akron = 7, Detroit = 1, Macon = 4, Miami = 3)
 
 # Total population and sample size
 total_population <- sum(population_counts)
@@ -104,21 +104,220 @@ design <- svydesign(ids = ~1,
 
 ## Goal 1: Participant Awareness and Knowledge
 
+None
+
+## Goal 2: Participant Confidence and Competence
+
 **Community Research**
 
 Please rate your familiarity with the following skills.
 
 **Q11. Conducting community research (leading interviews, surveys, observations, etc.)**
 
+```{r}
+#| label: q8-summary-statistics
+#| message: false
+
+summary(cohort3BackgroundGov$q8)
+```
+
+```{r}
+#| label: q8-descriptive-stat-plot
+#| message: false
+
+# Single-variable frequency plot
+q8_frequency <- svytable(~q8, design = design)
+
+ggplot(as.data.frame(q8_frequency), aes(x = q8, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  coord_flip() +
+  labs(title = "More than half respondents agree they learned new skills in community 
+research practices.",
+       subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+```{r}
+#| label: q8-summary-statistics-2
+#| message: false
+# 
+# cohort3BackgroundGov$q8 <- factor(cohort3BackgroundGov$q8, 
+#                              levels = c("1 - New to concept and terminology", 
+#                                         "2", 
+#                                         "3", 
+#                                         "4", 
+#                                         "5 - Expertise in concept and terminology"))
+# 
+# cohort3BackgroundGov$q8_numeric <- as.numeric(as.character(cohort3BackgroundGov$q8))
+# 
+# str(cohort3BackgroundGov)
+# 
+# options(survey.lonely.psu = "certainty")
+# 
+# design <- svydesign(ids = ~1, 
+#                     strata = ~city_mapped, 
+#                     weights = ~weights, 
+#                     data = cohort3BackgroundGov, 
+#                     variables = ~q8_numeric)
+# 
+# # Calculate the mean
+# q8_mean <- svymean(~q8_numeric, design, na.rm = TRUE)
+# 
+# # Calculate the standard deviation
+# q8_sd <- sqrt(svyvar(~q8_numeric, design, na.rm = TRUE))
+# 
+# # Calculate the median
+# q8_median_result <- svyquantile(~q8_numeric, design, 0.5, na.rm = TRUE)
+# q8_median_value <- as.numeric(q8_median_result$quantiles['50%'])
+# 
+# # Create the summary data frame
+# q8_summary_df <- data.frame(
+#   Mean = coef(q8_mean),
+#   SD = coef(q8_sd),
+#   Median = q8_median_value
+# )
+# 
+# # Print the summary statistics
+# print(q8_summary_df)
+```
+
+```{r}
+#| label: q8-cross-tabs-plot
+#| message: false
+# Cross-tabulation with cities
+q8_cross_tab_city <- svytable(~q8 + city_mapped, design = design)
+
+ggplot(as.data.frame(q8_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q8)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42",
+                               "#6eaddc",
+                               "#da291c",
+                               "#1B786E", 
+                               "#701C7F"),
+                    limits = c("5- Expertise in concept and terminology", 
+                               "4", 
+                               "3", 
+                               "2", 
+                               "1- New to concept and terminology")) + 
+  labs(title = "Akron is newest to community research skills, concepts and 
+terminologies, with Miami and Macon most experienced.",
+       subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
+```
+
 **Q12. Testing ideas or prototypes with community members**
+
+```{r}
+#| label: q9-summary-statistics
+#| message: false
+
+summary(cohort3BackgroundGov$q9)
+```
+
+```{r}
+# Single-variable frequency plot
+q9_frequency <- svytable(~q9, design = design)
+
+ggplot(as.data.frame(q9_frequency), aes(x = q9, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  coord_flip() +
+  labs(title = "3 out of 4 respondents believe they have the skills to test ideas or 
+prototypes with community members.",
+       subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"))
+```
+
+```{r}
+#| label: q9-cross-tabs-plot
+#| message: false
+# Cross-tabulation with cities
+q9_cross_tab_city <- svytable(~q9 + city_mapped, design = design)
+
+ggplot(as.data.frame(q9_cross_tab_city), aes(x = city_mapped, y = Freq, fill = q9)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("#041e42",
+                               "#6eaddc",
+                               "#da291c",
+                               "#1b786e", 
+                               "#701c7f"),
+                    limits = c("5- Expertise in concept and terminology", 
+                               "4", 
+                               "3", 
+                               "2", 
+                               "1- New to concept and terminology")) + 
+  labs(title = "Miami and Macon believe they are most experienced with testing 
+ideas with community members, with Akron newest to this skill.",
+       subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.margin = margin(0, 0, 0, 0),
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
+```
 
 **Q13. Creating wireframes or prototypes of digital products**
 
 **Q14. Synthesizing community research or feedback into insights or recommendations**
 
-## Goal 2: Participant Confidence and Competence
+**Product Stewardship**
 
-None
+Please rate your familiarity with the following skills.
+
+Q16. Evaluating ideas/solutions based on community need, feasibility, or viability
+
+Q17. Co-designing solutions alongside community members
+
+Q18. Translating an idea/solution into a list of digital product requirements for tech teams
+
+Q19. Working with data (analyzing, cleaning, evaluating, etc.)
+
+Q20. Publishing, sharing, or integrating data into strategy, projects, or tools
+
+Q21. Managing a community-facing digital product
+
+Q22. Drafting a plan to ensure long-term product success (including identifying budget and resources, updating product based on feedback, etc)
+
+**Partnerships**
+
+Please rate your familiarity with the following skills.
+
+Q24. Collaborating with community organizations on projects or programs
+
+Q25. Collaborating with other city/county departments on projects or programs
+
+Q26. Collaborating with an external tech or IT vendor on projects or programs
 
 ## Goal 3: Participant Recognition and Application of Methods
 
