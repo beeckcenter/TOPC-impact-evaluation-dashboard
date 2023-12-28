@@ -68,6 +68,7 @@ print(weights)
 ```{r}
 #| label: survey-design-definition
 #| message: false
+
 # Map between city names 
 city_map <- list(
   "Miami-Dade County, FL" = "Miami",
@@ -112,8 +113,6 @@ $\text{Weight for Detroit} = \frac{\frac{9}{40}}{\frac{2}{14}} = \frac{0.225}{0.
 $\text{Weight for Macon} = \frac{\frac{10}{40}}{\frac{4}{14}} = \frac{0.25}{0.2857} \approx 0.875$
 
 $\text{Weight for Miami} = \frac{\frac{13}{40}}{\frac{3}{14}} = \frac{0.325}{0.2143} \approx 1.517$
-
-## Descriptive Data
 
 ## Participant Background
 

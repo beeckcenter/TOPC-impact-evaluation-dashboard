@@ -90,52 +90,61 @@ design <- svydesign(ids = ~1,
                     data = cohort3BackgroundGov)
 ```
 
-## Limitations
-
-The pre-test and post-test survey questions are conceptually aligned but not directly comparable in terms of measurement scales and language of questions. The pre-test uses a 4-point Likert scale focused on agreement, while the post-test uses a 5-point scale assessing expertise levels. This difference in scales means a direct comparison or change analysis (like a t-test) is not straightforward.
-
-However, both sets of questions target similar skills and experiences. To assess changes, I looked at shifts in distribution of responses, using non-parametric methods or descriptive statistics to compare "before" and "after" without inferring statistical significance based on the Likert scale points. Qualitative analysis of open-ended responses also provided some insights into changes in participants' experiences and perceptions.
-
-## 
-Descriptive Data
-
 ```{r}
 #| label: all-questions
 #| message: false
 
 library(dplyr)
-library(purrr)
 
-# Assuming your dataframe is 'cohort3BackgroundGov' and all your question columns start with 'q'
-question_cols <- names(cohort3BackgroundGov)[grepl("^q", names(cohort3BackgroundGov))]
 
-# Function to calculate descriptive statistics
-calculate_stats <- function(column) {
-  data <- cohort3BackgroundGov[[column]]
-  list(
-    Mean = mean(data, na.rm = TRUE),
-    Median = median(data, na.rm = TRUE),
-    Mode = as.numeric(names(sort(table(data), decreasing = TRUE)[1])),
-    Q1 = quantile(data, 0.25, na.rm = TRUE),
-    Q3 = quantile(data, 0.75, na.rm = TRUE),
-    SD = sd(data, na.rm = TRUE)
-  )
-}
-
-# Apply the function to each question column
-stats <- map(question_cols, calculate_stats)
-
-# Convert the results to a dataframe for easy viewing
-stats_df <- bind_rows(stats, .id = "Question")
+# # Assuming your dataframe is 'cohort3BackgroundGov' and all your question columns start with 'q'
+# question_cols <- names(cohort3BackgroundGov)[grepl("^q", names(cohort3BackgroundGov))]
+# 
+# # Function to calculate descriptive statistics
+# calculate_stats <- function(column) {
+#   data <- cohort3BackgroundGov[[column]]
+#   list(
+#     Mean = mean(data, na.rm = TRUE),
+#     Median = median(data, na.rm = TRUE),
+#     Mode = as.numeric(names(sort(table(data), decreasing = TRUE)[1])),
+#     Q1 = quantile(data, 0.25, na.rm = TRUE),
+#     Q3 = quantile(data, 0.75, na.rm = TRUE),
+#     SD = sd(data, na.rm = TRUE)
+#   )
+# }
+# 
+# # Apply the function to each question column
+# stats <- map(question_cols, calculate_stats)
+# 
+# # Convert the results to a dataframe for easy viewing
+# stats_df <- bind_rows(stats, .id = "Question")
 
 ```
 
 ## Participant Background
 
+Q4. Which gender do you most closely identify with (or self-describe in 'other')?
+
 ## Goal 1: Participant Awareness and Knowledge
+
+**Community Research**
+
+**Q3.**
 
 ## Goal 2: Participant Confidence and Competence
 
+None
+
 ## Goal 3: Participant Recognition and Application of Methods
 
+None
+
 ## Goal 4: Participant Satisfaction and Intention to Action
+
+None
+
+## Limitations
+
+The pre-test and post-test survey questions are conceptually aligned but not directly comparable in terms of measurement scales and language of questions. The pre-test uses a 4-point Likert scale focused on agreement, while the post-test uses a 5-point scale assessing expertise levels. This difference in scales means a direct comparison or change analysis (like a t-test) is not straightforward.
+
+However, both sets of questions target similar skills and experiences. To assess changes, I looked at shifts in distribution of responses, using non-parametric methods or descriptive statistics to compare "before" and "after" without inferring statistical significance based on the Likert scale points. Qualitative analysis of open-ended responses also provided some insights into changes in participants' experiences and perceptions.

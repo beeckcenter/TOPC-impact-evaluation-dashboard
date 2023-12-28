@@ -85,6 +85,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#calculate-design-weights" id="toc-calculate-design-weights" class="nav-link" data-scroll-target="#calculate-design-weights">Calculate design weights</a></li>
   <li><a href="#define-the-survey-design" id="toc-define-the-survey-design" class="nav-link" data-scroll-target="#define-the-survey-design">Define the survey design</a></li>
   <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#participant-background" id="toc-participant-background" class="nav-link" data-scroll-target="#participant-background">Participant Background</a></li>
+  <li><a href="#goal-1-participant-awareness-and-knowledge" id="toc-goal-1-participant-awareness-and-knowledge" class="nav-link" data-scroll-target="#goal-1-participant-awareness-and-knowledge">Goal 1: Participant Awareness and Knowledge</a></li>
+  <li><a href="#goal-2-participant-confidence-and-competence" id="toc-goal-2-participant-confidence-and-competence" class="nav-link" data-scroll-target="#goal-2-participant-confidence-and-competence">Goal 2: Participant Confidence and Competence</a></li>
+  <li><a href="#goal-3-participant-recognition-and-application-of-methods" id="toc-goal-3-participant-recognition-and-application-of-methods" class="nav-link" data-scroll-target="#goal-3-participant-recognition-and-application-of-methods">Goal 3: Participant Recognition and Application of Methods</a></li>
+  <li><a href="#goal-4-participant-satisfaction-and-intention-to-action" id="toc-goal-4-participant-satisfaction-and-intention-to-action" class="nav-link" data-scroll-target="#goal-4-participant-satisfaction-and-intention-to-action">Goal 4: Participant Satisfaction and Intention to Action</a></li>
   </ul>
 </nav>
 </div>
@@ -206,6 +212,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
 <p>The pre-test and post-test survey questions are conceptually aligned but not directly comparable in terms of measurement scales and language of questions. The pre-test uses a 4-point Likert scale focused on agreement, while the post-test uses a 5-point scale assessing expertise levels. This difference in scales means a direct comparison or change analysis (like a t-test) is not straightforward.</p>
 <p>However, both sets of questions target similar skills and experiences. To assess changes, I looked at shifts in distribution of responses, using non-parametric methods or descriptive statistics to compare “before” and “after” without inferring statistical significance based on the Likert scale points. Qualitative analysis of open-ended responses also provided some insights into changes in participants’ experiences and perceptions.</p>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<p>Descriptive Data</p>
+<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/all-questions_408f3f19d9302da62eb9d7c7a19496ed">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # Assuming your dataframe is 'cohort3BackgroundGov' and all your question columns start with 'q'</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># question_cols &lt;- names(cohort3BackgroundGov)[grepl("^q", names(cohort3BackgroundGov))]</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># # Function to calculate descriptive statistics</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate_stats &lt;- function(column) {</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   data &lt;- cohort3BackgroundGov[[column]]</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   list(</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#     Mean = mean(data, na.rm = TRUE),</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#     Median = median(data, na.rm = TRUE),</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#     Mode = as.numeric(names(sort(table(data), decreasing = TRUE)[1])),</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#     Q1 = quantile(data, 0.25, na.rm = TRUE),</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     Q3 = quantile(data, 0.75, na.rm = TRUE),</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     SD = sd(data, na.rm = TRUE)</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># # Apply the function to each question column</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># stats &lt;- map(question_cols, calculate_stats)</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co"># # Convert the results to a dataframe for easy viewing</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># stats_df &lt;- bind_rows(stats, .id = "Question")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="participant-background" class="level2">
+<h2 class="anchored" data-anchor-id="participant-background">Participant Background</h2>
+</section>
+<section id="goal-1-participant-awareness-and-knowledge" class="level2">
+<h2 class="anchored" data-anchor-id="goal-1-participant-awareness-and-knowledge">Goal 1: Participant Awareness and Knowledge</h2>
+</section>
+<section id="goal-2-participant-confidence-and-competence" class="level2">
+<h2 class="anchored" data-anchor-id="goal-2-participant-confidence-and-competence">Goal 2: Participant Confidence and Competence</h2>
+</section>
+<section id="goal-3-participant-recognition-and-application-of-methods" class="level2">
+<h2 class="anchored" data-anchor-id="goal-3-participant-recognition-and-application-of-methods">Goal 3: Participant Recognition and Application of Methods</h2>
+</section>
+<section id="goal-4-participant-satisfaction-and-intention-to-action" class="level2">
+<h2 class="anchored" data-anchor-id="goal-4-participant-satisfaction-and-intention-to-action">Goal 4: Participant Satisfaction and Intention to Action</h2>
 </section>
 
 </main>
