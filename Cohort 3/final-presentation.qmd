@@ -5,20 +5,47 @@ format: revealjs
 editor: visual
 ---
 
-## Overview
+## **The Opportunity Project for Cities:** Impact Evaluation Report
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+![](images/topc-logo-01.png){fig-align="left" width="370"}
+
+## **Overview**
+
+**What is this?**
+
+This report presents insights into the learning outcomes, behavioral changes of Cohort 3 participants in The Opportunity Project for Cities (TOPC) in 2023, and the program's overall success in relation to the goals of the TOPC Program.
+
+This report evaluates the program's effectiveness in improving participant awareness and knowledge, competencies and confidence (self-efficacy), recognition and application of methods, and overall satisfaction and intention to action collected through surveys and interviews. 
+
+------------------------------------------------------------------------
+
+**How do I use this?**
+
+It's really easy! Start with the [Executive Summary] for an overview of key findings, then [Insights], followed by [Recommendations].
+
+1.  Make a copy of this file. 
+
+2.  Export graphs and data sources, including code.
+
+3.  Customize this report to your liking. You might want to remove this page :) 
+
+4.  Have tissues close by. This report could bring tears of joy.
+
+------------------------------------------------------------------------
+
+**What if I have questions?**
+
+Email Elham Ali, Researcher at the Beeck Center for Social Impact and Innovation, at [[elham.ali\@georgetown.edu]{.underline}](http://elham.ali@georgetown.edu/). 
+
+## Acknowledgement
+
+We would like to thank our funder, the Knight Foundation, partners including the Beeck Center for Social Impact and Innovation, Center for Public Impact, Google.org, and our program participants including city governments and their community partners. This report wouldn't have been possible without your perspectives.
+
+![](images/topc-partners.png){fig-align="left"}
 
 ## Executive Summary
 
-When you click the **Render** button a document will be generated that includes:
-
--   Content authored with markdown
--   Output from executable code
-
 ## Recommendations
-
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
 1 + 1
@@ -40,14 +67,22 @@ When you click the
 
 ## Limitations 
 
-There were a few key challenges
+-   **The survey design had issues.** We relied on descriptive data and interviews to find trends and themes. Qualitative analysis of open-ended responses also provided some insights into changes in participants' experiences and perceptions.
 
-The pre-test and post-test survey questions are conceptually aligned but not directly comparable in terms of measurement scales and language of questions.
-The pre-test uses a 4-point Likert scale focused on agreement, while the post-test uses a 5-point scale assessing expertise levels. This difference in scales means a direct comparison or change analysis (like a t-test) is not straightforward.
-However, both sets of questions target similar skills and experiences.
-To assess changes, I looked at shifts in distribution of responses, using non-parametric methods or descriptive statistics to compare before and after without inferring statistical significance based on the Likert scale points.
-Qualitative analysis of open-ended responses also provided some insights into changes in participants' experiences and perceptions.
+-   **The survey was not distributed to all program participants**. This could have biased sample size and results. We corrected this challenge by calculating and defining survey design weights.
+
+-   **In the post-test data, there was a PSU of one**, which means we cannot calculate the variance. There were other methods to correct this such as using bootstrapping or jacknife, but these methods are time consuming and can't justify the need for it.
+
+------------------------------------------------------------------------
+
+-   **The pre-test and post-test survey questions are conceptually aligned but not directly comparable** in terms of measurement scales and language of questions. The pre-test uses a 4-point Likert scale focused on agreement, while the post-test uses a 5-point scale assessing expertise levels. This difference in scales means a direct comparison or change analysis (like a t-test) is not straightforward.
+
+-   However, **both sets of questions target similar skills and experiences.** To assess changes, we looked at shifts in distribution of responses, using non-parametric methods or descriptive statistics to compare before and after without inferring statistical significance based on the Likert scale points.
 
 ## Appendix 
 
-## References
+-   Github repository
+
+-   Survey responses
+
+-   Interview recordings and analysis
