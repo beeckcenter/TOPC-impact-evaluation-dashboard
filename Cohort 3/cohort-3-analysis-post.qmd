@@ -39,7 +39,7 @@ library(knitr)
 library(survey)
 ```
 
-## Calculate design weights
+## Survey design weights
 
 ```{r}
 #| label: design-weights
@@ -62,8 +62,6 @@ weights <- (population_counts / total_population) / (sample_counts / total_sampl
 # Print the calculated weights
 print(weights)
 ```
-
-## Define the survey design
 
 ```{r}
 #| label: survey-design-definition
@@ -88,6 +86,19 @@ design <- svydesign(ids = ~1,
                     strata = ~city_mapped, 
                     weights = ~weights, 
                     data = cohort3FinalGov)
+```
+
+```{r}
+#| label: likert-scale-weights
+#| message: false
+# Assign weights to responses
+weight_mapping <- c("Strongly agree" = 4, "Agree" = 3, "Disagree" = 2, "Strongly disagree" = 1)
+
+# Map the responses in the survey data to their weights
+cohort3FinalGov$WeightedValue <- weight_mapping[cohort3FinalGov$q4]
+
+# Check if the mapping worked correctly
+print(head(cohort3FinalGov))
 ```
 
 Given this in the data:
@@ -389,28 +400,42 @@ some strongly agreeing, particularly in Miami and Detroit.",
         plot.caption = element_text(hjust = 0)) +
   guides(fill = guide_legend(nrow = 1, byrow = TRUE))
 
-# Descriptive statistics
-# Convert svytable objects to data frames
-q4_frequency_df <- as.data.frame(q4_frequency)
-q4_cross_tab_city_df <- as.data.frame(q4_cross_tab_city)
+# # Descriptive statistics
+# # Convert svytable objects to data frames
+# q4_frequency_df <- as.data.frame(q4_frequency)
+# q4_cross_tab_city_df <- as.data.frame(q4_cross_tab_city)
+# 
+# # Calculate descriptive statistics
+# # For q4_frequency
+# q4_freq_stats_weighted <- q4_frequency_df %>%
+#   summarise(WeightedMean = sum(WeightedFreq) / sum(Freq),
+#             WeightedSD = sd(WeightedValue, weights = Freq))
+# 
+# # For q4_cross_tab_city
+# q4_cross_tab_stats_weighted <- q4_cross_tab_city_df %>%
+#   group_by(city_mapped) %>%
+#   summarise(WeightedMean = sum(WeightedFreq) / sum(Freq),
+#             WeightedSD = sd(WeightedValue, weights = Freq))
+# 
+# # Print results
+# print(q4_freq_stats_weighted)
+# print(q4_cross_tab_stats_weighted)
+```
 
-# Calculate descriptive statistics
-# For q4_frequency
-q4_freq_stats <- q4_frequency_df %>%
-  summarise(Mean = mean(Freq),
-            Median = median(Freq),
-            SD = sd(Freq))
+```{r}
+#| label: q4-likert-scale-weights
+#| message: false
 
-# For q4_cross_tab_city
-q4_cross_tab_stats <- q4_cross_tab_city_df %>%
-  group_by(city_mapped) %>%
-  summarise(Mean = mean(Freq),
-            Median = median(Freq),
-            SD = sd(Freq))
-
-# Print results
-print(q4_freq_stats)
-print(q4_cross_tab_stats)
+# # Assign weights to responses
+# weight_mapping <- c("Strongly agree" = 4, "Agree" = 3, "Disagree" = 2, "Strongly disagree" = 1)
+# 
+# # Apply weights to q4_frequency_df
+# q4_frequency_df$WeightedValue <- weight_mapping[q4_frequency_df$q4]
+# q4_frequency_df$WeightedFreq <- q4_frequency_df$Freq * q4_frequency_df$WeightedValue
+# 
+# # Apply weights to q4_cross_tab_city_df
+# q4_cross_tab_city_df$WeightedValue <- weight_mapping[q4_cross_tab_city_df$q4]
+# q4_cross_tab_city_df$WeightedFreq <- q4_cross_tab_city_df$Freq * q4_cross_tab_city_df$WeightedValue
 ```
 
 **Q5. I learned skills to promote equity and foster inclusive spaces in my work.**

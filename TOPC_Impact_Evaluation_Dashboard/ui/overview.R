@@ -1,5 +1,4 @@
 # overview.R
-tabItem(tabName = "overview",
-        h2("Overview")
-        # rest of UI code
-)
+overviewUI <- tabItem(tabName = "overview",
+                      h2("Overview"),
+                      h3("This is some basic text."))

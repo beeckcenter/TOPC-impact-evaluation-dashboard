@@ -14,7 +14,7 @@ cache: true
 
 Graphs for pre-test survey analysis for city governments.
 
-## Install necessary packages
+## Necessary packages
 
 ```{r}
 #| label: packages-installation
@@ -39,7 +39,7 @@ library(knitr)
 library(survey)
 ```
 
-## Calculate design weights
+## Survey design weights
 
 ```{r}
 #| label: design-weights
@@ -62,8 +62,6 @@ weights <- (population_counts / total_population) / (sample_counts / total_sampl
 # Print the calculated weights
 print(weights)
 ```
-
-## Define the survey design
 
 ```{r}
 #| label: survey-design-definition
@@ -90,46 +88,33 @@ design <- svydesign(ids = ~1,
                     data = cohort3BackgroundGov)
 ```
 
-```{r}
-#| label: all-questions
-#| message: false
-
-library(dplyr)
-
-
-# # Assuming your dataframe is 'cohort3BackgroundGov' and all your question columns start with 'q'
-# question_cols <- names(cohort3BackgroundGov)[grepl("^q", names(cohort3BackgroundGov))]
-# 
-# # Function to calculate descriptive statistics
-# calculate_stats <- function(column) {
-#   data <- cohort3BackgroundGov[[column]]
-#   list(
-#     Mean = mean(data, na.rm = TRUE),
-#     Median = median(data, na.rm = TRUE),
-#     Mode = as.numeric(names(sort(table(data), decreasing = TRUE)[1])),
-#     Q1 = quantile(data, 0.25, na.rm = TRUE),
-#     Q3 = quantile(data, 0.75, na.rm = TRUE),
-#     SD = sd(data, na.rm = TRUE)
-#   )
-# }
-# 
-# # Apply the function to each question column
-# stats <- map(question_cols, calculate_stats)
-# 
-# # Convert the results to a dataframe for easy viewing
-# stats_df <- bind_rows(stats, .id = "Question")
-
-```
-
 ## Participant Background
 
-Q4. Which gender do you most closely identify with (or self-describe in 'other')?
+**Q4. Which gender do you most closely identify with (or self-describe in 'other')?**
+
+**Q6. Please describe your racial/ethnic identity. Select all that apply.**
+
+**Q7. Which city/county are you representing? \[Format - City/County, State abbreviation\] (domestic)\]**
+
+**Q8. Which title best describes your role and level of seniority at work?**
+
+**Q9. What is your current department?**
+
+**Q10. How many years have you worked for your city or county?**
 
 ## Goal 1: Participant Awareness and Knowledge
 
 **Community Research**
 
-**Q3.**
+Please rate your familiarity with the following skills.
+
+**Q11. Conducting community research (leading interviews, surveys, observations, etc.)**
+
+**Q12. Testing ideas or prototypes with community members**
+
+**Q13. Creating wireframes or prototypes of digital products**
+
+**Q14. Synthesizing community research or feedback into insights or recommendations**
 
 ## Goal 2: Participant Confidence and Competence
 

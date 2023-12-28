@@ -1,18 +1,18 @@
 ## app.R ##
 library(shinydashboard)
 
-# source("ui/overview.R") 
+source("~/Documents/R Projects/TOPC-impact-evaluation-dashboard/TOPC_Impact_Evaluation_Dashboard/ui/overview.R") 
 # source("ui/executiveSummary.R")
 # source("ui/recommendations.R")
 # source("ui/cohort3Insights.R") 
 # source("ui/methodology.R")
 # source("ui/discussion.R")
-# source("ui/limitations.R") 
+source("~/Documents/R Projects/TOPC-impact-evaluation-dashboard/TOPC_Impact_Evaluation_Dashboard/ui/limitations.R")
 # source("ui/appendix.R")
 # source("ui/references.R")
 
 ui <- dashboardPage(
-  dashboardHeader(title = "TOPC Dashboard"),
+  dashboardHeader(title = "TOPC Impact"),
   dashboardSidebar(
     sidebarMenu(
       menuItem("Overview", tabName = "overview", icon = icon("dashboard")),
@@ -29,9 +29,7 @@ ui <- dashboardPage(
   dashboardBody(
     tabItems(
       # First tab content
-      tabItem(tabName = "overview",
-              h2("Overview")
-      ),
+      overviewUI,
       # Second tab content
       tabItem(tabName = "executiveSummary",
               h2("Executive Summary")
@@ -53,9 +51,7 @@ ui <- dashboardPage(
               h2("Discussion")
       ),
       # Seventh tab content
-      tabItem(tabName = "limitations",
-              h2("Limitations")
-      ),
+      limitationsUI,
       # Eighth tab content
       tabItem(tabName = "appendix",
               h2("Appendix")
