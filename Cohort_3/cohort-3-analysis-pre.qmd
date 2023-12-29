@@ -128,10 +128,25 @@ design <- svydesign(ids = ~1,
 # plots[[1]] # For example, to view the plot for the first question in the list
 ```
 
+#### Per Question
+
+**For Akron, Macon and Miami Strata**: We used the survey package functions like svyquantile and sqrt(svyvar) for calculating the median and standard deviation for strata other than Detroit. So, these statistics do take into account the sampling weights. The survey package is designed to incorporate sampling weights into its calculations, which means that the median and standard deviation for Akron (as well as for Macon and Miami) reflect the weighted characteristics of your sample.
+
+**For the Detroit Stratum**: For the Detroit stratum, we calculated the median and standard deviation directly because of the single PSU issue. This direct calculation does not take into account the sampling weights since it bypasses the survey package. In cases where there's only one PSU, the concept of weighting becomes less relevant, as there's no variance within the stratum to adjust for. The summary statistics for Detroit are based solely on the available data for that stratum.
+
+So, in summary:
+
+-   For Akron, Macon, and Miami, the summary statistics listed are weighted and take into account the sampling design.
+
+-   For Detroit, the statistics are unweighted due to the direct calculation method used.
+
+This approach is consistent with handling complex survey data where some strata have limitations like having only one PSU. This method of handling of the data aligns well with these challenges.
+
 ```{r}
-#| label: q8-central-tendancy
+#| label: central-tendancy-per-question
 #| message: false
 
+# Calculate central tendancy per question per stratum
 # List of questions to analyze
 questions_to_analyze <- c("q8", "q9", "q10", "q11", "q13", "q14", "q15", "q16", "q17", "q18", "q19", "q21", "q22", "q23")
 
@@ -215,7 +230,74 @@ results_table <- kable(results_df, format = "html",
 
 # Print the table
 results_table
+```
 
+#### Per City Government Team
+
+The below table shows summary statistics for respondents from each city and county government team who rated their skills in community research, product stewardship, and partnerships using a likert scale of 5 - Expertise in concept and terminology to 1 - New to concept and terminology.
+
+Detroit and Miami show higher self-assessed skill levels (median of 4), but Miami has more variability in responses, meaning there's more diversity in how respondents rate their skills, ranging from moderate to high levels of familiarity. Akron has the lowest self-assessed skill level (median of 2) with less variability, suggesting a general consensus around a basic level of understanding, while Macon is in the middle (median of 3) with moderate variability. For Macon, there is a wider range of self-assessed skill levels, though still relatively clustered around the median.
+
+-   1 - New to concept and terminology: The respondent has no previous knowledge or experience with the skill in question. They are entirely unfamiliar with the concepts or terminology.
+
+-   2 - The respondent has very basic knowledge or understanding of the skill. They may recognize it but are not comfortable with it.
+
+-   3 - The respondent has a moderate level of familiarity with the skill. They have some experience or understanding but may not feel fully proficient.
+
+-   4 - The respondent is quite familiar and comfortable with the skill, although not at the highest level of proficiency.
+
+-   5 - Expertise in concept and terminology: The respondent has a very high level of familiarity with the skill. They have comprehensive knowledge and experience, and they understand the concepts and terminology thoroughly.
+
+```{r}
+#| label: central-tendancy-per-stratum-across-all-questions
+#| message: false
+
+# Central tendancy per question per stratum
+strata <- c("Akron", "Detroit", "Macon", "Miami")
+
+# Check if 'all_strata_stats' is a list with an entry for each stratum
+# print(strata)
+# print(names(all_strata_stats))
+
+calculate_overall_stats <- function(stratum_stats) {
+    combined_medians <- unlist(lapply(stratum_stats, function(x) x$median), use.names = FALSE)
+    combined_sds <- unlist(lapply(stratum_stats, function(x) x$sd), use.names = FALSE)
+    
+    overall_median <- median(combined_medians, na.rm = TRUE)
+    overall_sd <- sd(combined_sds, na.rm = TRUE)
+    
+    return(list(median = overall_median, sd = overall_sd))
+}
+
+overall_stratum_stats <- list()
+
+for (stratum in strata) {
+    if (stratum %in% names(all_strata_stats)) {
+        overall_stratum_stats[[stratum]] <- calculate_overall_stats(all_strata_stats[[stratum]])
+    } else {
+        overall_stratum_stats[[stratum]] <- list(median = NA, sd = NA)
+    }
+}
+
+# Print overall stats for each stratum
+# for (stratum in strata) {
+#     cat("Overall statistics for stratum:", stratum, "\n")
+#     print(overall_stratum_stats[[stratum]])
+#     cat("\n")
+# }
+
+# Prepare a data frame for the overall statistics table
+overall_stats_df <- data.frame(Stratum = names(overall_stratum_stats),
+                               Median = sapply(overall_stratum_stats, function(x) x$median),
+                               StandardDeviation = sapply(overall_stratum_stats, function(x) x$sd),
+                               stringsAsFactors = FALSE)
+
+# Create a basic table with no HTML styling
+overall_stats_table <- kable(overall_stats_df, format = "simple",
+                             col.names = c("Stratum", "Overall Median", "Overall Standard Deviation"))
+
+# Print the table
+print(overall_stats_table)
 ```
 
 ## Participant Background
