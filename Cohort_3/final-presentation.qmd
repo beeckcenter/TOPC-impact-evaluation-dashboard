@@ -1,11 +1,11 @@
 ---
-title: "final-presentation"
-author: "Elham Ali"
 format: revealjs
 editor: visual
 ---
 
-## **The Opportunity Project for Cities:** Impact Evaluation Report
+## **The Opportunity Project for Cities:** Cohort 3 Impact Evaluation Report
+
+Published on December 20, 2023
 
 ![](images/topc-logo-01.png){fig-align="left" width="370"}
 
@@ -15,7 +15,15 @@ editor: visual
 
 This report presents insights into the learning outcomes, behavioral changes of Cohort 3 participants in The Opportunity Project for Cities (TOPC) in 2023, and the program's overall success in relation to the goals of the TOPC Program.
 
-This report evaluates the program's effectiveness in improving participant awareness and knowledge, competencies and confidence (self-efficacy), recognition and application of methods, and overall satisfaction and intention to action collected through surveys and interviews. 
+This report evaluates the program's effectiveness in improving:
+
+1.  participant awareness and knowledge,
+
+2.  competencies and confidence (self-efficacy),
+
+3.  recognition and application of methods, and
+
+4.  overall satisfaction and intention to action.
 
 ------------------------------------------------------------------------
 
@@ -49,43 +57,40 @@ We would like to thank our funder, the Knight Foundation, partners including the
 
 ## Insights
 
-#### Participant awareness and knowledge 
+#### Participant awareness and knowledge
 
 ------------------------------------------------------------------------
 
-#### Participant competencies and confidence (self-efficacy) 
+#### Participant competencies and confidence (self-efficacy)
 
 ::: columns
 ::: {.column width="50%"}
-Pre-test result on community research
+Post-test
 
 ```{r}
 # | label: community-research-pre-vs-post
 
-![](~/Documents/R Projects/TOPC-impact-evaluation-dashboard/Cohort 3/plots/q8_frequency_plot.png)
+knitr::include_graphics("q8_frequency_plot.png")
+
 ```
 :::
 
 ::: {.column width="50%"}
-Post-test result on community research
-
-```{r}
-
-```
+Pre-test
 :::
 :::
 
 ------------------------------------------------------------------------
 
-#### Participant recognition and application of methods 
+#### Participant recognition and application of methods
 
 ------------------------------------------------------------------------
 
 #### Participant satisfaction and Intention to Action
 
-## Methodology 
+## Methodology
 
-## Limitations 
+## Limitations
 
 -   **The survey design had issues.** We relied on descriptive data and interviews to find trends and themes. Qualitative analysis of open-ended responses also provided some insights into changes in participants' experiences and perceptions.
 
@@ -99,7 +104,7 @@ Post-test result on community research
 
 -   However, **both sets of questions target similar skills and experiences.** To assess changes, we looked at shifts in distribution of responses, using non-parametric methods or descriptive statistics to compare before and after without inferring statistical significance based on the Likert scale points.
 
-## Appendix 
+## Appendix
 
 -   Github repository
 
