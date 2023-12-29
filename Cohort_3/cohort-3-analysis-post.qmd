@@ -137,7 +137,7 @@ $\text{Weight for Miami} = \frac{\frac{13}{40}}{\frac{3}{14}} = \frac{0.325}{0.2
 q3_frequency <- svytable(~q3, design = design)
 
 ggplot(as.data.frame(q3_frequency), aes(x = q3, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "All city governments participated in the survey with the 
 highest number of respondents from Miami-Dade and 
@@ -167,7 +167,7 @@ Macon-Bibb Counties.",
 q25_frequency <- svytable(~q25, design = design)
 
 ggplot(as.data.frame(q25_frequency), aes(x = q25, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "Majority of respondents are senior officials or 
 managers.",
@@ -221,7 +221,7 @@ managers.",
 q27_frequency <- svytable(~q27, design = design)
 
 ggplot(as.data.frame(q27_frequency), aes(x = q27, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "Majority are new to working in their city or county governments.",
        subtitle = paste("Total number of survey respondents (n =", total_sample, ")"),
@@ -274,7 +274,7 @@ especially in Macon and Detroit.",
 q28_frequency <- svytable(~q28, design = design)
 
 ggplot(as.data.frame(q28_frequency), aes(x = q28, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "Majority are new to working in their city or county governments.",
        subtitle = paste("Total number of survey respondents (n =", total_sample, ")"),
@@ -302,7 +302,7 @@ ggplot(as.data.frame(q28_frequency), aes(x = q28, y = Freq)) +
 q29_frequency <- svytable(~q29, design = design)
 
 ggplot(as.data.frame(q29_frequency), aes(x = q29, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "More than half of respondents identify as male.",
        subtitle = paste("Total number of survey respondents (n =", total_sample, ")"),
@@ -363,7 +363,7 @@ ggplot(as.data.frame(q29_frequency), aes(x = q29, y = Freq)) +
 q4_frequency <- svytable(~q4, design = design)
 
 ggplot(as.data.frame(q4_frequency), aes(x = q4, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "All respondents agree they learned new skills in community 
 research practices.",
@@ -448,7 +448,7 @@ some strongly agreeing, particularly in Miami and Detroit.",
 q5_frequency <- svytable(~q5, design = design)
 
 ggplot(as.data.frame(q5_frequency), aes(x = q5, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "All respondents agree they learned new skills to promote
 equity and inclusion in their work.",
@@ -496,7 +496,7 @@ some strongly agreeing, particularly in Miami and Macon.",
 q6_frequency <- svytable(~q6, design = design)
 
 ggplot(as.data.frame(q6_frequency), aes(x = q6, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "All respondents agree they learned new skills to apply user 
 testing feedback in their solution development.",
@@ -544,7 +544,7 @@ solutions, with Miami strongly agreeing the most.",
 q15_frequency <- svytable(~q15, design = design)
 
 ggplot(as.data.frame(q15_frequency), aes(x = q15, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "All respondents agree they learned new skills to collaborate 
 with a community organization from problem discovery to 
@@ -593,7 +593,7 @@ organization, with Akron strongly agreeing the most.",
 q16_frequency <- svytable(~q16, design = design)
 
 ggplot(as.data.frame(q16_frequency), aes(x = q16, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "All respondents agree they learned news skills to build 
 consensus and align on long-term plans with internal stakeholders.",
@@ -641,7 +641,7 @@ consensus, with Detroit and Akron agreeing the most.",
 q9_frequency <- svytable(~q9, design = design)
 
 ggplot(as.data.frame(q9_frequency), aes(x = q9, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "All respondents agree they learned different strategies to 
 brainstorm ideas based on community research insights.",
@@ -689,7 +689,7 @@ ideas using community research, but some disagree in Miami and Macon.",
 q10_frequency <- svytable(~q10, design = design)
 
 ggplot(as.data.frame(q10_frequency), aes(x = q10, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "All respondents agree they learned new skills to prioritize 
 requirements to develop a digital product.",
@@ -738,7 +738,7 @@ the most.",
 q11_frequency <- svytable(~q11, design = design)
 
 ggplot(as.data.frame(q11_frequency), aes(x = q11, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "All respondents agree they learned new skills to identify and 
 evaluate data.",
@@ -786,7 +786,7 @@ data, with Miami and Detroit strongly agreeing the most.",
 q12_frequency <- svytable(~q12, design = design)
 
 ggplot(as.data.frame(q12_frequency), aes(x = q12, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "Most respondents agree they learned new skills to manage
 developing a digital product.",
@@ -834,7 +834,7 @@ a digital product, but some disagree in Macon and Detroit.",
 q13_frequency <- svytable(~q13, design = design)
 
 ggplot(as.data.frame(q13_frequency), aes(x = q13, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "Most respondents agree they learned new skills to create a
 product sustainability plan.",
@@ -884,7 +884,7 @@ sustainability plan, but some disagree in Detroit.",
 q14_frequency <- svytable(~q14, design = design)
 
 ggplot(as.data.frame(q14_frequency), aes(x = q14, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "Most respondents agree they have the skills and support
 to innovate in their everyday work.",
@@ -932,7 +932,7 @@ in their everyday work, but some disagree in Detroit.",
 q17_frequency <- svytable(~q17, design = design)
 
 ggplot(as.data.frame(q17_frequency), aes(x = q17, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "Most respondents agree they feel confident working with technical
 partners to design a tool.",
@@ -982,7 +982,7 @@ partners, but some disagree in Detroit.",
 q20_frequency <- svytable(~q20, design = design)
 
 ggplot(as.data.frame(q20_frequency), aes(x = q20, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "Most respondents agree they are applying the skills they have 
 learned from the program in their everyday work.",
@@ -1030,7 +1030,7 @@ program, with Miami strongly agreeing the most.",
 q7_frequency <- svytable(~q7, design = design)
 
 ggplot(as.data.frame(q7_frequency), aes(x = q7, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "Most respondents agree their teams have defined a role for the 
 community to design services moving forward.",
@@ -1081,7 +1081,7 @@ agreeing the most.",
 q21_frequency <- svytable(~q21, design = design)
 
 ggplot(as.data.frame(q21_frequency), aes(x = q21, y = Freq)) +
-  geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "All respondents agree they would recommend this program 
 to their peers.",
