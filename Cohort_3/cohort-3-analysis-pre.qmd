@@ -30,10 +30,12 @@ options(repos = c(CRAN = "https://cloud.r-project.org"))
 # install.packages("knitr")
 # install.packages("KableExtra")
 # install.packages("survey")
+# install.packages("plotly")
 
 # Load the packages
 library(magrittr)
 library(dplyr)
+library(plotly)
 library(ggplot2)
 library(knitr)
 library(survey)
@@ -757,8 +759,8 @@ q17_pre_cross_tab_city_plot <- ggplot(q17_cross_tab_city_df, aes(x = city_mapped
   coord_flip() +
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) + 
-  labs(title = "All city teams show moderate to expertise in skills working with data 
-with slight variation in Akron of few respondents new to the skill.",
+  labs(title = "Half of respondents quite familiar with publishing data into strategy 
+and projects and the rest are either new or moderately familiarity.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -778,6 +780,43 @@ ggsave("q17_pre_cross_tab_city_plot.png", q17_pre_cross_tab_city_plot)
 ```
 
 **Q21. Managing a community-facing digital product**
+
+```{r}
+# Single-variable frequency plot
+q17_frequency <- svytable(~q17, design = design)
+
+# Create a data frame with all possible levels and a frequency of 0
+all_levels_df <- data.frame(q17 = factor(1:5, levels = 1:5), Freq = integer(5))
+
+# Merge this with your actual data to ensure all levels are included
+q17_frequency_df <- merge(all_levels_df, as.data.frame(q17_frequency), by = "q17", all.x = TRUE)
+q17_frequency_df$Freq <- rowSums(q17_frequency_df[, c("Freq.x", "Freq.y")], na.rm = TRUE)
+
+# Create the ggplot object
+q17_pre_frequency_plot <- ggplot(q17_frequency_df, aes(x = q17, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
+  coord_flip() +
+  labs(title = "Majority of respondents believe they moderately or are experienced
+in their skills working with data from analysis to evaluation.",
+       subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0))
+
+# Convert the ggplot object to a plotly object
+q17_pre_frequency_plot_interactive <- ggplotly(q17_pre_frequency_plot)
+
+# Print the interactive plot to the viewer
+print(q17_pre_frequency_plot_interactive)
+
+# If you want to save the interactive plot as an HTML file
+htmlwidgets::saveWidget(q17_pre_frequency_plot_interactive, "q17_pre_frequency_plot_interactive.html")
+```
 
 **Q22. Drafting a plan to ensure long-term product success (including identifying budget and resources, updating product based on feedback, etc)**
 

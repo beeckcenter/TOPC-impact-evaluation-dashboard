@@ -125,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Graphs for pre-test survey analysis for city governments.</p>
 <section id="necessary-packages" class="level2">
 <h2 class="anchored" data-anchor-id="necessary-packages">Necessary packages</h2>
-<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/packages-installation_e03376357908cbb1ae25f2c0b9858bf0">
+<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/packages-installation_66161119eb25d3644250322a24b40132">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set a CRAN mirror</span></span>
@@ -138,13 +138,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("knitr")</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("KableExtra")</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("survey")</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the packages</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("plotly")</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the packages</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -882,7 +884,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p><strong>Q20. Publishing, sharing, or integrating data into strategy, projects, or tools</strong></p>
-<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/q17-plots_725fcbf182a4b04faea129564ad7e594">
+<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/q17-plots_c377885fff81e82a5b7b5da4d173bfbc">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Single-variable frequency plot</span></span>
@@ -931,8 +933,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
 <span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"5"</span> <span class="ot">=</span> <span class="st">"#041e42"</span>, <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"#6eaddc"</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"#da291c"</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"#1B786E"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"#701C7F"</span>),</span>
 <span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>                    <span class="at">drop=</span><span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"All city teams show moderate to expertise in skills working with data </span></span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="st">with slight variation in Akron of few respondents new to the skill."</span>,</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Half of respondents quite familiar with publishing data into strategy </span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="st">and projects and the rest are either new or moderately familiarity."</span>,</span>
 <span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Rating Scale: 5 - Expert to 1 - New (n ="</span>, total_sample, <span class="st">")"</span>),</span>
 <span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">""</span>,</span>
 <span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of Responses"</span>,</span>
@@ -957,6 +959,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p><strong>Q21. Managing a community-facing digital product</strong></p>
+<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/unnamed-chunk-16_ebb941c8e3826fb908bbf82ec4132527">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Single-variable frequency plot</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>q17_frequency <span class="ot">&lt;-</span> <span class="fu">svytable</span>(<span class="sc">~</span>q17, <span class="at">design =</span> design)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame with all possible levels and a frequency of 0</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>all_levels_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">q17 =</span> <span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="at">Freq =</span> <span class="fu">integer</span>(<span class="dv">5</span>))</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge this with your actual data to ensure all levels are included</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>q17_frequency_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(all_levels_df, <span class="fu">as.data.frame</span>(q17_frequency), <span class="at">by =</span> <span class="st">"q17"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>q17_frequency_df<span class="sc">$</span>Freq <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(q17_frequency_df[, <span class="fu">c</span>(<span class="st">"Freq.x"</span>, <span class="st">"Freq.y"</span>)], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the ggplot object</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>q17_pre_frequency_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(q17_frequency_df, <span class="fu">aes</span>(<span class="at">x =</span> q17, <span class="at">y =</span> Freq)) <span class="sc">+</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"#041e42"</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Majority of respondents believe they moderately or are experienced</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="st">in their skills working with data from analysis to evaluation."</span>,</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Rating Scale: 5 - Expert to 1 - New (n ="</span>, total_sample, <span class="st">")"</span>),</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of Responses"</span>,</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Source: TOPC Cohort 3 Survey (2023)"</span>) <span class="sc">+</span></span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>))</span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the ggplot object to a plotly object</span></span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a>q17_pre_frequency_plot_interactive <span class="ot">&lt;-</span> <span class="fu">ggplotly</span>(q17_pre_frequency_plot)</span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the interactive plot to the viewer</span></span>
+<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(q17_pre_frequency_plot_interactive)</span>
+<span id="cb35-32"><a href="#cb35-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-33"><a href="#cb35-33" aria-hidden="true" tabindex="-1"></a><span class="co"># If you want to save the interactive plot as an HTML file</span></span>
+<span id="cb35-34"><a href="#cb35-34" aria-hidden="true" tabindex="-1"></a>htmlwidgets<span class="sc">::</span><span class="fu">saveWidget</span>(q17_pre_frequency_plot_interactive, <span class="st">"q17_pre_frequency_plot_interactive.html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <p><strong>Q22. Drafting a plan to ensure long-term product success (including identifying budget and resources, updating product based on feedback, etc)</strong></p>
 </section>
 <section id="partnerships" class="level4">
