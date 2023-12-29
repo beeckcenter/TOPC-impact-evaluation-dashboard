@@ -208,230 +208,871 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="descriptive-data-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="descriptive-data-analysis">Descriptive Data Analysis</h2>
-<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/likert-scale-analysis-based-on-sampling-weights_52acc7ee899fa9e20644ae58075122c8">
+<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/likert-scale-analysis-based-on-sampling-weights_036da7069b637dcc99cfc9f52ecedb8c">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate and plot weighted frequencies for a single question</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>analyze_likert_question <span class="ot">&lt;-</span> <span class="cf">function</span>(question, design) {</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create a formula dynamically</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  formula <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(<span class="st">"~"</span>, question))</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the weighted table of frequencies</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  likert_distribution <span class="ot">&lt;-</span> <span class="fu">svytable</span>(formula, design)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Convert to a dataframe for plotting</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  likert_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(likert_distribution)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Rename the variables for plotting</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(likert_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Response"</span>, <span class="st">"Frequency"</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot using ggplot2</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(likert_df, <span class="fu">aes</span>(<span class="at">x =</span> Response, <span class="at">y =</span> Frequency)) <span class="sc">+</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Distribution of Responses for"</span>, question))</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the function to each question</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>questions_to_analyze <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"q8"</span>, <span class="st">"q9"</span>, <span class="st">"q10"</span>, <span class="st">"q11"</span>, <span class="st">"q13"</span>, <span class="st">"q14"</span>, <span class="st">"q15"</span>, <span class="st">"q16"</span>, <span class="st">"q17"</span>, <span class="st">"q18"</span>, <span class="st">"q19"</span>, <span class="st">"q21"</span>, <span class="st">"q22"</span>, <span class="st">"q23"</span>)</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">lapply</span>(questions_to_analyze, <span class="cf">function</span>(q) <span class="fu">analyze_likert_question</span>(q, design))</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># You can now view the plots for each question</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>plots[[<span class="dv">1</span>]] <span class="co"># For example, to view the plot for the first question in the list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Function to calculate and plot weighted frequencies for a single question</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># analyze_likert_question &lt;- function(question, design) {</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Create a formula dynamically</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   formula &lt;- as.formula(paste("~", question))</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Calculate the weighted table of frequencies</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   likert_distribution &lt;- svytable(formula, design)</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Convert to a dataframe for plotting</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   likert_df &lt;- as.data.frame(likert_distribution)</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Rename the variables for plotting</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   names(likert_df) &lt;- c("Response", "Frequency")</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Plot using ggplot2</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   ggplot(likert_df, aes(x = Response, y = Frequency)) +</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     geom_bar(stat = "identity") +</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     labs(title = paste("Distribution of Responses for", question))</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># # Apply the function to each question</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># questions_to_analyze &lt;- c("q8", "q9", "q10", "q11", "q13", "q14", "q15", "q16", "q17", "q18", "q19", "q21", "q22", "q23")</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co"># plots &lt;- lapply(questions_to_analyze, function(q) analyze_likert_question(q, design))</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># # You can now view the plots for each question</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co"># plots[[1]] # For example, to view the plot for the first question in the list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-<p><img src="cohort-3-analysis-pre_files/figure-html/likert-scale-analysis-based-on-sampling-weights-1.png" class="img-fluid" width="672"></p>
 </div>
-</div>
-<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/q8-central-tendancy_f4bf85eba53d9c68fbb36599761739e9">
+<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/q8-central-tendancy_9e9c9c48028d97b0897953e73a243f61">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List of questions to analyze</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>questions_to_analyze <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"q8"</span>, <span class="st">"q9"</span>, <span class="st">"q10"</span>, <span class="st">"q11"</span>, <span class="st">"q13"</span>, <span class="st">"q14"</span>, <span class="st">"q15"</span>, <span class="st">"q16"</span>, <span class="st">"q17"</span>, <span class="st">"q18"</span>, <span class="st">"q19"</span>, <span class="st">"q21"</span>, <span class="st">"q22"</span>, <span class="st">"q23"</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for Detroit stratum</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>detroit_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(cohort3BackgroundGov, city_mapped <span class="sc">==</span> <span class="st">"Detroit"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the strata</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>strata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Akron"</span>, <span class="st">"Detroit"</span>, <span class="st">"Macon"</span>, <span class="st">"Miami"</span>)</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a list to store stats for each question</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>detroit_stats <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a list to store stats for each question and stratum</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>all_strata_stats <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each question and calculate stats</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (question <span class="cf">in</span> questions_to_analyze) {</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    question_data <span class="ot">&lt;-</span> detroit_data[[question]]</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check if the data is not all NA</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">all</span>(<span class="fu">is.na</span>(question_data))) {</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        median_val <span class="ot">&lt;-</span> <span class="fu">median</span>(question_data, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        mean_val <span class="ot">&lt;-</span> <span class="fu">mean</span>(question_data, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        sd_val <span class="ot">&lt;-</span> <span class="fu">sd</span>(question_data, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># If data is all NA, set values to NA</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        median_val <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        mean_val <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        sd_val <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add the stats to the list</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    detroit_stats[[question]] <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">median =</span> median_val, <span class="at">mean =</span> mean_val, <span class="at">sd =</span> sd_val)</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Print stats for each question</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (question <span class="cf">in</span> questions_to_analyze) {</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"Statistics for"</span>, question, <span class="st">":</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(detroit_stats[[question]])</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each stratum and question to calculate stats</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (stratum <span class="cf">in</span> strata) {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    stratum_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(cohort3BackgroundGov, city_mapped <span class="sc">==</span> stratum)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    stratum_stats <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (question <span class="cf">in</span> questions_to_analyze) {</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (stratum <span class="sc">!=</span> <span class="st">"Detroit"</span>) {</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Use survey package functions for strata other than Detroit</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            median_val <span class="ot">&lt;-</span> <span class="fu">svyquantile</span>(<span class="sc">~</span><span class="fu">get</span>(question), <span class="fu">subset</span>(design, city_mapped <span class="sc">==</span> stratum), <span class="fl">0.5</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>            sd_val <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">svyvar</span>(<span class="sc">~</span><span class="fu">get</span>(question), <span class="fu">subset</span>(design, city_mapped <span class="sc">==</span> stratum), <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Direct calculation for Detroit</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>            question_data <span class="ot">&lt;-</span> stratum_data[[question]]</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (<span class="sc">!</span><span class="fu">all</span>(<span class="fu">is.na</span>(question_data))) {</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>                median_val <span class="ot">&lt;-</span> <span class="fu">median</span>(question_data, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>                sd_val <span class="ot">&lt;-</span> <span class="fu">sd</span>(question_data, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>            } <span class="cf">else</span> {</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>                median_val <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>                sd_val <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        stratum_stats[[question]] <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">median =</span> median_val, <span class="at">sd =</span> sd_val)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    all_strata_stats[[stratum]] <span class="ot">&lt;-</span> stratum_stats</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Print stats for each question and stratum</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (stratum <span class="cf">in</span> strata) {</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"Statistics for stratum:"</span>, stratum, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (question <span class="cf">in</span> questions_to_analyze) {</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">"Question"</span>, question, <span class="st">":</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>        <span class="fu">print</span>(all_strata_stats[[stratum]][[question]])</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Statistics for q8 :
+<pre><code>Statistics for stratum: Akron 
+Question q8 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        2      1     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance    SE
+get(question)   1.3801 0.479
+
+
+Question q9 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        2      1     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance    SE
+get(question)   1.3801 0.479
+
+
+Question q10 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        1      1     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance    SE
+get(question)  0.37796 0.119
+
+
+Question q11 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        3      1     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance    SE
+get(question)   1.3801 0.479
+
+
+Question q13 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5 se
+0.5        3      3       3  0
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)  0.75593 0.4762
+
+
+Question q14 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        2      2     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)  0.95119 0.4912
+
+
+Question q15 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        1      1     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   0.7868 0.3777
+
+
+Question q16 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        3      1     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   1.5275 0.8444
+
+
+Question q17 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        2      1     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)  0.89974 0.2321
+
+
+Question q18 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        1      1     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)  0.75593 0.4762
+
+
+Question q19 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        3      1     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   1.2724 0.4837
+
+
+Question q21 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        3      2     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   1.4639 0.8627
+
+
+Question q22 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        4      4     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   1.1339 0.4511
+
+
+Question q23 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        2      2     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)    1.069 0.7198
+
+
+Statistics for stratum: Detroit 
+Question q8 :
 $median
 [1] 3
 
-$mean
-[1] 3
-
 $sd
 [1] NA
 
 
-Statistics for q9 :
+Question q9 :
 $median
 [1] 3
 
-$mean
-[1] 3
-
 $sd
 [1] NA
 
 
-Statistics for q10 :
+Question q10 :
 $median
 [1] 2
 
-$mean
-[1] 2
-
 $sd
 [1] NA
 
 
-Statistics for q11 :
+Question q11 :
 $median
-[1] 5
-
-$mean
 [1] 5
 
 $sd
 [1] NA
 
 
-Statistics for q13 :
+Question q13 :
 $median
-[1] 5
-
-$mean
 [1] 5
 
 $sd
 [1] NA
 
 
-Statistics for q14 :
+Question q14 :
 $median
-[1] 5
-
-$mean
 [1] 5
 
 $sd
 [1] NA
 
 
-Statistics for q15 :
+Question q15 :
 $median
-[1] 2
-
-$mean
 [1] 2
 
 $sd
 [1] NA
 
 
-Statistics for q16 :
+Question q16 :
 $median
-[1] 5
-
-$mean
 [1] 5
 
 $sd
 [1] NA
 
 
-Statistics for q17 :
+Question q17 :
 $median
-[1] 4
-
-$mean
 [1] 4
 
 $sd
 [1] NA
 
 
-Statistics for q18 :
+Question q18 :
 $median
-[1] 2
-
-$mean
 [1] 2
 
 $sd
 [1] NA
 
 
-Statistics for q19 :
+Question q19 :
 $median
-[1] 4
-
-$mean
 [1] 4
 
 $sd
 [1] NA
 
 
-Statistics for q21 :
+Question q21 :
 $median
-[1] 5
-
-$mean
 [1] 5
 
 $sd
 [1] NA
 
 
-Statistics for q22 :
+Question q22 :
 $median
-[1] 4
-
-$mean
 [1] 4
 
 $sd
 [1] NA
 
 
-Statistics for q23 :
+Question q23 :
 $median
 [1] 2
 
-$mean
-[1] 2
+$sd
+[1] NA
+
+
+Statistics for stratum: Macon 
+Question q8 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        3    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
 
 $sd
-[1] NA</code></pre>
+              variance     SE
+get(question)  0.95743 0.4194
+
+
+Question q9 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        3    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance SE
+get(question)  0.57735  0
+
+
+Question q10 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        2    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)    1.291 0.7698
+
+
+Question q11 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        4    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   0.8165 0.3849
+
+
+Question q13 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        3    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)  0.95743 0.4194
+
+
+Question q14 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        3    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)    1.291 0.7698
+
+
+Question q15 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        3    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance SE
+get(question)  0.57735  0
+
+
+Question q16 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        4    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)      0.5 0.1667
+
+
+Question q17 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        3    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance SE
+get(question)  0.57735  0
+
+
+Question q18 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        2    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)      1.5 0.6872
+
+
+Question q19 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        4    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   0.8165 0.3849
+
+
+Question q21 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        3    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)  0.95743 0.4194
+
+
+Question q22 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        4    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   0.8165 0.3849
+
+
+Question q23 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5 se
+0.5        4      4       4  0
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance SE
+get(question)        0  0
+
+
+Statistics for stratum: Miami 
+Question q8 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        4    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance  SE
+get(question)        1 0.5
+
+
+Question q9 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5 se
+0.5        4      4       4  0
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)  0.57735 0.1667
+
+
+Question q10 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        4    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   2.0817 2.1667
+
+
+Question q11 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        3    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance SE
+get(question)        2  2
+
+
+Question q13 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        4    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   2.0817 2.1667
+
+
+Question q14 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5 se
+0.5        4      4       4  0
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance  SE
+get(question)   1.7321 1.5
+
+
+Question q15 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5 se
+0.5        4      4       4  0
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)  0.57735 0.1667
+
+
+Question q16 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5 se
+0.5        4      4       4  0
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)  0.57735 0.1667
+
+
+Question q17 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5 se
+0.5        4      4       4  0
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)  0.57735 0.1667
+
+
+Question q18 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5 se
+0.5        5      5       5  0
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)  0.57735 0.1667
+
+
+Question q19 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        2    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   2.0817 2.1667
+
+
+Question q21 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        2    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   2.0817 2.1667
+
+
+Question q22 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        4    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   1.5275 1.1667
+
+
+Question q23 :
+$median
+$`get(question)`
+    quantile ci.2.5 ci.97.5  se
+0.5        3    NaN     NaN NaN
+
+attr(,"hasci")
+[1] TRUE
+attr(,"class")
+[1] "newsvyquantile"
+
+$sd
+              variance     SE
+get(question)   1.1547 0.6667</code></pre>
 </div>
 </div>
 </section>
