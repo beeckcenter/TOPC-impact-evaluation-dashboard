@@ -68,6 +68,10 @@ print(weights)
 ```{r}
 #| label: survey-design-definition
 #| message: false
+
+# Set the option for handling a single PSU in a stratum as certainty
+options(survey.lonely.psu="certainty")
+
 # Map between city names 
 city_map <- list(
   "Miami-Dade County, FL" = "Miami",
@@ -87,6 +91,129 @@ design <- svydesign(ids = ~1,
                     strata = ~city_mapped, 
                     weights = ~weights, 
                     data = cohort3BackgroundGov)
+```
+
+## Descriptive Data Analysis
+
+```{r}
+#| label: likert-scale-analysis-based-on-sampling-weights
+#| message: false
+
+# Function to calculate and plot weighted frequencies for a single question
+analyze_likert_question <- function(question, design) {
+  # Create a formula dynamically
+  formula <- as.formula(paste("~", question))
+  
+  # Calculate the weighted table of frequencies
+  likert_distribution <- svytable(formula, design)
+  
+  # Convert to a dataframe for plotting
+  likert_df <- as.data.frame(likert_distribution)
+  
+  # Rename the variables for plotting
+  names(likert_df) <- c("Response", "Frequency")
+  
+  # Plot using ggplot2
+  ggplot(likert_df, aes(x = Response, y = Frequency)) +
+    geom_bar(stat = "identity") +
+    labs(title = paste("Distribution of Responses for", question))
+}
+
+# Apply the function to each question
+questions_to_analyze <- c("q8", "q9", "q10", "q11", "q13", "q14", "q15", "q16", "q17", "q18", "q19", "q21", "q22", "q23")
+plots <- lapply(questions_to_analyze, function(q) analyze_likert_question(q, design))
+
+# You can now view the plots for each question
+plots[[1]] # For example, to view the plot for the first question in the list
+```
+
+```{r}
+#| label: q8-central-tendancy
+#| message: false
+
+library(dplyr)
+library(plotly)
+library(ggplot2)
+library(survey)
+
+# Detroit stratum 
+# List of questions to analyze
+questions_to_analyze <- c("q8", "q9", "q10", "q11", "q13", "q14", "q15", "q16", "q17", "q18", "q19", "q21", "q22", "q23")
+
+# Filter the data for Detroit stratum
+detroit_data <- subset(cohort3BackgroundGov, city_mapped == "Detroit")
+
+# Initialize a list to store stats for each question
+detroit_stats <- list()
+
+# Loop through each question and calculate stats
+for (question in questions_to_analyze) {
+    question_data <- detroit_data[[question]]
+    # Check if the data is not all NA
+    if (!all(is.na(question_data))) {
+        median_val <- median(question_data, na.rm = TRUE)
+        mean_val <- mean(question_data, na.rm = TRUE)
+        sd_val <- sd(question_data, na.rm = TRUE)
+    } else {
+        # If data is all NA, set values to NA
+        median_val <- NA
+        mean_val <- NA
+        sd_val <- NA
+    }
+    # Add the stats to the list
+    detroit_stats[[question]] <- list(median = median_val, mean = mean_val, sd = sd_val)
+}
+
+# Print stats for each question
+for (question in questions_to_analyze) {
+    cat("Statistics for", question, ":\n")
+    print(detroit_stats[[question]])
+    cat("\n")
+}
+
+# All other strata
+# Function to calculate median and standard deviation for each stratum and question
+analyze_likert_stats_stratum <- function(question, data, stratum, design) {
+  # Filter data for the specific stratum
+  stratum_data <- subset(data, city_mapped == stratum)
+
+  # If stratum is not Detroit, use survey package functions
+  if (stratum != "Detroit") {
+    median <- svyquantile(~get(question), subset(design, city_mapped == stratum), 0.5, na.rm = TRUE)
+    sd <- svysd(~get(question), subset(design, city_mapped == stratum), na.rm = TRUE)
+  } else {
+    # Direct calculation for Detroit
+    if (!all(is.na(stratum_data[[question]]))) {
+      median <- median(stratum_data[[question]], na.rm = TRUE)
+      sd <- sd(stratum_data[[question]], na.rm = TRUE)
+    } else {
+      median <- NA
+      sd <- NA
+    }
+  }
+
+  # Return the results
+  list(median = median, sd = sd)
+}
+
+# Define the strata
+strata <- c("Akron", "Detroit", "Macon", "Miami")
+
+# Initialize a list to store stats for each question and stratum
+all_strata_stats <- list()
+
+# Loop through each stratum and question to calculate stats
+for (stratum in strata) {
+  stratum_stats <- lapply(questions_to_analyze, function(q) analyze_likert_stats_stratum(q, cohort3BackgroundGov, stratum, design))
+  all_strata_stats[[stratum]] <- stratum_stats
+}
+
+# Example: Print stats for question "q8" for all strata
+for (stratum in strata) {
+    cat("Statistics for q8 in", stratum, ":\n")
+    print(all_strata_stats[[stratum]][["q8"]])
+    cat("\n")
+}
 ```
 
 ## Participant Background
