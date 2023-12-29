@@ -166,15 +166,56 @@ for (stratum in strata) {
     all_strata_stats[[stratum]] <- stratum_stats
 }
 
-# Print stats for each question and stratum
+# # Print stats for each question and stratum
+# for (stratum in strata) {
+#     cat("Statistics for stratum:", stratum, "\n")
+#     for (question in questions_to_analyze) {
+#         cat("Question", question, ":\n")
+#         print(all_strata_stats[[stratum]][[question]])
+#         cat("\n")
+#     }
+# }
+
+# Initialize an empty data frame for the results
+results_df <- data.frame(Stratum = character(),
+                         Question = character(),
+                         Median = numeric(),
+                         StandardDeviation = numeric(),
+                         stringsAsFactors = FALSE)
+
+# Loop through each stratum and question to collect stats
+counter <- 1
 for (stratum in strata) {
-    cat("Statistics for stratum:", stratum, "\n")
     for (question in questions_to_analyze) {
-        cat("Question", question, ":\n")
-        print(all_strata_stats[[stratum]][[question]])
-        cat("\n")
+        # Extract median and standard deviation values
+        median_val <- all_strata_stats[[stratum]][[question]]$median
+        sd_val <- all_strata_stats[[stratum]][[question]]$sd
+
+        # Format the values correctly
+        median_val <- ifelse(is.list(median_val), median_val[[1]], median_val)
+        sd_val <- ifelse(is.list(sd_val), sd_val[[1]], sd_val)
+
+        # Ensure that NA values are handled properly
+        median_val <- ifelse(is.null(median_val) || length(median_val) == 0, NA, median_val)
+        sd_val <- ifelse(is.null(sd_val) || length(sd_val) == 0, NA, sd_val)
+
+        # Append the row to the data frame
+        results_df[counter, ] <- c(Stratum = stratum,
+                                   Question = question,
+                                   Median = median_val,
+                                   StandardDeviation = sd_val)
+        counter <- counter + 1
     }
 }
+
+# Create the table using kable and kableExtra
+results_table <- kable(results_df, format = "html", 
+                       col.names = c("Stratum", "Question", "Median", "Standard Deviation")) %>%
+                 kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+# Print the table
+results_table
+
 ```
 
 ## Participant Background
