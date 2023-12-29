@@ -98,6 +98,34 @@ design <- svydesign(ids = ~1,
 
 **Q7. Which city/county are you representing? \[Format - City/County, State abbreviation\] (domestic)\]**
 
+```{r}
+#| label: q4-descriptive-stat-plot
+#| message: false
+
+# Single-variable frequency plot
+q4_frequency <- svytable(~q4, design = design)
+
+# Assign the ggplot object to a variable
+q4_pre_frequency_plot <- ggplot(as.data.frame(q4_frequency), aes(x = q4, y = Freq)) +
+  geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
+  coord_flip() +
+  labs(title = "More than half respondents agree they learned new skills in community 
+research practices.",
+       subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses") +
+  theme_minimal() + 
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0))
+# Print the plot to display it in the document
+print(q4_pre_frequency_plot)
+
+# Use ggsave to save the plot
+ggsave("q4_pre_frequency_plot.png", q4_pre_frequency_plot)
+```
+
 **Q8. Which title best describes your role and level of seniority at work?**
 
 **Q9. What is your current department?**
@@ -106,7 +134,7 @@ design <- svydesign(ids = ~1,
 
 ## Goal 1: Participant Awareness and Knowledge
 
-None
+None.
 
 ## Goal 2: Participant Confidence and Competence
 
