@@ -72,9 +72,8 @@ print(weights)
 city_map <- list(
   "Miami-Dade County, FL" = "Miami",
   "Akron, OH" = "Akron",
-  "City of Akron" = "Akron",
   "Detroit, MI" = "Detroit",
-  "Macon-Bibb, GA" = "Macon"
+  "Macon-Bibb County, GA" = "Macon"
 )
 
 # Update dataframe to use the mapped names
@@ -98,6 +97,20 @@ design <- svydesign(ids = ~1,
 
 **Q7. Which city/county are you representing? \[Format - City/County, State abbreviation\] (domestic)\]**
 
+The survey had a total of respondents from:
+
+-   Akron = 7
+
+-   Detroit = 1
+
+-   Macon = 4
+
+-   Miami = 3
+
+However, we applied weights in this survey analysis to adjust the results to compensate for different probabilities of selection, non-response, and to adjust the sample to known population totals. The weights we provided are the factor by which each city's responses are to be multiplied to get a representation that is more reflective of the population and the quota sampling design of this study.
+
+For example, to interpret the graph with weight counts for Akron, OH, the city has an original count of 7 respondents and a weight of 0.4285714. The weighted count would be **`7 * 0.4285714`**. This would suggest that the weighted frequency count for Akron should be about 3 after rounding, which matches the bar graph.
+
 ```{r}
 #| label: q4-descriptive-stat-plot
 #| message: false
@@ -105,24 +118,23 @@ design <- svydesign(ids = ~1,
 # Single-variable frequency plot
 q4_frequency <- svytable(~q4, design = design)
 
-# Assign the ggplot object to a variable
 q4_pre_frequency_plot <- ggplot(as.data.frame(q4_frequency), aes(x = q4, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
-  labs(title = "More than half respondents agree they learned new skills in community 
-research practices.",
-       subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
+  labs(title = "Weighted frequency count of respondents from four city 
+and county government teams.",
+       subtitle = paste("Sample size =", total_sample),
        x = "",
-       y = "Number of Responses") +
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
   theme_minimal() + 
   theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"),
         plot.caption = element_text(hjust = 0))
-# Print the plot to display it in the document
+
 print(q4_pre_frequency_plot)
 
-# Use ggsave to save the plot
 ggsave("q4_pre_frequency_plot.png", q4_pre_frequency_plot)
 ```
 
@@ -310,8 +322,8 @@ q9_pre_cross_tab_city_plot <- ggplot(q9_cross_tab_city_df, aes(x = city_mapped, 
   coord_flip() +
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) +
-  labs(title = "Miami and Macon rated themselves as most experienced with testing 
-ideas with community members, while Akron newest to this skill.",
+  labs(title = "Respondents from each city report having a moderate level of familiarity 
+testing ideas with community members. Respondents from Akron are newest to the skill.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -332,7 +344,7 @@ print(q9_pre_cross_tab_city_plot)
 ggsave("q9_pre_cross_tab_city_plot.png", q9_pre_cross_tab_city_plot)
 ```
 
-**q9. Creating wireframes or prototypes of digital products**
+**Q13. Creating wireframes or prototypes of digital products**
 
 ```{r}
 #| label: q10-plots
@@ -653,8 +665,9 @@ q15_pre_cross_tab_city_plot <- ggplot(q15_cross_tab_city_df, aes(x = city_mapped
   coord_flip() +
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) + 
-  labs(title = "Respondents from each city team reported being at minimum quite familiar 
-with drafting plans for long-term product success.",
+  labs(title = "Respondents from each city team report having some knowledge or
+moderate familiarity translating ideas into digital product requirements 
+for tech teams.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
