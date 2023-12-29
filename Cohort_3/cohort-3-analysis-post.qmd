@@ -356,7 +356,7 @@ ggplot(as.data.frame(q29_frequency), aes(x = q29, y = Freq)) +
 **Q4. I learned new skills in community research practices, such as leading interviews and conducting surveys, during this program.**
 
 ```{r}
-#| label: q4
+#| label: q4-descriptive stat plot
 #| message: false
 
 # Single-variable frequency plot

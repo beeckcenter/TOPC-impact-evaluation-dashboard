@@ -115,20 +115,14 @@ Please rate your familiarity with the following skills.
 **Q11. Conducting community research (leading interviews, surveys, observations, etc.)**
 
 ```{r}
-#| label: q8-summary-statistics
-#| message: false
-
-summary(cohort3BackgroundGov$q8)
-```
-
-```{r}
 #| label: q8-descriptive-stat-plot
 #| message: false
 
 # Single-variable frequency plot
 q8_frequency <- svytable(~q8, design = design)
 
-ggplot(as.data.frame(q8_frequency), aes(x = q8, y = Freq)) +
+# Assign the ggplot object to a variable
+q8_frequency_plot <- ggplot(as.data.frame(q8_frequency), aes(x = q8, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.5) +
   coord_flip() +
   labs(title = "More than half respondents agree they learned new skills in community 
@@ -140,6 +134,12 @@ research practices.",
   theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"))
+
+# Print the plot to display it in the document
+print(q8_frequency_plot)
+
+# Use ggsave to save the plot
+ggsave("q8_frequency_plot.png", q8_frequency_plot)
 ```
 
 ```{r}
