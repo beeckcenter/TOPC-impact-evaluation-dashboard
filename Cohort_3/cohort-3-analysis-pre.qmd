@@ -102,25 +102,16 @@ design <- svydesign(ids = ~1,
 
 # Function to calculate and plot weighted frequencies for a single question
 analyze_likert_question <- function(question, design) {
-  # Create a formula dynamically
   formula <- as.formula(paste("~", question))
-
-  # Calculate the weighted table of frequencies
   likert_distribution <- svytable(formula, design)
-
-  # Convert to a dataframe for plotting
   likert_df <- as.data.frame(likert_distribution)
-
-  # Rename the variables for plotting
   names(likert_df) <- c("Response", "Frequency")
 
-  # Plot using ggplot2
   ggplot(likert_df, aes(x = Response, y = Frequency)) +
     geom_bar(stat = "identity") +
     labs(title = paste("Distribution of Responses for", question))
 }
 
-# Apply the function to each question
 questions_to_analyze <- c("q8", "q9", "q10", "q11", "q13", "q14", "q15", "q16", "q17", "q18", "q19", "q21", "q22", "q23")
 plots <- lapply(questions_to_analyze, function(q) analyze_likert_question(q, design))
 
@@ -355,10 +346,6 @@ ggsave("q4_pre_frequency_plot.png", q4_pre_frequency_plot)
 
 **Q10. How many years have you worked for your city or county?**
 
-## Goal 1: Participant Awareness and Knowledge
-
-None.
-
 ## Goal 2: Participant Confidence and Competence
 
 #### **Community Research**
@@ -374,7 +361,6 @@ Please rate your familiarity with the following skills.
 # Single-variable frequency plot
 q8_frequency <- svytable(~q8, design = design)
 
-# Assign the ggplot object to a variable
 q8_pre_frequency_plot <- ggplot(as.data.frame(q8_frequency), aes(x = q8, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
@@ -382,61 +368,16 @@ q8_pre_frequency_plot <- ggplot(as.data.frame(q8_frequency), aes(x = q8, y = Fre
 research practices.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
        x = "",
-       y = "Number of Responses") +
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
   theme_minimal() + 
   theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         plot.title = element_text(face = "bold"),
         plot.caption = element_text(hjust = 0))
-# Print the plot to display it in the document
+
 print(q8_pre_frequency_plot)
-
-# Use ggsave to save the plot
 ggsave("q8_pre_frequency_plot.png", q8_pre_frequency_plot)
-```
-
-```{r}
-#| label: q8-summary-statistics-2
-#| message: false
-# 
-# cohort3BackgroundGov$q8 <- factor(cohort3BackgroundGov$q8, 
-#                              levels = c("1 - New to concept and terminology", 
-#                                         "2", 
-#                                         "3", 
-#                                         "4", 
-#                                         "5 - Expertise in concept and terminology"))
-# 
-# cohort3BackgroundGov$q8_numeric <- as.numeric(as.character(cohort3BackgroundGov$q8))
-# 
-# str(cohort3BackgroundGov)
-# 
-# options(survey.lonely.psu = "certainty")
-# 
-# design <- svydesign(ids = ~1, 
-#                     strata = ~city_mapped, 
-#                     weights = ~weights, 
-#                     data = cohort3BackgroundGov, 
-#                     variables = ~q8_numeric)
-# 
-# # Calculate the mean
-# q8_mean <- svymean(~q8_numeric, design, na.rm = TRUE)
-# 
-# # Calculate the standard deviation
-# q8_sd <- sqrt(svyvar(~q8_numeric, design, na.rm = TRUE))
-# 
-# # Calculate the median
-# q8_median_result <- svyquantile(~q8_numeric, design, 0.5, na.rm = TRUE)
-# q8_median_value <- as.numeric(q8_median_result$quantiles['50%'])
-# 
-# # Create the summary data frame
-# q8_summary_df <- data.frame(
-#   Mean = coef(q8_mean),
-#   SD = coef(q8_sd),
-#   Median = q8_median_value
-# )
-# 
-# # Print the summary statistics
-# print(q8_summary_df)
 ```
 
 ```{r}

@@ -13,17 +13,15 @@ Published on December 20, 2023
 
 **What is this?**
 
-This report presents insights into the learning outcomes, behavioral changes of Cohort 3 participants in The Opportunity Project for Cities (TOPC) in 2023, and the program's overall success in relation to the goals of the TOPC Program.
+This report presents insights into the learning outcomes of Cohort 3 participants in The Opportunity Project for Cities (TOPC) in 2023. It also evaluates the program's effectiveness in improving participants':
 
-This report evaluates the program's effectiveness in improving:
+1.  Awareness and knowledge.
 
-1.  participant awareness and knowledge,
+2.  Competencies and confidence (self-efficacy).
 
-2.  competencies and confidence (self-efficacy),
+3.  Recognition and application of methods.
 
-3.  recognition and application of methods, and
-
-4.  overall satisfaction and intention to action.
+4.  Intention to action and overall satisfaction.
 
 ------------------------------------------------------------------------
 
@@ -47,7 +45,7 @@ Email Elham Ali, Researcher at the Beeck Center for Social Impact and Innovation
 
 ## Acknowledgement
 
-We would like to thank our funder, the Knight Foundation, partners including the Beeck Center for Social Impact and Innovation, Center for Public Impact, Google.org, and our program participants including city governments and their community partners. This report wouldn't have been possible without your perspectives.
+We would like to thank the Knight Foundation, the Beeck Center for Social Impact and Innovation, Center for Public Impact, Google.org, and our program participants including city governments and their community partners. This report wouldn't have been possible without your perspectives.
 
 ![](images/topc-partners.png){fig-align="left"}
 
@@ -111,3 +109,5 @@ Pre-test
 -   Survey responses
 
 -   Interview recordings and analysis
+
+## References
