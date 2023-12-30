@@ -28,14 +28,17 @@ options(repos = c(CRAN = "https://cloud.r-project.org"))
 # install.packages("dplyr")
 # install.packages("ggplot2")
 # install.packages("knitr")
-# install.packages("KableExtra")
+# install.packages("kableExtra")
 # install.packages("survey")
+# install.packages("plotly")
 
 # Load the packages
 library(magrittr)
 library(dplyr)
+library(plotly)
 library(ggplot2)
 library(knitr)
+library(kableExtra)
 library(survey)
 ```
 
@@ -66,6 +69,9 @@ print(weights)
 ```{r}
 #| label: survey-design-definition
 #| message: false
+
+# Set the option for handling a single PSU in a stratum as certainty
+options(survey.lonely.psu="certainty")
 
 # Map between city names 
 city_map <- list(
