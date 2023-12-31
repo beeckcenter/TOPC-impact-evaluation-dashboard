@@ -49,7 +49,7 @@ library(survey)
 #| message: false
 
 # Read the data from the CSV file
-cohort3FinalGov <- read.csv("~/Documents/GitHub/TOPC-impact-evaluation-dashboard/Cohort 3/cohort3FinalGov2.csv")
+cohort3FinalGov <- read.csv("~/Documents/R_Projects/TOPC-impact-evaluation-dashboard/Cohort_3/cohort3FinalGov2.csv") 
 
 # Define population and sample sizes
 population_counts <- c(Akron = 8, Detroit = 9, Macon = 10, Miami = 13)
@@ -69,9 +69,6 @@ print(weights)
 ```{r}
 #| label: survey-design-definition
 #| message: false
-
-# Set the option for handling a single PSU in a stratum as certainty
-options(survey.lonely.psu="certainty")
 
 # Map between city names 
 city_map <- list(
@@ -1106,7 +1103,12 @@ agreeing the most.",
 # Single-variable frequency plot
 q21_frequency <- svytable(~q21, design = design)
 
-ggplot(as.data.frame(q21_frequency), aes(x = q21, y = Freq)) +
+all_levels_df <- data.frame(q21 = factor(1:4, levels = 1:4), Freq = character(4))
+
+q21_frequency_df <- merge(all_levels_df, as.data.frame(q21_frequency), by = "q21", all.x = TRUE)
+q21_frequency_df$Freq <- rowSums(q21_frequency_df[, c("Freq.x", "Freq.y")], na.rm = TRUE)
+
+q21_post_frequency_plot <- ggplot(q21_frequency_df, aes(x = q21, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   labs(title = "All respondents agree they would recommend this program 
@@ -1117,7 +1119,12 @@ to their peers.",
   theme_minimal() + 
   theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
-        plot.title = element_text(face = "bold"))
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0))
+
+print(q21_post_frequency_plot)
+
+ggsave("q21_post_frequency_plot.png", q21_post_frequency_plot)
 
 # Cross-tabulation with cities
 q21_cross_tab_city <- svytable(~q21 + city_mapped, design = design)

@@ -158,11 +158,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="survey-design-weights" class="level2">
 <h2 class="anchored" data-anchor-id="survey-design-weights">Survey design weights</h2>
-<div class="cell" data-hash="cohort-3-analysis-post_cache/html/design-weights_e2fd1aad91bd946392d67aa9364d790a">
+<div class="cell" data-hash="cohort-3-analysis-post_cache/html/design-weights_5aefd99b66886b985d70fd4aeafe5db6">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the data from the CSV file</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cohort3FinalGov <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"~/Documents/GitHub/TOPC-impact-evaluation-dashboard/Cohort 3/cohort3FinalGov2.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cohort3FinalGov <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"~/Documents/R_Projects/TOPC-impact-evaluation-dashboard/Cohort_3/cohort3FinalGov2.csv"</span>) </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define population and sample sizes</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>population_counts <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Akron =</span> <span class="dv">8</span>, <span class="at">Detroit =</span> <span class="dv">9</span>, <span class="at">Macon =</span> <span class="dv">10</span>, <span class="at">Miami =</span> <span class="dv">13</span>)</span>
@@ -183,31 +183,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 0.650000 1.462500 0.812500 1.408333 </code></pre>
 </div>
 </div>
-<div class="cell" data-hash="cohort-3-analysis-post_cache/html/survey-design-definition_d57153969cdccaa896e13fe17b59adc2">
+<div class="cell" data-hash="cohort-3-analysis-post_cache/html/survey-design-definition_b9cc73de5b5e72cfa7027032f420b088">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the option for handling a single PSU in a stratum as certainty</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">survey.lonely.psu=</span><span class="st">"certainty"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Map between city names </span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>city_map <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Miami-Dade County, FL"</span> <span class="ot">=</span> <span class="st">"Miami"</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Akron, OH"</span> <span class="ot">=</span> <span class="st">"Akron"</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Detroit, MI"</span> <span class="ot">=</span> <span class="st">"Detroit"</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Macon-Bibb County, GA"</span> <span class="ot">=</span> <span class="st">"Macon"</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map between city names </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>city_map <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Miami-Dade County, FL"</span> <span class="ot">=</span> <span class="st">"Miami"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Akron, OH"</span> <span class="ot">=</span> <span class="st">"Akron"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Detroit, MI"</span> <span class="ot">=</span> <span class="st">"Detroit"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Macon-Bibb County, GA"</span> <span class="ot">=</span> <span class="st">"Macon"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Update dataframe to use the mapped names</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>cohort3FinalGov<span class="sc">$</span>city_mapped <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(cohort3FinalGov<span class="sc">$</span>q3, <span class="cf">function</span>(x) city_map[[x]]))</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Update dataframe to use the mapped names</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>cohort3FinalGov<span class="sc">$</span>city_mapped <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(cohort3FinalGov<span class="sc">$</span>q3, <span class="cf">function</span>(x) city_map[[x]]))</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign weights using the mapped city names</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>cohort3FinalGov<span class="sc">$</span>weights <span class="ot">&lt;-</span> weights[cohort3FinalGov<span class="sc">$</span>city_mapped]</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign weights using the mapped city names</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>cohort3FinalGov<span class="sc">$</span>weights <span class="ot">&lt;-</span> weights[cohort3FinalGov<span class="sc">$</span>city_mapped]</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the survey design</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span><span class="dv">1</span>, </span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                    <span class="at">strata =</span> <span class="sc">~</span>city_mapped, </span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                    <span class="at">weights =</span> <span class="sc">~</span>weights, </span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> cohort3FinalGov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the survey design</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span><span class="dv">1</span>, </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">strata =</span> <span class="sc">~</span>city_mapped, </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">weights =</span> <span class="sc">~</span>weights, </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> cohort3FinalGov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Given this in the data:</p>
@@ -1369,54 +1366,64 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="goal-4-participant-satisfaction-and-intention-to-action" class="level2">
 <h2 class="anchored" data-anchor-id="goal-4-participant-satisfaction-and-intention-to-action">Goal 4: Participant Satisfaction and Intention to Action</h2>
 <p><strong>Q21. I would recommend this program to my peers.</strong></p>
-<div class="cell" data-hash="cohort-3-analysis-post_cache/html/q21_464218a0b940b66039477d73d4a7fe5a">
+<div class="cell" data-hash="cohort-3-analysis-post_cache/html/q21_c265d5118e4469c692dff067ae2a4d3e">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Single-variable frequency plot</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>q21_frequency <span class="ot">&lt;-</span> <span class="fu">svytable</span>(<span class="sc">~</span>q21, <span class="at">design =</span> design)</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(q21_frequency), <span class="fu">aes</span>(<span class="at">x =</span> q21, <span class="at">y =</span> Freq)) <span class="sc">+</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"#041e42"</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"All respondents agree they would recommend this program </span></span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="st">to their peers."</span>,</span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n ="</span>, total_sample, <span class="st">")"</span>),</span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">""</span>,</span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of Responses"</span>) <span class="sc">+</span></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>all_levels_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">q21 =</span> <span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">Freq =</span> <span class="fu">integer</span>(<span class="dv">4</span>))</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>q21_frequency_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(all_levels_df, <span class="fu">as.data.frame</span>(q21_frequency), <span class="at">by =</span> <span class="st">"q21"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>q21_frequency_df<span class="sc">$</span>Freq <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(q21_frequency_df[, <span class="fu">c</span>(<span class="st">"Freq.x"</span>, <span class="st">"Freq.y"</span>)], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>q21_post_frequency_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(q21_frequency_df, <span class="fu">aes</span>(<span class="at">x =</span> q21, <span class="at">y =</span> Freq)) <span class="sc">+</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"#041e42"</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"All respondents agree they would recommend this program </span></span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="st">to their peers."</span>,</span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n ="</span>, total_sample, <span class="st">")"</span>),</span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of Responses"</span>) <span class="sc">+</span></span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>))</span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(q21_post_frequency_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="cohort-3-analysis-post_files/figure-html/q21-1.png" class="img-fluid" width="672"></p>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cross-tabulation with cities</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>q21_cross_tab_city <span class="ot">&lt;-</span> <span class="fu">svytable</span>(<span class="sc">~</span>q21 <span class="sc">+</span> city_mapped, <span class="at">design =</span> design)</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(q21_cross_tab_city), <span class="fu">aes</span>(<span class="at">x =</span> city_mapped, <span class="at">y =</span> Freq, <span class="at">fill =</span> q21)) <span class="sc">+</span></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"stack"</span>) <span class="sc">+</span></span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#041e42"</span>,<span class="st">"#6eaddc"</span>,<span class="st">"#da291c"</span>,<span class="st">"#1B786E"</span>),</span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">limits =</span> <span class="fu">c</span>(<span class="st">"Strongly agree"</span>, <span class="st">"Agree"</span>, <span class="st">"Disagree"</span>, <span class="st">"Strongly disagree"</span>)) <span class="sc">+</span> </span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Majority agree they would recommend this program to their peers, </span></span>
-<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="st">with Miami and Akron strongly agreeing the most."</span>,</span>
-<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n ="</span>, total_sample, <span class="st">")"</span>),</span>
-<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">""</span>,</span>
-<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of Responses"</span>,</span>
-<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Source: TOPC Cohort 3 Survey (2023)"</span>) <span class="sc">+</span></span>
-<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.box =</span> <span class="st">"vertical"</span>,</span>
-<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.box.margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"q21_post_frequency_plot.png"</span>, q21_post_frequency_plot)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Cross-tabulation with cities</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>q21_cross_tab_city <span class="ot">&lt;-</span> <span class="fu">svytable</span>(<span class="sc">~</span>q21 <span class="sc">+</span> city_mapped, <span class="at">design =</span> design)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(q21_cross_tab_city), <span class="fu">aes</span>(<span class="at">x =</span> city_mapped, <span class="at">y =</span> Freq, <span class="at">fill =</span> q21)) <span class="sc">+</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"stack"</span>) <span class="sc">+</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#041e42"</span>,<span class="st">"#6eaddc"</span>,<span class="st">"#da291c"</span>,<span class="st">"#1B786E"</span>),</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">limits =</span> <span class="fu">c</span>(<span class="st">"Strongly agree"</span>, <span class="st">"Agree"</span>, <span class="st">"Disagree"</span>, <span class="st">"Strongly disagree"</span>)) <span class="sc">+</span> </span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Majority agree they would recommend this program to their peers, </span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a><span class="st">with Miami and Akron strongly agreeing the most."</span>,</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n ="</span>, total_sample, <span class="st">")"</span>),</span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of Responses"</span>,</span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Source: TOPC Cohort 3 Survey (2023)"</span>) <span class="sc">+</span></span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.box =</span> <span class="st">"vertical"</span>,</span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.box.margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="cohort-3-analysis-post_files/figure-html/q21-2.png" class="img-fluid" width="672"></p>

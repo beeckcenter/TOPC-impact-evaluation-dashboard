@@ -1341,7 +1341,7 @@ of familiarity collaborating with external tech or IT vendors on projects.",
 
 print(q23_pre_frequency_plot)
 
-ggsave("q23_pre_frequency_plot.png", q23_pre_frequency_plot, width = 11, height = 8.5, dpi = 300)
+ggsave("q23_pre_frequency_plot.png", q23_pre_frequency_plot)
 
 # Cross-tabulation with cities
 q23_cross_tab_city <- svytable(~q23 + city_mapped, design = design)
