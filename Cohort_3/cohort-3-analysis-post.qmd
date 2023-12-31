@@ -44,27 +44,34 @@ library(survey)
 
 ## Survey design weights
 
-```{r}
-#| label: design-weights
-#| message: false
+-   <div>
 
-# Read the data from the CSV file
-cohort3FinalGov <- read.csv("~/Documents/R_Projects/TOPC-impact-evaluation-dashboard/Cohort_3/cohort3FinalGov2.csv") 
+    ```{r}
+    #| label: design-weights
+    #| message: false
 
-# Define population and sample sizes
-population_counts <- c(Akron = 8, Detroit = 9, Macon = 10, Miami = 13)
-sample_counts <- c(Akron = 4, Detroit = 2, Macon = 4, Miami = 3)
+    # Set the option for handling a single PSU in a stratum as certainty
+    options(survey.lonely.psu="certainty")
 
-# Total population and sample size
-total_population <- sum(population_counts)
-total_sample <- sum(sample_counts)
+    # Read the data from the CSV file
+    cohort3FinalGov <- read.csv("~/Documents/R_Projects/TOPC-impact-evaluation-dashboard/Cohort_3/cohort3FinalGov3.csv") 
 
-# Calculate the weights
-weights <- (population_counts / total_population) / (sample_counts / total_sample)
+    # Define population and sample sizes
+    population_counts <- c(Akron = 8, Detroit = 9, Macon = 10, Miami = 13)
+    sample_counts <- c(Akron = 4, Detroit = 2, Macon = 4, Miami = 3)
 
-# Print the calculated weights
-print(weights)
-```
+    # Total population and sample size
+    total_population <- sum(population_counts)
+    total_sample <- sum(sample_counts)
+
+    # Calculate the weights
+    weights <- (population_counts / total_population) / (sample_counts / total_sample)
+
+    # Print the calculated weights
+    print(weights)
+    ```
+
+    </div>
 
 ```{r}
 #| label: survey-design-definition
@@ -115,26 +122,6 @@ $\text{Weight for Macon} = \frac{\frac{10}{40}}{\frac{4}{14}} = \frac{0.25}{0.28
 
 $\text{Weight for Miami} = \frac{\frac{13}{40}}{\frac{3}{14}} = \frac{0.325}{0.2143} \approx 1.517$
 
-## Likert scale conversion
-
-```{r}
-#| label: agreement-likert-scale-conversion
-#| message: false
-
-likert_columns <- c("q4", "q5", "q6", "q7", "q9", "q10", "q11", "q12", "q13", "q14", "q15", "q16", "q17", "q20", "q21")
-for (col in likert_columns) {
-  cohort3FinalGov[[col]] <- as.numeric(factor(cohort3FinalGov[[col]],
-                                             levels = c('Strongly disagree', 'Disagree', 'Agree', 'Strongly agree'),
-                                             labels = c(1, 2, 3, 4)))
-}
-
-# Check the data types after conversion
-sapply(cohort3FinalGov[likert_columns], class)
-
-# Check if conversion worked correctly
-summary(cohort3FinalGov[likert_columns])
-```
-
 ## Descriptive data analysis
 
 #### Per Question
@@ -143,10 +130,143 @@ summary(cohort3FinalGov[likert_columns])
 #| label: central-tendancy-per-question
 #| message: false
 
+# # Calculate central tendancy per question per stratum
+# # List of questions to analyze
+# questions_to_analyze <- c("q4", "q5", "q6", "q7", "q9", "q10", "q11", "q12", "q13", "q14", "q15", "q16", "q17", "q20", "q21")
+# 
+# # Define the strata
+# strata <- c("Akron", "Detroit", "Macon", "Miami")
+# 
+# # Initialize a list to store stats for each question and stratum
+# all_strata_stats <- list()
+# 
+# # Loop through each stratum and question to calculate stats
+# for (stratum in strata) {
+#     stratum_data <- subset(cohort3FinalGov, city_mapped == stratum)
+#     stratum_stats <- list()
+#     for (question in questions_to_analyze) {
+#         if (stratum != "Detroit") {
+#             # Use survey package functions for strata other than Detroit
+#             median_val <- svyquantile(~get(question), subset(design, city_mapped == stratum), 0.5, na.rm = TRUE)
+#             sd_val <- sqrt(svyvar(~get(question), subset(design, city_mapped == stratum), na.rm = TRUE))
+#         } else {
+#             # Direct calculation for Detroit
+#             question_data <- stratum_data[[question]]
+#             if (!all(is.na(question_data))) {
+#                 median_val <- median(question_data, na.rm = TRUE)
+#                 sd_val <- sd(question_data, na.rm = TRUE)
+#             } else {
+#                 median_val <- NA
+#                 sd_val <- NA
+#             }
+#         }
+#         stratum_stats[[question]] <- list(median = median_val, sd = sd_val)
+#     }
+#     all_strata_stats[[stratum]] <- stratum_stats
+# }
+# 
+# # # Print stats for each question and stratum
+# # for (stratum in strata) {
+# #     cat("Statistics for stratum:", stratum, "\n")
+# #     for (question in questions_to_analyze) {
+# #         cat("Question", question, ":\n")
+# #         print(all_strata_stats[[stratum]][[question]])
+# #         cat("\n")
+# #     }
+# # }
+# 
+# # Initialize an empty data frame for the results
+# results_df <- data.frame(Stratum = character(),
+#                          Question = character(),
+#                          Median = numeric(),
+#                          StandardDeviation = numeric(),
+#                          stringsAsFactors = FALSE)
+# 
+# # Loop through each stratum and question to collect stats
+# counter <- 1
+# for (stratum in strata) {
+#     for (question in questions_to_analyze) {
+#         # Extract median and standard deviation values
+#         median_val <- all_strata_stats[[stratum]][[question]]$median
+#         sd_val <- all_strata_stats[[stratum]][[question]]$sd
+# 
+#         # Format the values correctly
+#         median_val <- ifelse(is.list(median_val), median_val[[1]], median_val)
+#         sd_val <- ifelse(is.list(sd_val), sd_val[[1]], sd_val)
+# 
+#         # Ensure that NA values are handled properly
+#         median_val <- ifelse(is.null(median_val) || length(median_val) == 0, NA, median_val)
+#         sd_val <- ifelse(is.null(sd_val) || length(sd_val) == 0, NA, sd_val)
+# 
+#         # Append the row to the data frame
+#         results_df[counter, ] <- c(Stratum = stratum,
+#                                    Question = question,
+#                                    Median = median_val,
+#                                    StandardDeviation = sd_val)
+#         counter <- counter + 1
+#     }
+# }
+# 
+# # Create the table using kable and kableExtra
+# results_table <- kable(results_df, format = "html", 
+#                        col.names = c("Stratum", "Question", "Median", "Standard Deviation")) %>%
+#                  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+# 
+# # Print the table
+# results_table
 
 ```
 
 #### Per City Government Team
+
+```{r}
+#| label: central-tendancy-per-stratum-across-all-questions
+#| message: false
+
+# Central tendancy per question per stratum
+strata <- c("Akron", "Detroit", "Macon", "Miami")
+
+# Check if 'all_strata_stats' is a list with an entry for each stratum
+# print(strata)
+# print(names(all_strata_stats))
+
+calculate_overall_stats <- function(stratum_stats) {
+    combined_medians <- unlist(lapply(stratum_stats, function(x) x$median), use.names = FALSE)
+    combined_sds <- unlist(lapply(stratum_stats, function(x) x$sd), use.names = FALSE)
+    
+    overall_median <- median(combined_medians, na.rm = TRUE)
+    overall_sd <- sd(combined_sds, na.rm = TRUE)
+    
+    return(list(median = overall_median, sd = overall_sd))
+}
+
+overall_stratum_stats <- list()
+
+for (stratum in strata) {
+    if (stratum %in% names(all_strata_stats)) {
+        overall_stratum_stats[[stratum]] <- calculate_overall_stats(all_strata_stats[[stratum]])
+    } else {
+        overall_stratum_stats[[stratum]] <- list(median = NA, sd = NA)
+    }
+}
+
+# Print overall stats for each stratum
+# for (stratum in strata) {
+#     cat("Overall statistics for stratum:", stratum, "\n")
+#     print(overall_stratum_stats[[stratum]])
+#     cat("\n")
+# }
+
+overall_stats_df <- data.frame(Stratum = names(overall_stratum_stats),
+                               Median = sapply(overall_stratum_stats, function(x) x$median),
+                               StandardDeviation = sapply(overall_stratum_stats, function(x) x$sd),
+                               stringsAsFactors = FALSE)
+
+overall_stats_table <- kable(overall_stats_df, format = "simple",
+                             col.names = c("Stratum", "Overall Median", "Overall Standard Deviation"))
+
+print(overall_stats_table)
+```
 
 ## Participant Background
 
@@ -1103,7 +1223,7 @@ agreeing the most.",
 # Single-variable frequency plot
 q21_frequency <- svytable(~q21, design = design)
 
-all_levels_df <- data.frame(q21 = factor(1:4, levels = 1:4), Freq = character(4))
+all_levels_df <- data.frame(q21 = factor(1:4, levels = 1:4), Freq = numeric(4))
 
 q21_frequency_df <- merge(all_levels_df, as.data.frame(q21_frequency), by = "q21", all.x = TRUE)
 q21_frequency_df$Freq <- rowSums(q21_frequency_df[, c("Freq.x", "Freq.y")], na.rm = TRUE)
