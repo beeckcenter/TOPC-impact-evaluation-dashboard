@@ -211,30 +211,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="descriptive-data-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="descriptive-data-analysis">Descriptive Data Analysis</h2>
-<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/likert-scale-analysis-based-on-sampling-weights_cc16a5a4c62a24b02c84094386a766b1">
+<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/likert-scale-analysis-based-on-sampling-weights_b943b77cb27593c00f0ea905842ca225">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate and plot weighted frequencies for a single question</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>analyze_likert_question <span class="ot">&lt;-</span> <span class="cf">function</span>(question, design) {</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  formula <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(<span class="st">"~"</span>, question))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  likert_distribution <span class="ot">&lt;-</span> <span class="fu">svytable</span>(formula, design)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  likert_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(likert_distribution)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(likert_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Response"</span>, <span class="st">"Frequency"</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(likert_df, <span class="fu">aes</span>(<span class="at">x =</span> Response, <span class="at">y =</span> Frequency)) <span class="sc">+</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Distribution of Responses for"</span>, question))</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>questions_to_analyze <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"q8"</span>, <span class="st">"q9"</span>, <span class="st">"q10"</span>, <span class="st">"q11"</span>, <span class="st">"q13"</span>, <span class="st">"q14"</span>, <span class="st">"q15"</span>, <span class="st">"q16"</span>, <span class="st">"q17"</span>, <span class="st">"q18"</span>, <span class="st">"q19"</span>, <span class="st">"q21"</span>, <span class="st">"q22"</span>, <span class="st">"q23"</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">lapply</span>(questions_to_analyze, <span class="cf">function</span>(q) <span class="fu">analyze_likert_question</span>(q, design))</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># You can now view the plots for each question</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>plots[[<span class="dv">1</span>]] <span class="co"># For example, to view the plot for the first question in the list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Function to calculate and plot weighted frequencies for a single question</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># analyze_likert_question &lt;- function(question, design) {</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   formula &lt;- as.formula(paste("~", question))</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   likert_distribution &lt;- svytable(formula, design)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   likert_df &lt;- as.data.frame(likert_distribution)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   names(likert_df) &lt;- c("Response", "Frequency")</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   ggplot(likert_df, aes(x = Response, y = Frequency)) +</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     geom_bar(stat = "identity") +</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     labs(title = paste("Distribution of Responses for", question))</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># questions_to_analyze &lt;- c("q8", "q9", "q10", "q11", "q13", "q14", "q15", "q16", "q17", "q18", "q19", "q21", "q22", "q23")</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># plots &lt;- lapply(questions_to_analyze, function(q) analyze_likert_question(q, design))</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># # You can now view the plots for each question</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># plots[[1]] # For example, to view the plot for the first question in the list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-<p><img src="cohort-3-analysis-pre_files/figure-html/likert-scale-analysis-based-on-sampling-weights-1.png" class="img-fluid" width="672"></p>
-</div>
 </div>
 <section id="per-question" class="level4">
 <h4 class="anchored" data-anchor-id="per-question">Per Question</h4>
@@ -701,7 +698,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>4 - The respondent is quite familiar and comfortable with the skill, although not at the highest level of proficiency.</p></li>
 <li><p>5 - Expertise in concept and terminology: The respondent has a very high level of familiarity with the skill. They have comprehensive knowledge and experience, and they understand the concepts and terminology thoroughly.</p></li>
 </ul>
-<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/central-tendancy-per-stratum-across-all-questions_7a578f98b64239271af4bb6d029ad777">
+<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/central-tendancy-per-stratum-across-all-questions_77193df368c30d1c18cf978b739360ea">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Central tendancy per question per stratum</span></span>
@@ -738,18 +735,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co">#     cat("\n")</span></span>
 <span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
 <span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare a data frame for the overall statistics table</span></span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>overall_stats_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Stratum =</span> <span class="fu">names</span>(overall_stratum_stats),</span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>                               <span class="at">Median =</span> <span class="fu">sapply</span>(overall_stratum_stats, <span class="cf">function</span>(x) x<span class="sc">$</span>median),</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>                               <span class="at">StandardDeviation =</span> <span class="fu">sapply</span>(overall_stratum_stats, <span class="cf">function</span>(x) x<span class="sc">$</span>sd),</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>                               <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a basic table with no HTML styling</span></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>overall_stats_table <span class="ot">&lt;-</span> <span class="fu">kable</span>(overall_stats_df, <span class="at">format =</span> <span class="st">"simple"</span>,</span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>                             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Stratum"</span>, <span class="st">"Overall Median"</span>, <span class="st">"Overall Standard Deviation"</span>))</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the table</span></span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(overall_stats_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>overall_stats_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Stratum =</span> <span class="fu">names</span>(overall_stratum_stats),</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>                               <span class="at">Median =</span> <span class="fu">sapply</span>(overall_stratum_stats, <span class="cf">function</span>(x) x<span class="sc">$</span>median),</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>                               <span class="at">StandardDeviation =</span> <span class="fu">sapply</span>(overall_stratum_stats, <span class="cf">function</span>(x) x<span class="sc">$</span>sd),</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>                               <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>overall_stats_table <span class="ot">&lt;-</span> <span class="fu">kable</span>(overall_stats_df, <span class="at">format =</span> <span class="st">"simple"</span>,</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>                             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Stratum"</span>, <span class="st">"Overall Median"</span>, <span class="st">"Overall Standard Deviation"</span>))</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(overall_stats_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
