@@ -1,5 +1,10 @@
 ---
-format: revealjs
+format:
+  revealjs:
+    logo: topc-logo.png
+    footer: "TOPC Impact Evaluation 2023"
+    slide-number: true
+    show-slide-number: all
 editor: visual
 ---
 
@@ -81,6 +86,22 @@ Pre-test
 ------------------------------------------------------------------------
 
 #### Participant recognition and application of methods
+
+::: panel-tabset
+## Before 
+
+![](q11_pre_cross_tab_city_plot.png){width="685"}
+
+## After 
+
+![](q4_post_cross_tab_city_plot.png){width="681"}
+
+## Quotes 
+
+## Summary
+
+In general, there is a positive improvement in terms of competence and confidence (i.e. self efficacy of skills) towards community research. However, these results are not reflective of the general population, i.e. of all participants in the TOPC program.
+:::
 
 ------------------------------------------------------------------------
 
