@@ -1814,7 +1814,7 @@ Miami     Miami                   4                    0.6726299</code></pre>
 </details>
 </div>
 <p><strong>Q26. Collaborating with an external tech or IT vendor on projects or programs</strong></p>
-<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/q23-plots_19e2c8994cef347550d4529e3eb3f544">
+<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/q23-plots_8e97fe3513ebf486da377b31328996e8">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Single-variable frequency plot</span></span>
@@ -1847,7 +1847,7 @@ Miami     Miami                   4                    0.6726299</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"q23_pre_frequency_plot.png"</span>, q23_pre_frequency_plot, <span class="at">width =</span> <span class="dv">11</span>, <span class="at">height =</span> <span class="fl">8.5</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"q23_pre_frequency_plot.png"</span>, q23_pre_frequency_plot)</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Cross-tabulation with cities</span></span>
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>q23_cross_tab_city <span class="ot">&lt;-</span> <span class="fu">svytable</span>(<span class="sc">~</span>q23 <span class="sc">+</span> city_mapped, <span class="at">design =</span> design)</span>

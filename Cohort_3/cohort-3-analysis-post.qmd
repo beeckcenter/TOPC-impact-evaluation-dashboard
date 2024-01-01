@@ -44,38 +44,41 @@ library(survey)
 
 ## Survey design weights
 
--   <div>
+<div>
 
-    ```{r}
-    #| label: design-weights
-    #| message: false
+```{r}
+#| label: design-weights
+#| message: false
 
-    # Set the option for handling a single PSU in a stratum as certainty
-    options(survey.lonely.psu="certainty")
+# Read the data from the CSV file
+cohort3FinalGov3 <- read.csv("~/Documents/R_Projects/TOPC-impact-evaluation-dashboard/Cohort_3/cohort3FinalGov3.csv") 
 
-    # Read the data from the CSV file
-    cohort3FinalGov <- read.csv("~/Documents/R_Projects/TOPC-impact-evaluation-dashboard/Cohort_3/cohort3FinalGov3.csv") 
+# Define population and sample sizes
+population_counts <- c(Akron = 8, Detroit = 9, Macon = 10, Miami = 13)
+sample_counts <- c(Akron = 4, Detroit = 2, Macon = 4, Miami = 3)
 
-    # Define population and sample sizes
-    population_counts <- c(Akron = 8, Detroit = 9, Macon = 10, Miami = 13)
-    sample_counts <- c(Akron = 4, Detroit = 2, Macon = 4, Miami = 3)
+# Total population and sample size
+total_population <- sum(population_counts)
+total_sample <- sum(sample_counts)
 
-    # Total population and sample size
-    total_population <- sum(population_counts)
-    total_sample <- sum(sample_counts)
+# Calculate the weights
+weights <- (population_counts / total_population) / (sample_counts / total_sample)
 
-    # Calculate the weights
-    weights <- (population_counts / total_population) / (sample_counts / total_sample)
+# Print the calculated weights
+print(weights)
+```
 
-    # Print the calculated weights
-    print(weights)
-    ```
-
-    </div>
+</div>
 
 ```{r}
 #| label: survey-design-definition
 #| message: false
+
+# Convert Likert scale questions to numeric
+likert_questions <- c("q4", "q5", "q6", "q7", "q9", "q10", "q11", "q12", "q13", "q14", "q15", "q16", "q17", "q20", "q21")
+for (question in likert_questions) {
+    cohort3FinalGov3[[question]] <- as.numeric(as.character(cohort3FinalGov3[[question]]))
+}
 
 # Map between city names 
 city_map <- list(
@@ -86,16 +89,16 @@ city_map <- list(
 )
 
 # Update dataframe to use the mapped names
-cohort3FinalGov$city_mapped <- unlist(lapply(cohort3FinalGov$q3, function(x) city_map[[x]]))
+cohort3FinalGov3$city_mapped <- unlist(lapply(cohort3FinalGov3$q3, function(x) city_map[[x]]))
 
 # Assign weights using the mapped city names
-cohort3FinalGov$weights <- weights[cohort3FinalGov$city_mapped]
+cohort3FinalGov3$weights <- weights[cohort3FinalGov3$city_mapped]
 
 # Define the survey design
 design <- svydesign(ids = ~1, 
                     strata = ~city_mapped, 
                     weights = ~weights, 
-                    data = cohort3FinalGov)
+                    data = cohort3FinalGov3)
 ```
 
 Given this in the data:
@@ -126,146 +129,91 @@ $\text{Weight for Miami} = \frac{\frac{13}{40}}{\frac{3}{14}} = \frac{0.325}{0.2
 
 #### Per Question
 
+For Q4
+
+Please note that the absence of confidence intervals and standard errors for the median in the strata of Akron, Detroit, and Miami could be due to the **`svyquantile`** function not being able to compute these values with the available data. This is typically due to small sample sizes or other limitations in the data. The confidence interval for Macon, being precise, might suggest limited responses or a lack of variation in the responses for that stratum.
+
+-   **Akron**
+
+    -   **Median**: The median response is 3, which means the central tendency of the responses is "Agree".
+
+    -   **Standard Deviation**: The standard deviation is approximately 0.50. This value indicates moderate variability in the responses, suggesting that while "Agree" is the median response, there is some dispersion around this central value.
+
+-   **Detroit**
+
+    -   **Median**: The median response is 3, similar to Akron, indicating "Agree" as the central response.
+
+    -   **Standard Deviation**: The standard deviation is approximately 0.71, which suggests a slightly higher variability in responses compared to Akron.
+
+-   **Macon**
+
+    -   **Median**: The median response is 3 with a confidence interval from 3 to 3, which indicates a very consistent agreement among the participants, as the central response is "Agree" with little to no variability.
+
+    -   **Standard Deviation**: The standard deviation is 0, which means there is no variability among the responses, and all respondents provided the same answer.
+
+-   **Miami**
+
+    -   **Median**: The median response is also 3, indicating "Agree" as the central response.
+
+    -   **Standard Deviation**: The standard deviation is approximately 0.58, suggesting a moderate level of variability, similar to Akron.
+
 ```{r}
 #| label: central-tendancy-per-question
 #| message: false
 
-# # Calculate central tendancy per question per stratum
-# # List of questions to analyze
-# questions_to_analyze <- c("q4", "q5", "q6", "q7", "q9", "q10", "q11", "q12", "q13", "q14", "q15", "q16", "q17", "q20", "q21")
-# 
-# # Define the strata
-# strata <- c("Akron", "Detroit", "Macon", "Miami")
-# 
-# # Initialize a list to store stats for each question and stratum
-# all_strata_stats <- list()
-# 
-# # Loop through each stratum and question to calculate stats
-# for (stratum in strata) {
-#     stratum_data <- subset(cohort3FinalGov, city_mapped == stratum)
-#     stratum_stats <- list()
-#     for (question in questions_to_analyze) {
-#         if (stratum != "Detroit") {
-#             # Use survey package functions for strata other than Detroit
-#             median_val <- svyquantile(~get(question), subset(design, city_mapped == stratum), 0.5, na.rm = TRUE)
-#             sd_val <- sqrt(svyvar(~get(question), subset(design, city_mapped == stratum), na.rm = TRUE))
-#         } else {
-#             # Direct calculation for Detroit
-#             question_data <- stratum_data[[question]]
-#             if (!all(is.na(question_data))) {
-#                 median_val <- median(question_data, na.rm = TRUE)
-#                 sd_val <- sd(question_data, na.rm = TRUE)
-#             } else {
-#                 median_val <- NA
-#                 sd_val <- NA
-#             }
-#         }
-#         stratum_stats[[question]] <- list(median = median_val, sd = sd_val)
-#     }
-#     all_strata_stats[[stratum]] <- stratum_stats
-# }
-# 
-# # # Print stats for each question and stratum
-# # for (stratum in strata) {
-# #     cat("Statistics for stratum:", stratum, "\n")
-# #     for (question in questions_to_analyze) {
-# #         cat("Question", question, ":\n")
-# #         print(all_strata_stats[[stratum]][[question]])
-# #         cat("\n")
-# #     }
-# # }
-# 
-# # Initialize an empty data frame for the results
-# results_df <- data.frame(Stratum = character(),
-#                          Question = character(),
-#                          Median = numeric(),
-#                          StandardDeviation = numeric(),
-#                          stringsAsFactors = FALSE)
-# 
-# # Loop through each stratum and question to collect stats
-# counter <- 1
-# for (stratum in strata) {
-#     for (question in questions_to_analyze) {
-#         # Extract median and standard deviation values
-#         median_val <- all_strata_stats[[stratum]][[question]]$median
-#         sd_val <- all_strata_stats[[stratum]][[question]]$sd
-# 
-#         # Format the values correctly
-#         median_val <- ifelse(is.list(median_val), median_val[[1]], median_val)
-#         sd_val <- ifelse(is.list(sd_val), sd_val[[1]], sd_val)
-# 
-#         # Ensure that NA values are handled properly
-#         median_val <- ifelse(is.null(median_val) || length(median_val) == 0, NA, median_val)
-#         sd_val <- ifelse(is.null(sd_val) || length(sd_val) == 0, NA, sd_val)
-# 
-#         # Append the row to the data frame
-#         results_df[counter, ] <- c(Stratum = stratum,
-#                                    Question = question,
-#                                    Median = median_val,
-#                                    StandardDeviation = sd_val)
-#         counter <- counter + 1
-#     }
-# }
-# 
-# # Create the table using kable and kableExtra
-# results_table <- kable(results_df, format = "html", 
-#                        col.names = c("Stratum", "Question", "Median", "Standard Deviation")) %>%
-#                  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
-# 
-# # Print the table
-# results_table
+# Define the strata
+strata <- c("Akron", "Detroit", "Macon", "Miami")
 
+# Initialize a data frame to store the results for question q4
+results_df <- data.frame(
+    Stratum = character(),
+    Median = numeric(),
+    StandardDeviation = numeric(),
+    stringsAsFactors = FALSE
+)
+
+# Calculate stats for question q4 across each stratum
+for (stratum in strata) {
+    # Create stratum-specific design
+    stratum_design <- subset(design, city_mapped == stratum)
+    
+    # Calculate weighted median for q4
+    median_val <- svyquantile(~q4, stratum_design, 0.5, na.rm = TRUE)
+    
+    # Calculate weighted standard deviation for q4
+    sd_val <- sqrt(svyvar(~q4, stratum_design, na.rm = TRUE))
+    
+    # Extract the median and standard deviation values
+    median_q4 <- median_val[1]  # Extracting the median value for q4
+    sd_q4 <- sd_val[1]  # Extracting the SD value for q4
+    
+    # Append the results to the data frame
+    results_df <- rbind(results_df, data.frame(
+        Stratum = stratum,
+        Median = median_q4,
+        StandardDeviation = sd_q4
+    ))
+}
+
+# Print the results for q4
+print(results_df)
 ```
 
 #### Per City Government Team
+
+-   1 = Strongly disagree
+
+-   2 = Disagree
+
+-   3 = Agree
+
+-   4 = Strongly agree
 
 ```{r}
 #| label: central-tendancy-per-stratum-across-all-questions
 #| message: false
 
-# Central tendancy per question per stratum
-strata <- c("Akron", "Detroit", "Macon", "Miami")
 
-# Check if 'all_strata_stats' is a list with an entry for each stratum
-# print(strata)
-# print(names(all_strata_stats))
-
-calculate_overall_stats <- function(stratum_stats) {
-    combined_medians <- unlist(lapply(stratum_stats, function(x) x$median), use.names = FALSE)
-    combined_sds <- unlist(lapply(stratum_stats, function(x) x$sd), use.names = FALSE)
-    
-    overall_median <- median(combined_medians, na.rm = TRUE)
-    overall_sd <- sd(combined_sds, na.rm = TRUE)
-    
-    return(list(median = overall_median, sd = overall_sd))
-}
-
-overall_stratum_stats <- list()
-
-for (stratum in strata) {
-    if (stratum %in% names(all_strata_stats)) {
-        overall_stratum_stats[[stratum]] <- calculate_overall_stats(all_strata_stats[[stratum]])
-    } else {
-        overall_stratum_stats[[stratum]] <- list(median = NA, sd = NA)
-    }
-}
-
-# Print overall stats for each stratum
-# for (stratum in strata) {
-#     cat("Overall statistics for stratum:", stratum, "\n")
-#     print(overall_stratum_stats[[stratum]])
-#     cat("\n")
-# }
-
-overall_stats_df <- data.frame(Stratum = names(overall_stratum_stats),
-                               Median = sapply(overall_stratum_stats, function(x) x$median),
-                               StandardDeviation = sapply(overall_stratum_stats, function(x) x$sd),
-                               stringsAsFactors = FALSE)
-
-overall_stats_table <- kable(overall_stats_df, format = "simple",
-                             col.names = c("Stratum", "Overall Median", "Overall Standard Deviation"))
-
-print(overall_stats_table)
 ```
 
 ## Participant Background
@@ -468,7 +416,7 @@ ggplot(as.data.frame(q29_frequency), aes(x = q29, y = Freq)) +
 #| message: false
 # Compare weighted vs. unweighted counts:
 # # Unweighted count
-# unweighted_counts <- table(cohort3FinalGov$q3)
+# unweighted_counts <- table(cohort3FinalGov3$q3)
 # 
 # # Weighted count
 # weighted_counts <- svytable(~q3, design = design)

@@ -102,6 +102,8 @@ Pre-test
 
 -   However, **both sets of questions target similar skills and experiences.** To assess changes, we looked at shifts in distribution of responses, using non-parametric methods or descriptive statistics to compare before and after without inferring statistical significance based on the Likert scale points.
 
+-   In our analysis of the survey data, we have applied survey sampling weights to adjust for disparities in response rates and representation across different city government groups. While these weights help in making our sample more reflective of the broader population, it's important to note that they cannot entirely compensate for all the limitations inherent in the data. Specifically, the non-random nature of our sampling method and the presence of biases in sample collection present challenges that weights alone may not fully address. As a result, while the weighted analysis offers valuable insights, the findings should be interpreted with an understanding of these constraints. We remain committed to transparency and rigor in our research and want to ensure that all stakeholders are aware of the nuances and limitations of the methods employed.
+
 ## Appendix
 
 -   Github repository
