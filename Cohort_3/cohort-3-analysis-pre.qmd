@@ -361,6 +361,7 @@ q8_frequency <- svytable(~q8, design = design)
 q8_pre_frequency_plot <- ggplot(as.data.frame(q8_frequency), aes(x = q8, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "More than half respondents agree they learned new skills in community 
 research practices.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
@@ -395,6 +396,7 @@ q8_cross_tab_city_df$q8 <- factor(q8_cross_tab_city_df$q8, levels = c("1", "2", 
 q8_pre_cross_tab_city_plot <- ggplot(q8_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q8)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F")) +
   labs(title = "Akron is newest to community research skills, concepts and 
 terminologies, with Miami and Macon most experienced.",
@@ -433,6 +435,7 @@ q9_frequency_df$Freq <- rowSums(q9_frequency_df[, c("Freq.x", "Freq.y")], na.rm 
 q9_pre_frequency_plot <- ggplot(q9_frequency_df, aes(x = q9, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "3 out of 4 respondents believe they have the skills to test ideas or 
 prototypes with community members.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
@@ -469,6 +472,7 @@ q9_cross_tab_city_df$q9 <- factor(q9_cross_tab_city_df$q9, levels = c("1", "2", 
 q9_pre_cross_tab_city_plot <- ggplot(q9_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q9)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) +
   labs(title = "Respondents from each city report having a moderate level of familiarity 
@@ -505,6 +509,7 @@ q10_frequency <- svytable(~q10, design = design)
 q10_pre_frequency_plot <- ggplot(as.data.frame(q10_frequency), aes(x = q10, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "More than half of respondents believe they have the skills to
 create wireframes or prototypes of digital products.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
@@ -517,28 +522,23 @@ create wireframes or prototypes of digital products.",
         plot.title = element_text(face = "bold"),
         plot.caption = element_text(hjust = 0))
 
-# Print the plot to display it in the document
 print(q10_pre_frequency_plot)
-
-# Use ggsave to save the plot
 ggsave("q10_pre_frequency_plot.png", q10_pre_frequency_plot)
 
 
 # Cross-tabulation with cities
 q10_cross_tab_city <- svytable(~q10 + city_mapped, design = design)
 
-# Ensure that 'q10' is a factor with levels ordered from 1 to 5
 q10_levels_ordered <- as.factor(as.data.frame(q10_cross_tab_city)$q10)
 q10_levels_ordered <- factor(q10_levels_ordered, levels = c("1", "2", "3", "4", "5"))
 
-# Update the cross-tabulation data frame to use the ordered levels
 q10_cross_tab_city_df <- as.data.frame(q10_cross_tab_city)
 q10_cross_tab_city_df$q10 <- factor(q10_cross_tab_city_df$q10, levels = c("1", "2", "3", "4", "5"))
 
-# Generate the plot
 q10_pre_cross_tab_city_plot <- ggplot(q10_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q10)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F")) +
   labs(title = "Akron and Detroit rated themselves as newest with creating digital wireframes or prototypes, while Miami most experienced to this skill.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
@@ -554,10 +554,7 @@ q10_pre_cross_tab_city_plot <- ggplot(q10_cross_tab_city_df, aes(x = city_mapped
         plot.caption = element_text(hjust = 0)) +
   guides(fill = guide_legend(reverse = TRUE, nrow = 1, byrow = TRUE))
 
-# Print the plot to display it in the document
 print(q10_pre_cross_tab_city_plot)
-
-# Use ggsave to save the plot
 ggsave("q10_pre_cross_tab_city_plot.png", q10_pre_cross_tab_city_plot)
 ```
 
@@ -573,6 +570,7 @@ q11_frequency <- svytable(~q11, design = design)
 q11_pre_frequency_plot <- ggplot(as.data.frame(q11_frequency), aes(x = q11, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "Majority of respondents believe they moderately or experienced in their 
 skills synthesizing community feedback into insights or recommendations.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
@@ -595,18 +593,16 @@ ggsave("q11_pre_frequency_plot.png", q11_pre_frequency_plot)
 # Cross-tabulation with cities
 q11_cross_tab_city <- svytable(~q11 + city_mapped, design = design)
 
-# Ensure that 'q11' is a factor with levels ordered from 1 to 5
 q11_levels_ordered <- as.factor(as.data.frame(q11_cross_tab_city)$q11)
 q11_levels_ordered <- factor(q11_levels_ordered, levels = c("1", "2", "3", "4", "5"))
 
-# Update the cross-tabulation data frame to use the ordered levels
 q11_cross_tab_city_df <- as.data.frame(q11_cross_tab_city)
 q11_cross_tab_city_df$q11 <- factor(q11_cross_tab_city_df$q11, levels = c("1", "2", "3", "4", "5"))
 
-# Generate the plot
 q11_pre_cross_tab_city_plot <- ggplot(q11_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q11)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F")) +
   labs(title = "The most experienced to this skill are city teams that have
 previously participated in the TOPC program.",
@@ -623,10 +619,7 @@ previously participated in the TOPC program.",
         plot.caption = element_text(hjust = 0)) +
   guides(fill = guide_legend(reverse = TRUE, nrow = 1, byrow = TRUE))
 
-# Print the plot to display it in the document
 print(q11_pre_cross_tab_city_plot)
-
-# Use ggsave to save the plot
 ggsave("q11_pre_cross_tab_city_plot.png", q11_pre_cross_tab_city_plot)
 ```
 
@@ -651,6 +644,7 @@ q13_frequency_df$Freq <- rowSums(q13_frequency_df[, c("Freq.x", "Freq.y")], na.r
 q13_pre_frequency_plot <- ggplot(q13_frequency_df, aes(x = q13, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "Majority of respondents believe they moderately or experienced in their 
 skills evaluating solutions based on community need.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
@@ -679,6 +673,7 @@ q13_cross_tab_city_df$q13 <- factor(q13_cross_tab_city_df$q13, levels = c("1", "
 q13_pre_cross_tab_city_plot <- ggplot(q13_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q13)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) +
   labs(title = "The most experienced to this skill are city teams that have
@@ -697,7 +692,6 @@ previously participated in the TOPC program.",
   guides(fill = guide_legend(reverse = TRUE, nrow = 1, byrow = TRUE))
 
 print(q13_pre_cross_tab_city_plot)
-
 ggsave("q13_pre_cross_tab_city_plot.png", q13_pre_cross_tab_city_plot)
 ```
 
@@ -718,6 +712,7 @@ q14_frequency_df$Freq <- rowSums(q14_frequency_df[, c("Freq.x", "Freq.y")], na.r
 q14_pre_frequency_plot <- ggplot(q14_frequency_df, aes(x = q14, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "Majority of respondents believe they moderately or are experienced in their skills co-desinging solutions with community members.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
        x = "",
@@ -745,6 +740,7 @@ q14_cross_tab_city_df$q14 <- factor(q14_cross_tab_city_df$q14, levels = c("1", "
 q14_pre_cross_tab_city_plot <- ggplot(q14_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q14)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) +
   labs(title = "The most experienced to this skill are city teams that have
@@ -763,7 +759,6 @@ previously participated in the TOPC program.",
   guides(fill = guide_legend(reverse = TRUE, nrow = 1, byrow = TRUE))
 
 print(q14_pre_cross_tab_city_plot)
-
 ggsave("q14_pre_cross_tab_city_plot.png", q14_pre_cross_tab_city_plot)
 ```
 
@@ -784,6 +779,7 @@ q15_frequency_df$Freq <- rowSums(q15_frequency_df[, c("Freq.x", "Freq.y")], na.r
 q15_pre_frequency_plot <- ggplot(q15_frequency_df, aes(x = q15, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "Half of respondents report they believe they have the skills to 
 translate an indea to digital product requirements for tech teams.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
@@ -812,6 +808,7 @@ q15_cross_tab_city_df$q15 <- factor(q15_cross_tab_city_df$q15, levels = c("1", "
 q15_pre_cross_tab_city_plot <- ggplot(q15_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q15)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) + 
   labs(title = "Respondents from each city team report having some knowledge or
@@ -831,7 +828,6 @@ for tech teams.",
   guides(fill = guide_legend(reverse = TRUE, nrow = 1, byrow = TRUE))
 
 print(q15_pre_cross_tab_city_plot)
-
 ggsave("q15_pre_cross_tab_city_plot.png", q15_pre_cross_tab_city_plot)
 ```
 
@@ -852,6 +848,7 @@ q16_frequency_df$Freq <- rowSums(q16_frequency_df[, c("Freq.x", "Freq.y")], na.r
 q16_pre_frequency_plot <- ggplot(q16_frequency_df, aes(x = q16, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "Majority of respondents believe they moderately or are experienced
 in their skills working with data from analysis to evaluation.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
@@ -880,6 +877,7 @@ q16_cross_tab_city_df$q16 <- factor(q16_cross_tab_city_df$q16, levels = c("1", "
 q16_pre_cross_tab_city_plot <- ggplot(q16_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q16)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) + 
   labs(title = "All city teams show moderate to expertise in skills working with data 
@@ -898,7 +896,6 @@ with slight variation in Akron of few respondents new to the skill.",
   guides(fill = guide_legend(reverse = TRUE, nrow = 1, byrow = TRUE))
 
 print(q16_pre_cross_tab_city_plot)
-
 ggsave("q16_pre_cross_tab_city_plot.png", q16_pre_cross_tab_city_plot)
 ```
 
@@ -919,6 +916,7 @@ q17_frequency_df$Freq <- rowSums(q17_frequency_df[, c("Freq.x", "Freq.y")], na.r
 q17_pre_frequency_plot <- ggplot(q17_frequency_df, aes(x = q17, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "Majority of respondents believe they moderately or are experienced
 in their skills working with data from analysis to evaluation.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
@@ -947,6 +945,7 @@ q17_cross_tab_city_df$q17 <- factor(q17_cross_tab_city_df$q17, levels = c("1", "
 q17_pre_cross_tab_city_plot <- ggplot(q17_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q17)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) + 
   labs(title = "Half of respondents are quite familiar with publishing data into 
@@ -965,76 +964,10 @@ projects and the rest are either new or moderately familiarity.",
   guides(fill = guide_legend(reverse = TRUE, nrow = 1, byrow = TRUE))
 
 print(q17_pre_cross_tab_city_plot)
-
 ggsave("q17_pre_cross_tab_city_plot.png", q17_pre_cross_tab_city_plot)
 ```
 
 **Q21. Managing a community-facing digital product**
-
-```{r}
-#| echo: false
-#| output: false
-#| #| message: false
-
-# # Single-variable frequency plot
-# q17_frequency <- svytable(~q17, design = design)
-# 
-# all_levels_df <- data.frame(q17 = factor(1:5, levels = 1:5), Freq = integer(5))
-# 
-# q17_frequency_df <- merge(all_levels_df, as.data.frame(q17_frequency), by = "q17", all.x = TRUE)
-# q17_frequency_df$Freq <- rowSums(q17_frequency_df[, c("Freq.x", "Freq.y")], na.rm = TRUE)
-# # Create the ggplot object
-# q17_pre_frequency_plot <- ggplot(q17_frequency_df, aes(x = q17, y = Freq)) +
-#   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
-#   coord_flip() +
-#   labs(title = "",
-#        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
-#        x = "Rating Scale: 5 - Expert to 1 - New",
-#        y = "Number of Responses",
-#        caption = "Source: TOPC Cohort 3 Survey (2023)") +
-#   theme_minimal() + 
-#   theme(panel.grid.major.y = element_blank(),
-#         panel.grid.minor.y = element_blank(),
-#         plot.title = element_text(face = "bold"),
-#         plot.caption = element_text(hjust = 0))
-# 
-# ggplotly(q17_pre_frequency_plot)
-```
-
-```{r}
-#| echo: false
-#| output: false
-#| #| message: false
-
-# # Cross-tabulation with cities
-# q17_cross_tab_city <- svytable(~q17 + city_mapped, design = design)
-# 
-# # Convert to a data frame
-# q17_cross_tab_city_df <- as.data.frame(q17_cross_tab_city)
-# 
-# # Define colors manually
-# colors = c("1" = "#701C7F", "2" = "#1B786E", "3" = "#da291c", "4" = "#6eaddc", "5" = "#041e42")
-# 
-# # Ordering factor levels for q17 to match the colors
-# q17_cross_tab_city_df$q17 <- factor(q17_cross_tab_city_df$q17, levels = names(colors))
-# 
-# # Create the interactive plot and set the size
-# interactive_cross_tab_plot <- plot_ly(data = q17_cross_tab_city_df, x = ~Freq, y = ~city_mapped,
-#                                       type = 'bar', orientation = 'h',
-#                                       width = 800, height = 600) %>% # Set the size here
-#   add_bars(marker = list(color = ~factor(q17, levels = names(colors)))) %>%
-#   layout(barmode = 'stack',
-#          title = "",
-#          xaxis = list(title = "Number of Responses"),
-#          yaxis = list(title = ""),
-#          margin = list(b = 150, l = 100, t = 100, r = 50), # Adjust margins if necessary
-#          legend = list(title = list(text = ""),
-#                        orientation = 'h', # Set legend to horizontal
-#                        x = 0.5, xanchor = 'center', y = -0.15)) # Position the legend below the plot
-# 
-# # Render the plot
-# interactive_cross_tab_plot
-```
 
 ```{r}
 #| label: q18-plots
@@ -1051,6 +984,7 @@ q18_frequency_df$Freq <- rowSums(q18_frequency_df[, c("Freq.x", "Freq.y")], na.r
 q18_pre_frequency_plot <- ggplot(q18_frequency_df, aes(x = q18, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "Half of respondents believe they moderately or are experienced
 in their skills managing a community-facing digital product, 
 with the other half new to the skill.",
@@ -1080,6 +1014,7 @@ q18_cross_tab_city_df$q18 <- factor(q18_cross_tab_city_df$q18, levels = c("1", "
 q18_pre_cross_tab_city_plot <- ggplot(q18_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q18)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) + 
   labs(title = "Respondents from Macon, Detroit and Akron reported new to moderate
@@ -1098,7 +1033,6 @@ level of familiarity with managing a community-facing digital product.",
   guides(fill = guide_legend(reverse = TRUE, nrow = 1, byrow = TRUE))
 
 print(q18_pre_cross_tab_city_plot)
-
 ggsave("q18_pre_cross_tab_city_plot.png", q18_pre_cross_tab_city_plot)
 ```
 
@@ -1119,6 +1053,7 @@ q19_frequency_df$Freq <- rowSums(q19_frequency_df[, c("Freq.x", "Freq.y")], na.r
 q19_pre_frequency_plot <- ggplot(q19_frequency_df, aes(x = q19, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "2 out of 3 respondents believe they moderately or are quite familiar
 in their skills drafting a plan for long-term product success",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
@@ -1147,6 +1082,7 @@ q19_cross_tab_city_df$q19 <- factor(q19_cross_tab_city_df$q19, levels = c("1", "
 q19_pre_cross_tab_city_plot <- ggplot(q19_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q19)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) + 
   labs(title = "Respondents from each city team reported being at minimum quite 
@@ -1165,7 +1101,6 @@ familiar with drafting plans for long-term product success.",
   guides(fill = guide_legend(reverse = TRUE, nrow = 1, byrow = TRUE))
 
 print(q19_pre_cross_tab_city_plot)
-
 ggsave("q19_pre_cross_tab_city_plot.png", q19_pre_cross_tab_city_plot)
 ```
 
@@ -1192,6 +1127,7 @@ q21_frequency_df$Freq <- rowSums(q21_frequency_df[, c("Freq.x", "Freq.y")], na.r
 q21_pre_frequency_plot <- ggplot(q21_frequency_df, aes(x = q21, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "Half of respondents report being new or have basic knowledge in their 
 skills to collaborate with community organizations on projects.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
@@ -1220,6 +1156,7 @@ q21_cross_tab_city_df$q21 <- factor(q21_cross_tab_city_df$q21, levels = c("1", "
 q21_pre_cross_tab_city_plot <- ggplot(q21_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q21)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) + 
   labs(title = "Each city team report being has a mixture of respondents who are 
@@ -1239,7 +1176,6 @@ organizations on projects.",
   guides(fill = guide_legend(reverse = TRUE, nrow = 1, byrow = TRUE))
 
 print(q21_pre_cross_tab_city_plot)
-
 ggsave("q21_pre_cross_tab_city_plot.png", q21_pre_cross_tab_city_plot)
 ```
 
@@ -1260,6 +1196,7 @@ q22_frequency_df$Freq <- rowSums(q22_frequency_df[, c("Freq.x", "Freq.y")], na.r
 q22_pre_frequency_plot <- ggplot(q22_frequency_df, aes(x = q22, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "Around 2 out of 3 respondents report being experts or quite familiar
 with collaborating with other city/county departments on projects.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
@@ -1288,6 +1225,7 @@ q22_cross_tab_city_df$q22 <- factor(q22_cross_tab_city_df$q22, levels = c("1", "
 q22_pre_cross_tab_city_plot <- ggplot(q22_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q22)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) + 
   labs(title = "Respondents in every city team report being very familiar
@@ -1306,7 +1244,6 @@ with collaborating with other city/county departments on projects.",
   guides(fill = guide_legend(reverse = TRUE, nrow = 1, byrow = TRUE))
 
 print(q22_pre_cross_tab_city_plot)
-
 ggsave("q22_pre_cross_tab_city_plot.png", q22_pre_cross_tab_city_plot)
 ```
 
@@ -1327,6 +1264,7 @@ q23_frequency_df$Freq <- rowSums(q23_frequency_df[, c("Freq.x", "Freq.y")], na.r
 q23_pre_frequency_plot <- ggplot(q23_frequency_df, aes(x = q23, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   labs(title = "More than half of respondants report being new or moderate level
 of familiarity collaborating with external tech or IT vendors on projects.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
@@ -1340,7 +1278,6 @@ of familiarity collaborating with external tech or IT vendors on projects.",
         plot.caption = element_text(hjust = 0))
 
 print(q23_pre_frequency_plot)
-
 ggsave("q23_pre_frequency_plot.png", q23_pre_frequency_plot)
 
 # Cross-tabulation with cities
@@ -1355,6 +1292,7 @@ q23_cross_tab_city_df$q23 <- factor(q23_cross_tab_city_df$q23, levels = c("1", "
 q23_pre_cross_tab_city_plot <- ggplot(q23_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q23)) +
   geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
+  expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) + 
   labs(title = "There are expert respondents in some city teams but not in others to 
@@ -1374,6 +1312,5 @@ the highest variation with majority of respondents are new to this skill.",
   guides(fill = guide_legend(reverse = TRUE, nrow = 1, byrow = TRUE))
 
 print(q23_pre_cross_tab_city_plot)
-
 ggsave("q23_pre_cross_tab_city_plot.png", q23_pre_cross_tab_city_plot)
 ```
