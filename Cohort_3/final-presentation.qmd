@@ -88,15 +88,15 @@ Pre-test
 #### Participant recognition and application of methods
 
 ::: panel-tabset
-## Before 
+## Before
 
 ![](q11_pre_cross_tab_city_plot.png){width="685"}
 
-## After 
+## After
 
 ![](q4_post_cross_tab_city_plot.png){width="681"}
 
-## Quotes 
+## Quotes
 
 ## Summary
 
