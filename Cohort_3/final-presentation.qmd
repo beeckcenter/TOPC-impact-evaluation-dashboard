@@ -1,18 +1,17 @@
 ---
+title: "The Opportunity Project for Cities"
+subtitle: "Cohort 3 Impact Evaluation Report 2023"
 format:
   revealjs:
-    logo: topc-logo.png
-    footer: "TOPC Impact Evaluation 2023"
     slide-number: true
     show-slide-number: all
+    chalkboard: 
+      buttons: false
+    preview-links: auto
+    logo: images/topc.png
+    footer: Published on January 2, 2024
 editor: visual
 ---
-
-## **The Opportunity Project for Cities:** Cohort 3 Impact Evaluation Report
-
-Published on December 20, 2023
-
-![](images/topc-logo-01.png){fig-align="left" width="370"}
 
 ## **Overview**
 
@@ -32,7 +31,7 @@ This report presents insights into the learning outcomes of Cohort 3 participant
 
 **How do I use this?**
 
-It's really easy! Start with the [Executive Summary] for an overview of key findings, then [Insights], followed by [Recommendations].
+It's really easy! Start with the [Executive Summary] for an overview of key findings, then [Insights], followed by [Evaluation Questions].
 
 1.  Make a copy of this file. 
 
@@ -56,7 +55,9 @@ We would like to thank the Knight Foundation, the Beeck Center for Social Impact
 
 ## Executive Summary
 
-## Recommendations
+## Evaluation Questions
+
+## Methodology
 
 ## Insights
 
@@ -94,11 +95,9 @@ Pre-test
 
 ## After
 
-![](q4_post_cross_tab_city_plot.png){width="681"}
-
 ## Quotes
 
-## Summary
+## Finding
 
 In general, there is a positive improvement in terms of competence and confidence (i.e. self efficacy of skills) towards community research. However, these results are not reflective of the general population, i.e. of all participants in the TOPC program.
 :::
@@ -107,7 +106,7 @@ In general, there is a positive improvement in terms of competence and confidenc
 
 #### Participant satisfaction and Intention to Action
 
-## Methodology
+## Recommendations {data-link="Recommendations"}
 
 ## Limitations
 
@@ -119,7 +118,7 @@ In general, there is a positive improvement in terms of competence and confidenc
 
 ------------------------------------------------------------------------
 
--   **The pre-test and post-test survey questions are conceptually aligned but not directly comparable** in terms of measurement scales and language of questions. The pre-test uses a 4-point Likert scale focused on agreement, while the post-test uses a 5-point scale assessing expertise levels. This difference in scales means a direct comparison or change analysis (like a t-test) is not straightforward.
+-   The pre-test and post-test survey questions are conceptually aligned but not directly comparable in terms of measurement scales and language of questions. The pre-test uses a 4-point Likert scale focused on agreement, while the post-test uses a 5-point scale assessing expertise levels. This difference in scales means a direct comparison or change analysis (like a t-test) is not straightforward.
 
 -   However, **both sets of questions target similar skills and experiences.** To assess changes, we looked at shifts in distribution of responses, using non-parametric methods or descriptive statistics to compare before and after without inferring statistical significance based on the Likert scale points.
 

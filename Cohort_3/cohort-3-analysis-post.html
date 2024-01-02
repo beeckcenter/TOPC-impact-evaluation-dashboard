@@ -261,8 +261,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="descriptive-data-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="descriptive-data-analysis">Descriptive data analysis</h2>
-<section id="per-question" class="level4">
-<h4 class="anchored" data-anchor-id="per-question">Per Question</h4>
 <p>For Q4</p>
 <p>Please note that the absence of confidence intervals and standard errors for the median in the strata of Akron, Detroit, and Miami could be due to the <strong><code>svyquantile</code></strong> function not being able to compute these values with the available data. This is typically due to small sample sizes or other limitations in the data. The confidence interval for Macon, being precise, might suggest limited responses or a lack of variation in the responses for that stratum.</p>
 <ul>
@@ -287,69 +285,712 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Standard Deviation</strong>: The standard deviation is approximately 0.58, suggesting a moderate level of variability, similar to Akron.</p></li>
 </ul></li>
 </ul>
-<div class="cell" data-hash="cohort-3-analysis-post_cache/html/central-tendancy-per-question_d499cc825dc66acfb0a011c60656825f">
+<div class="cell" data-hash="cohort-3-analysis-post_cache/html/q4-summary-statistics_faf0f02523343e38f334a0a4067a5225">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the strata</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>strata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Akron"</span>, <span class="st">"Detroit"</span>, <span class="st">"Macon"</span>, <span class="st">"Miami"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a data frame to store the results for question q4</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>results_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Stratum =</span> <span class="fu">character</span>(),</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Median =</span> <span class="fu">numeric</span>(),</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">StandardDeviation =</span> <span class="fu">numeric</span>(),</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate stats for question q4 across each stratum</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (stratum <span class="cf">in</span> strata) {</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create stratum-specific design</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    stratum_design <span class="ot">&lt;-</span> <span class="fu">subset</span>(design, city_mapped <span class="sc">==</span> stratum)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate weighted median for q4</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    median_val <span class="ot">&lt;-</span> <span class="fu">svyquantile</span>(<span class="sc">~</span>q4, stratum_design, <span class="fl">0.5</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate weighted standard deviation for q4</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    sd_val <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">svyvar</span>(<span class="sc">~</span>q4, stratum_design, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the median and standard deviation values</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    median_q4 <span class="ot">&lt;-</span> median_val[<span class="dv">1</span>]  <span class="co"># Extracting the median value for q4</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    sd_q4 <span class="ot">&lt;-</span> sd_val[<span class="dv">1</span>]  <span class="co"># Extracting the SD value for q4</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append the results to the data frame</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    results_df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(results_df, <span class="fu">data.frame</span>(</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">Stratum =</span> stratum,</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">Median =</span> median_q4,</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">StandardDeviation =</span> sd_q4</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    ))</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results for q4</span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(results_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Define the strata</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># strata &lt;- c("Akron", "Detroit", "Macon", "Miami")</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # Initialize a data frame to store the results for question q4</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># results_df &lt;- data.frame(</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#     Stratum = character(),</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#     Median = numeric(),</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#     StandardDeviation = numeric(),</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     stringsAsFactors = FALSE</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># # Calculate stats for question q4 across each stratum</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># for (stratum in strata) {</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#     stratum_design &lt;- subset(design, city_mapped == stratum)</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     median_val &lt;- svyquantile(~q4, stratum_design, 0.5, na.rm = TRUE)</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     sd_val &lt;- sqrt(svyvar(~q4, stratum_design, na.rm = TRUE))</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Extract the median and standard deviation values</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#     median_q4 &lt;- median_val[1]  # Extracting the median value for q4</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#     sd_q4 &lt;- sd_val[1]  # Extracting the SD value for q4</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Append the results to the data frame</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">#     results_df &lt;- rbind(results_df, data.frame(</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#         Stratum = stratum,</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">#         Median = median_q4,</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#         StandardDeviation = sd_q4</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#     ))</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co"># # Print the results for q4</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co"># print(results_df)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     Stratum Median.q4.quantile Median.q4.ci.2.5 Median.q4.ci.97.5 Median.q4.se
-0.5    Akron                  3              NaN               NaN          NaN
-0.51 Detroit                  3              NaN               NaN          NaN
-0.52   Macon                  3                3                 3            0
-0.53   Miami                  3              NaN               NaN          NaN
-     StandardDeviation
-0.5          0.5000000
-0.51         0.7071068
-0.52         0.0000000
-0.53         0.5773503</code></pre>
+</div>
+<div class="cell" data-hash="cohort-3-analysis-post_cache/html/all-questions-summary-statistics_839408b33c58e7295e5600845eea177f">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the strata and questions</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>strata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Akron"</span>, <span class="st">"Detroit"</span>, <span class="st">"Macon"</span>, <span class="st">"Miami"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>questions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"q4"</span>, <span class="st">"q5"</span>, <span class="st">"q6"</span>, <span class="st">"q7"</span>, <span class="st">"q9"</span>, <span class="st">"q10"</span>, <span class="st">"q11"</span>, <span class="st">"q12"</span>, <span class="st">"q13"</span>, <span class="st">"q14"</span>, <span class="st">"q15"</span>, <span class="st">"q16"</span>, <span class="st">"q17"</span>, <span class="st">"q20"</span>, <span class="st">"q21"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a data frame to store the results</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>results_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Question =</span> <span class="fu">character</span>(),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Stratum =</span> <span class="fu">character</span>(),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Median =</span> <span class="fu">numeric</span>(),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">StandardDeviation =</span> <span class="fu">numeric</span>(),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate stats for each question across each stratum</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (question <span class="cf">in</span> questions) {</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (stratum <span class="cf">in</span> strata) {</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create the design for the current stratum</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        stratum_design <span class="ot">&lt;-</span> <span class="fu">subset</span>(design, city_mapped <span class="sc">==</span> stratum)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute the median and standard deviation for the current question</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        median_val <span class="ot">&lt;-</span> <span class="fu">svyquantile</span>(<span class="sc">~</span><span class="fu">get</span>(question), stratum_design, <span class="fl">0.5</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        sd_val <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">svyvar</span>(<span class="sc">~</span><span class="fu">get</span>(question), stratum_design, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Extract the median and standard deviation values</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        median_question <span class="ot">&lt;-</span> median_val[<span class="dv">1</span>]  <span class="co"># Extracting the median value for the question</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>        sd_question <span class="ot">&lt;-</span> sd_val[<span class="dv">1</span>]  <span class="co"># Extracting the SD value for the question</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Append the results to the data frame</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        results_df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(results_df, <span class="fu">data.frame</span>(</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>            <span class="at">Question =</span> question,</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>            <span class="at">Stratum =</span> stratum,</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>            <span class="at">Median =</span> median_question,</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>            <span class="at">StandardDeviation =</span> sd_question</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>        ))</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co"># print(results_df)</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(results_df, <span class="at">caption =</span> <span class="st">"Post-test Survey Results by City and Question"</span>, </span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>      <span class="at">align =</span> <span class="st">'c'</span>, <span class="at">format =</span> <span class="st">"html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<caption>Post-test Survey Results by City and Question</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Question</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Stratum</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Median.get.question..quantile</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Median.get.question..ci.2.5</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Median.get.question..ci.97.5</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Median.get.question..se</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">StandardDeviation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0.5</td>
+<td style="text-align: center;">q4</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.51</td>
+<td style="text-align: center;">q4</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.7071068</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.52</td>
+<td style="text-align: center;">q4</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.53</td>
+<td style="text-align: center;">q4</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.54</td>
+<td style="text-align: center;">q5</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.55</td>
+<td style="text-align: center;">q5</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.56</td>
+<td style="text-align: center;">q5</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.57</td>
+<td style="text-align: center;">q5</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.58</td>
+<td style="text-align: center;">q6</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.59</td>
+<td style="text-align: center;">q6</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.510</td>
+<td style="text-align: center;">q6</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.511</td>
+<td style="text-align: center;">q6</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.512</td>
+<td style="text-align: center;">q7</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.513</td>
+<td style="text-align: center;">q7</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.514</td>
+<td style="text-align: center;">q7</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.9574271</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.515</td>
+<td style="text-align: center;">q7</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.516</td>
+<td style="text-align: center;">q9</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.517</td>
+<td style="text-align: center;">q9</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.518</td>
+<td style="text-align: center;">q9</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.519</td>
+<td style="text-align: center;">q9</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.520</td>
+<td style="text-align: center;">q10</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.521</td>
+<td style="text-align: center;">q10</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.7071068</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.522</td>
+<td style="text-align: center;">q10</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.523</td>
+<td style="text-align: center;">q10</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.524</td>
+<td style="text-align: center;">q11</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.525</td>
+<td style="text-align: center;">q11</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.7071068</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.526</td>
+<td style="text-align: center;">q11</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.527</td>
+<td style="text-align: center;">q11</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.528</td>
+<td style="text-align: center;">q12</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.529</td>
+<td style="text-align: center;">q12</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">1.4142136</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.530</td>
+<td style="text-align: center;">q12</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.531</td>
+<td style="text-align: center;">q12</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.532</td>
+<td style="text-align: center;">q13</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.533</td>
+<td style="text-align: center;">q13</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.7071068</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.534</td>
+<td style="text-align: center;">q13</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.535</td>
+<td style="text-align: center;">q13</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.536</td>
+<td style="text-align: center;">q14</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.537</td>
+<td style="text-align: center;">q14</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.7071068</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.538</td>
+<td style="text-align: center;">q14</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.539</td>
+<td style="text-align: center;">q14</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.540</td>
+<td style="text-align: center;">q15</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.541</td>
+<td style="text-align: center;">q15</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.542</td>
+<td style="text-align: center;">q15</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.543</td>
+<td style="text-align: center;">q15</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">1.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.544</td>
+<td style="text-align: center;">q16</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.545</td>
+<td style="text-align: center;">q16</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.546</td>
+<td style="text-align: center;">q16</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.9574271</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.547</td>
+<td style="text-align: center;">q16</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.548</td>
+<td style="text-align: center;">q17</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.549</td>
+<td style="text-align: center;">q17</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.7071068</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.550</td>
+<td style="text-align: center;">q17</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.551</td>
+<td style="text-align: center;">q17</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.552</td>
+<td style="text-align: center;">q20</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.553</td>
+<td style="text-align: center;">q20</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.554</td>
+<td style="text-align: center;">q20</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.555</td>
+<td style="text-align: center;">q20</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.556</td>
+<td style="text-align: center;">q21</td>
+<td style="text-align: center;">Akron</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.5000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.557</td>
+<td style="text-align: center;">q21</td>
+<td style="text-align: center;">Detroit</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.558</td>
+<td style="text-align: center;">q21</td>
+<td style="text-align: center;">Macon</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">NaN</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.559</td>
+<td style="text-align: center;">q21</td>
+<td style="text-align: center;">Miami</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.5773503</td>
+</tr>
+</tbody>
+</table>
+
+
 </div>
 </div>
-</section>
-<section id="per-city-government-team" class="level4">
-<h4 class="anchored" data-anchor-id="per-city-government-team">Per City Government Team</h4>
-<ul>
-<li><p>1 = Strongly disagree</p></li>
-<li><p>2 = Disagree</p></li>
-<li><p>3 = Agree</p></li>
-<li><p>4 = Strongly agree</p></li>
-</ul>
-</section>
 </section>
 <section id="participant-background" class="level2">
 <h2 class="anchored" data-anchor-id="participant-background">Participant Background</h2>

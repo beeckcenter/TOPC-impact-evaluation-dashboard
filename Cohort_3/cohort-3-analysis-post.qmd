@@ -127,8 +127,6 @@ $\text{Weight for Miami} = \frac{\frac{13}{40}}{\frac{3}{14}} = \frac{0.325}{0.2
 
 ## Descriptive data analysis
 
-#### Per Question
-
 For Q4
 
 Please note that the absence of confidence intervals and standard errors for the median in the strata of Akron, Detroit, and Miami could be due to the **`svyquantile`** function not being able to compute these values with the available data. This is typically due to small sample sizes or other limitations in the data. The confidence interval for Macon, being precise, might suggest limited responses or a lack of variation in the responses for that stratum.
@@ -158,62 +156,90 @@ Please note that the absence of confidence intervals and standard errors for the
     -   **Standard Deviation**: The standard deviation is approximately 0.58, suggesting a moderate level of variability, similar to Akron.
 
 ```{r}
-#| label: central-tendancy-per-question
+#| label: q4-summary-statistics
 #| message: false
 
-# Define the strata
-strata <- c("Akron", "Detroit", "Macon", "Miami")
+# # Define the strata
+# strata <- c("Akron", "Detroit", "Macon", "Miami")
+# 
+# # Initialize a data frame to store the results for question q4
+# results_df <- data.frame(
+#     Stratum = character(),
+#     Median = numeric(),
+#     StandardDeviation = numeric(),
+#     stringsAsFactors = FALSE
+# )
+# 
+# # Calculate stats for question q4 across each stratum
+# for (stratum in strata) {
+#     stratum_design <- subset(design, city_mapped == stratum)
+#     median_val <- svyquantile(~q4, stratum_design, 0.5, na.rm = TRUE)
+#     sd_val <- sqrt(svyvar(~q4, stratum_design, na.rm = TRUE))
+# 
+#     # Extract the median and standard deviation values
+#     median_q4 <- median_val[1]  # Extracting the median value for q4
+#     sd_q4 <- sd_val[1]  # Extracting the SD value for q4
+# 
+#     # Append the results to the data frame
+#     results_df <- rbind(results_df, data.frame(
+#         Stratum = stratum,
+#         Median = median_q4,
+#         StandardDeviation = sd_q4
+#     ))
+# }
+# 
+# # Print the results for q4
+# print(results_df)
+```
 
-# Initialize a data frame to store the results for question q4
+```{r}
+#| label: all-questions-summary-statistics
+#| message: false
+
+# Define the strata and questions
+strata <- c("Akron", "Detroit", "Macon", "Miami")
+questions <- c("q4", "q5", "q6", "q7", "q9", "q10", "q11", "q12", "q13", "q14", "q15", "q16", "q17", "q20", "q21")
+
+# Initialize a data frame to store the results
 results_df <- data.frame(
+    Question = character(),
     Stratum = character(),
     Median = numeric(),
     StandardDeviation = numeric(),
     stringsAsFactors = FALSE
 )
 
-# Calculate stats for question q4 across each stratum
-for (stratum in strata) {
-    # Create stratum-specific design
-    stratum_design <- subset(design, city_mapped == stratum)
-    
-    # Calculate weighted median for q4
-    median_val <- svyquantile(~q4, stratum_design, 0.5, na.rm = TRUE)
-    
-    # Calculate weighted standard deviation for q4
-    sd_val <- sqrt(svyvar(~q4, stratum_design, na.rm = TRUE))
-    
-    # Extract the median and standard deviation values
-    median_q4 <- median_val[1]  # Extracting the median value for q4
-    sd_q4 <- sd_val[1]  # Extracting the SD value for q4
-    
-    # Append the results to the data frame
-    results_df <- rbind(results_df, data.frame(
-        Stratum = stratum,
-        Median = median_q4,
-        StandardDeviation = sd_q4
-    ))
+# Calculate stats for each question across each stratum
+for (question in questions) {
+    for (stratum in strata) {
+        # Create the design for the current stratum
+        stratum_design <- subset(design, city_mapped == stratum)
+
+        # Compute the median and standard deviation for the current question
+        median_val <- svyquantile(~get(question), stratum_design, 0.5, na.rm = TRUE)
+        sd_val <- sqrt(svyvar(~get(question), stratum_design, na.rm = TRUE))
+        
+        # Extract the median and standard deviation values
+        median_question <- median_val[1]  # Extracting the median value for the question
+        sd_question <- sd_val[1]  # Extracting the SD value for the question
+        
+        # Append the results to the data frame
+        results_df <- rbind(results_df, data.frame(
+            Question = question,
+            Stratum = stratum,
+            Median = median_question,
+            StandardDeviation = sd_question
+        ))
+    }
 }
 
-# Print the results for q4
-print(results_df)
-```
+# Print the results
+# print(results_df)
 
-#### Per City Government Team
+library(knitr)
 
--   1 = Strongly disagree
-
--   2 = Disagree
-
--   3 = Agree
-
--   4 = Strongly agree
-
-```{r}
-#| label: central-tendancy-per-stratum-across-all-questions
-#| message: false
-
-
+kable(results_df, caption = "Post-test Survey Results by City and Question", 
+      align = 'c', format = "html")
 ```
 
 ## Participant Background

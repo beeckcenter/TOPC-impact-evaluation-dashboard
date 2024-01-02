@@ -134,7 +134,7 @@ So, in summary:
 This approach is consistent with handling complex survey data where some strata have limitations like having only one PSU. This method of handling of the data aligns well with these challenges.
 
 ```{r}
-#| label: central-tendancy-per-question
+#| label: all-questions-summary-statistics
 #| message: false
 
 # Calculate central tendancy per question per stratum
