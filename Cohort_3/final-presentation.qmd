@@ -13,51 +13,113 @@ format:
 editor: visual
 ---
 
-## **Overview**
-
-**What is this?**
-
-This report presents insights into the learning outcomes of Cohort 3 participants in The Opportunity Project for Cities (TOPC) in 2023. It also evaluates the program's effectiveness in improving participants':
-
-1.  Awareness and knowledge.
-
-2.  Competencies and confidence (self-efficacy).
-
-3.  Recognition and application of methods.
-
-4.  Intention to action and overall satisfaction.
-
-------------------------------------------------------------------------
-
-**How do I use this?**
-
-It's really easy! Start with the [Executive Summary] for an overview of key findings, then [Insights], followed by [Evaluation Questions].
-
-1.  Make a copy of this file. 
-
-2.  Export graphs and data sources, including code.
-
-3.  Customize this report to your liking. You might want to remove this page :) 
-
-4.  Have tissues close by. This report could bring tears of joy.
-
-------------------------------------------------------------------------
-
-**What if I have questions?**
-
-Email Elham Ali, Researcher at the Beeck Center for Social Impact and Innovation, at [[elham.ali\@georgetown.edu]{.underline}](http://elham.ali@georgetown.edu/). 
-
 ## Acknowledgement
 
-We would like to thank the Knight Foundation, the Beeck Center for Social Impact and Innovation, Center for Public Impact, Google.org, and our program participants including city governments and their community partners. This report wouldn't have been possible without your perspectives.
+We would like to thank the Knight Foundation, the Beeck Center for Social Impact and Innovation, Center for Public Impact, Google.org, and all participating city governments and their community partners.
+
+Your active engagement, insights, and commitment were pivotal in bringing this report to fruition.
 
 ![](images/topc-partners.png){fig-align="left"}
 
+::: footer
+Learn more: [TOPC Partners](https://quarto.org/docs/output-formats/html-code.html#highlighting)
+:::
+
 ## Executive Summary
+
+## **Overview**
+
+This report provides insights and recommendations into the learning outcomes of Cohort 3 participants, city governments, in The Opportunity Project for Cities (TOPC) in 2023. It evaluates the program's effectiveness in improving participants':
+
+-   Awareness and knowledge.
+
+-   Competencies and confidence (self-efficacy).
+
+-   Recognition and application of methods.
+
+-   Intention to action and overall satisfaction.
+
+## **Program Goals**
+
+The primary objectives of the TOPC program are to: 
+
+-   Understand and strengthen human-centered design, open data, and design sprint principles and methods across city governments.
+
+-   Ensure grounding in human-centered design concepts through peer-to-peer connections and community partnerships.
+
+-   Share practical strategies and approaches for solving a local challenge and implementing data-driven solution with the community.
+
+## **Success Outcomes**
+
+This report aims to evaluates the first outcome from these outcome measures:
+
+1.  Increase in public servants' capacity for community-centered digital innovation.
+
+2.  More effective government services and increased data use.
+
+3.  Improved government legitimacy.
+
+::: footer
+Learn more: [Program Outcomes](https://quarto.org/docs/output-formats/html-code.html#highlighting)
+:::
+
+## Evaluation Goals
+
+The evaluation focuses on comprehensively assessing the TOPC design sprint's effectiveness across all participant cohorts. The key goals include:
+
+-   **Goal 1:** Increase participants' **awareness and knowledge** of human-centered design principles regarding addressing local community civic challenges.
+
+-   **Goal 2:** Increase participant **competencies and confidence** in the intersections of human-centered design methods, community research, product stewardship, and partnerships for addressing local community challenges.
+
+------------------------------------------------------------------------
+
+-   **Goal 3**: Increase participants' **recognition and application** of human-centered design and design sprint techniques in their work in collaboration with their department teams, community partners, and residents.
+
+-   **Goal 4:** Measure **participant satisfaction** with program outcomes and **intention toward action** after the design sprint.
 
 ## Evaluation Questions
 
+The evaluation questions that drive the analysis, insights, and recommendations are:
+
+-   **Goal 1:** To what extent has the program improved participants' awareness and knowledge of human-centered design in a local challenge in their communities?
+
+-   **Goal 2:** How have participants' competencies and confidence in understanding and applying the concepts of community research, product stewardship, and partnership improved to addressing local community challenges?
+
+------------------------------------------------------------------------
+
+-   **Goal 3**: How has the program increased participants' ability to recognize and apply methods and concepts in human-centered design and design sprints?
+
+-   **Goal 4:** How satisfied are participants with the outcomes of the program? What are the participants' intentions regarding applying the knowledge and skills gained in the program, particularly after the end of the program?
+
+## Logic Model
+
+TBD
+
 ## Methodology
+
+There is a total of **40 city governments employees** who participated in Cohort 3 of the TOPC program in 2023. **9-15 participants** (22.5-37.5%) engaged in evaluation activities.
+
+To measure baseline knowledge, inform course corrections, change in participant learning, and change in department's work, the data collection methods are:
+
+-   **Structured evaluations** through surveys and interviews at specific points in the program.
+
+-   **Ongoing feedback** with an Insights and testimonials form throughout the design sprint.
+
+------------------------------------------------------------------------
+
+| Survey            | Sample Size | Timing                               |
+|-------------------|-------------|--------------------------------------|
+| Pre-test          | 15          | Before program                       |
+| Midpoint check-in | 9           | After 2-3 phases                     |
+| Post-test         | 13          | At the end of program                |
+| 6-month follow-up | N/A         | 6-months after program               |
+| Learning session  | 4 - 18      | At the end of every learning session |
+
+------------------------------------------------------------------------
+
+| Interview | Sample Size | Timing                |
+|-----------|-------------|-----------------------|
+| Post-test | 13          | At the end of program |
 
 ## Insights
 
@@ -110,19 +172,37 @@ In general, there is a positive improvement in terms of competence and confidenc
 
 ## Limitations
 
--   **The survey design had issues.** We relied on descriptive data and interviews to find trends and themes. Qualitative analysis of open-ended responses also provided some insights into changes in participants' experiences and perceptions.
+::: callout-warning
+## Key Takeaway
 
--   **The survey was not distributed to all program participants**. This could have biased sample size and results. We corrected this challenge by calculating and defining survey design weights.
+The analysis, while supported by survey sampling weights, comes with inherent limitations. While these weights and other sampling design techniques help in making the sample more reflective of the broader population, it's important to note that they cannot entirely compensate for all the limitations inherent in the data.
 
--   **In the post-test data, there was a PSU of one**, which means we cannot calculate the variance. There were other methods to correct this such as using bootstrapping or jacknife, but these methods are time consuming and can't justify the need for it.
+To interpret the findings within the context of these methodological constraints, qualitative data from interviews provide the nuances of participant learning outcomes. We strive for transparency and rigor, ensuring stakeholders are fully informed about the strengths and constraints of the findings.
+:::
 
 ------------------------------------------------------------------------
 
--   The pre-test and post-test survey questions are conceptually aligned but not directly comparable in terms of measurement scales and language of questions. The pre-test uses a 4-point Likert scale focused on agreement, while the post-test uses a 5-point scale assessing expertise levels. This difference in scales means a direct comparison or change analysis (like a t-test) is not straightforward.
+-   **Survey design data collection challenges:** The pre- and post-test surveys had design errors which contributed to bias. Thus, the evaluation relied on descriptive data analysis and interviews for identifying trends and themes. Qualitative analysis of open-ended responses provided insights into changes in participants' experiences and perceptions.
 
--   However, **both sets of questions target similar skills and experiences.** To assess changes, we looked at shifts in distribution of responses, using non-parametric methods or descriptive statistics to compare before and after without inferring statistical significance based on the Likert scale points.
+-   **Survey distribution and sample representation:** Incomplete or varying methods of survey distribution may have impacted the representativeness of results. Application of survey design weights attempted to correct for potential biases in sample size and results.
+
+------------------------------------------------------------------------
+
+-   **Challenges in data analysis:** Presence of a single primary sampling unit (PSU) in post-test data limited variance calculation. Alternatives like bootstrapping or jackknife methods were not used due to it not being able to correct for bias existing in data collection and time constraints.
+
+-   **Comparison of pre-test and post-test data:** Pre-test and post-test surveys are conceptually aligned but differed in both questions and scales: a 4-point Likert scale for pre-test (focusing on agreement) and a 5-point scale for post-test (assessing expertise levels). Shifts in response distributions were analyzed using non-parametric methods, focusing on overall trends with descriptive statistics to compare before and after without inferring statistical significance. They are not directly comparable, which means means a direct comparison or change analysis like a t-test is not straightforward.
+
+------------------------------------------------------------------------
+
+-   **Nonresponse and uneven survey uptake across cities:** Although there were approximately 15 and 13 responses for the pre-test and post-test, respectively, the response rate for each is not uniform. For example, there was only one response in the pre-test, which made computing central tendency and spread difficult. Response rates varied notably, with about 15 responses for the pre-test and 13 for the post-test. Uneven distribution of responses across cities, such as only one pre-test response from a specific city, complicated the analysis.
+
+-   **Participant drop offs and inconsistent engagement:** Role or organizational changes among participants led to data gaps, as those no longer in the program couldn't provide follow-up information.
+
+------------------------------------------------------------------------
 
 -   In our analysis of the survey data, we have applied survey sampling weights to adjust for disparities in response rates and representation across different city government groups. While these weights help in making our sample more reflective of the broader population, it's important to note that they cannot entirely compensate for all the limitations inherent in the data. Specifically, the non-random nature of our sampling method and the presence of biases in sample collection present challenges that weights alone may not fully address. As a result, while the weighted analysis offers valuable insights, the findings should be interpreted with an understanding of these constraints. We remain committed to transparency and rigor in our research and want to ensure that all stakeholders are aware of the nuances and limitations of the methods employed.
+
+## FAQ
 
 ## Appendix
 
@@ -133,3 +213,7 @@ In general, there is a positive improvement in terms of competence and confidenc
 -   Interview recordings and analysis
 
 ## References
+
+## Contact Us
+
+If you have questions or comments about this report, email Elham Ali, Researcher at the Beeck Center for Social Impact and Innovation, at [[elham.ali\@georgetown.edu]{.underline}](http://elham.ali@georgetown.edu/). 
