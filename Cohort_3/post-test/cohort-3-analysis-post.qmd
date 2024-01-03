@@ -523,8 +523,8 @@ q4_post_cross_tab_city_plot <- ggplot(q4_cross_tab_city_df, aes(x = city_mapped,
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
           drop=FALSE) +  
-  labs(title = "Majority agree that they learned community research skills, and
-some strongly agreeing, particularly in Miami and Detroit.",
+  labs(title = "Q4. I learned new skills in community research practices, such as 
+leading interviews and conducting surveys, during this program.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",

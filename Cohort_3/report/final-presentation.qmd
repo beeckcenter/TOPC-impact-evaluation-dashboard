@@ -134,13 +134,49 @@ To measure baseline knowledge, inform course corrections, change in participant 
 
 More than half of respondents agree they learned new skills in community research practices.
 
-## Before
+## Before 
 
-![](q8_pre_cross_tab_city_plot.png)
+![](images/q8_pre_cross_tab_city_plot.png)
 
 ## After
 
-## Quotes
+```{r}
+# Cross-tabulation with cities
+q4_cross_tab_city <- svytable(~q4 + city_mapped, design = design)
+
+q4_levels_ordered <- as.factor(as.data.frame(q4_cross_tab_city)$q4)
+q4_levels_ordered <- factor(q4_levels_ordered, levels = c("1", "2", "3", "4"))
+
+q4_cross_tab_city_df <- as.data.frame(q4_cross_tab_city)
+q4_cross_tab_city_df$q4 <- factor(q4_cross_tab_city_df$q4, levels = c("1", "2", "3", "4"))
+
+q4_post_cross_tab_city_plot <- ggplot(q4_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q4)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
+  coord_flip() +
+  expand_limits(y = c(0, total_sample)) +
+  scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
+          drop=FALSE) +  
+  labs(title = "Q4. I learned new skills in community research practices, such as 
+leading interviews and conducting surveys, during this program.",
+       subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
+       x = "",
+       y = "Number of Responses",
+       caption = "Source: TOPC Cohort 3 Survey (2023)") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.title = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.title = element_text(face = "bold"),
+        plot.caption = element_text(hjust = 0)) +
+  guides(fill = guide_legend(reverse = TRUE, nrow = 1, byrow = TRUE))
+
+print(q4_post_cross_tab_city_plot)
+```
+
+![](images/q4_post_cross_tab_city_plot-01.png)
+
+## Quotes 
 :::
 
 ::: footer
