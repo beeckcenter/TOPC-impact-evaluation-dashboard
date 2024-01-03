@@ -351,6 +351,12 @@ Please rate your familiarity with the following skills.
 
 **Q11. Conducting community research (leading interviews, surveys, observations, etc.)**
 
+More than half respondents agree they learned new skills in community 
+research practices
+
+Akron is newest to community research skills, concepts and 
+terminologies, with Miami and Macon most experienced.
+
 ```{r}
 #| label: q8-descriptive-stat-plot
 #| message: false
@@ -398,8 +404,8 @@ q8_pre_cross_tab_city_plot <- ggplot(q8_cross_tab_city_df, aes(x = city_mapped, 
   coord_flip() +
   expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F")) +
-  labs(title = "Akron is newest to community research skills, concepts and 
-terminologies, with Miami and Macon most experienced.",
+  labs(title = "Q11. Conducting community research (leading interviews, 
+surveys, observations, etc.).",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",

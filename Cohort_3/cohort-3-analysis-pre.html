@@ -812,6 +812,8 @@ Miami     Miami                   4                    0.6726299</code></pre>
 <h4 class="anchored" data-anchor-id="community-research"><strong>Community Research</strong></h4>
 <p>Please rate your familiarity with the following skills.</p>
 <p><strong>Q11. Conducting community research (leading interviews, surveys, observations, etc.)</strong></p>
+<p>More than half respondents agree they learned new skills in community research practices</p>
+<p>Akron is newest to community research skills, concepts and terminologies, with Miami and Macon most experienced.</p>
 <div class="cell" data-hash="cohort-3-analysis-pre_cache/html/q8-descriptive-stat-plot_3825a7b50b899d4af457ad5f48d89226">
 <details>
 <summary>Code</summary>
@@ -844,7 +846,7 @@ Miami     Miami                   4                    0.6726299</code></pre>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"q8_pre_frequency_plot.png"</span>, q8_pre_frequency_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/q8-cross-tabs-plot_7a13296248d21f645ad6f1aeb7264955">
+<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/q8-cross-tabs-plot_8f4047a577fa32f0ef31a52019bb2cce">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cross-tabulation with cities</span></span>
@@ -864,8 +866,8 @@ Miami     Miami                   4                    0.6726299</code></pre>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
 <span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, total_sample)) <span class="sc">+</span> </span>
 <span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"5"</span> <span class="ot">=</span> <span class="st">"#041e42"</span>, <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"#6eaddc"</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"#da291c"</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"#1B786E"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"#701C7F"</span>)) <span class="sc">+</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Akron is newest to community research skills, concepts and </span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="st">terminologies, with Miami and Macon most experienced."</span>,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Q11. Conducting community research (leading interviews, </span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="st">surveys, observations, etc.)."</span>,</span>
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Rating Scale: 5 - Expert to 1 - New (n ="</span>, total_sample, <span class="st">")"</span>),</span>
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">""</span>,</span>
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of Responses"</span>,</span>

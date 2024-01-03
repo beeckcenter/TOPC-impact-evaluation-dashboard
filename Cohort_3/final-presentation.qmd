@@ -129,21 +129,22 @@ To measure baseline knowledge, inform course corrections, change in participant 
 
 #### Participant competencies and confidence (self-efficacy)
 
-::: columns
-::: {.column width="50%"}
-Post-test
+::: panel-tabset
+## Finding
 
-```{r}
-# | label: community-research-pre-vs-post
+More than half of respondents agree they learned new skills in community research practices.
 
-knitr::include_graphics("q8_frequency_plot.png")
+## Before
 
-```
+![](q8_pre_cross_tab_city_plot.png)
+
+## After
+
+## Quotes
 :::
 
-::: {.column width="50%"}
-Pre-test
-:::
+::: footer
+Key learning area: Community research
 :::
 
 ------------------------------------------------------------------------
@@ -175,26 +176,28 @@ In general, there is a positive improvement in terms of competence and confidenc
 ::: callout-warning
 ## Key Takeaway
 
-The analysis, while supported by survey sampling weights, comes with inherent limitations. While these weights and other sampling design techniques help in making the sample more reflective of the broader population, it's important to note that they cannot entirely compensate for all the limitations inherent in the data.
+The analysis, while supported by survey sampling weights, comes with inherent limitations. While these weights and other statistical techniques help make the sample more reflective of the broader population, it's important to note that they cannot entirely compensate for all the limitations inherent in the data.
 
-To interpret the findings within the context of these methodological constraints, qualitative data from interviews provide the nuances of participant learning outcomes. We strive for transparency and rigor, ensuring stakeholders are fully informed about the strengths and constraints of the findings.
+To interpret the findings within the context of these methodological constraints, qualitative data from interviews provide the nuances of uncovering participant experiences.
+
+We strive for transparency and rigor, ensuring stakeholders are fully informed about the strengths and constraints of the findings.
 :::
 
 ------------------------------------------------------------------------
 
--   **Survey design data collection challenges:** The pre- and post-test surveys had design errors which contributed to bias. Thus, the evaluation relied on descriptive data analysis and interviews for identifying trends and themes. Qualitative analysis of open-ended responses provided insights into changes in participants' experiences and perceptions.
+-   **Survey design data collection challenges:** The pre- and post-test surveys had question design errors which contributed to bias. Thus, the evaluation relied on descriptive data analysis and interviews for identifying trends and themes. Qualitative analysis of open-ended responses provided insights into changes in participants' experiences and perceptions.
 
 -   **Survey distribution and sample representation:** Incomplete or varying methods of survey distribution may have impacted the representativeness of results. Application of survey design weights attempted to correct for potential biases in sample size and results.
 
 ------------------------------------------------------------------------
 
--   **Challenges in data analysis:** Presence of a single primary sampling unit (PSU) in post-test data limited variance calculation. Alternatives like bootstrapping or jackknife methods were not used due to it not being able to correct for bias existing in data collection and time constraints.
+-   **Challenges in data analysis:** Presence of a single primary sampling unit (PSU) in post-test data limited variance calculation. Alternatives like bootstrapping or jackknife methods were not used for causal inference due to it not being able to correct for existing bias in data collection.
 
 -   **Comparison of pre-test and post-test data:** Pre-test and post-test surveys are conceptually aligned but differed in both questions and scales: a 4-point Likert scale for pre-test (focusing on agreement) and a 5-point scale for post-test (assessing expertise levels). Shifts in response distributions were analyzed using non-parametric methods, focusing on overall trends with descriptive statistics to compare before and after without inferring statistical significance. They are not directly comparable, which means means a direct comparison or change analysis like a t-test is not straightforward.
 
 ------------------------------------------------------------------------
 
--   **Nonresponse and uneven survey uptake across cities:** Although there were approximately 15 and 13 responses for the pre-test and post-test, respectively, the response rate for each is not uniform. For example, there was only one response in the pre-test, which made computing central tendency and spread difficult. Response rates varied notably, with about 15 responses for the pre-test and 13 for the post-test. Uneven distribution of responses across cities, such as only one pre-test response from a specific city, complicated the analysis.
+-   **Nonresponse and uneven survey uptake across cities:** Response rates varied notably, with about 15 responses for the pre-test and 13 for the post-test. Uneven distribution of responses across cities, such as only one pre-test response from a specific city, complicated the analysis.
 
 -   **Participant drop offs and inconsistent engagement:** Role or organizational changes among participants led to data gaps, as those no longer in the program couldn't provide follow-up information.
 

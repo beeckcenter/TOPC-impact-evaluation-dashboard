@@ -612,8 +612,6 @@ ggsave("q5_post_frequency_plot.png", q5_post_frequency_plot)
 # Cross-tabulation with cities
 q5_cross_tab_city <- svytable(~q5 + city_mapped, design = design)
 
-q5_cross_tab_city <- svytable(~q5 + city_mapped, design = design)
-
 q5_levels_ordered <- as.factor(as.data.frame(q5_cross_tab_city)$q5)
 q5_levels_ordered <- factor(q5_levels_ordered, levels = c("1", "2", "3", "4"))
 
