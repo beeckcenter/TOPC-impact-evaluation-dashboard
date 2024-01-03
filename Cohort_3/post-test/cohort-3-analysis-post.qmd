@@ -661,8 +661,8 @@ q6_post_frequency_plot <- ggplot(q6_frequency_df, aes(x = q6, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) + 
-  labs(title = "All respondents agree they learned new skills to apply user 
-testing feedback in their solution development.",
+  labs(title = "Q6. I learned new skills in applying user testing feedback to shape 
+the development of our solution.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -688,13 +688,12 @@ q6_cross_tab_city_df <- as.data.frame(q6_cross_tab_city)
 q6_cross_tab_city_df$q6 <- factor(q6_cross_tab_city_df$q6, levels = c("1", "2", "3", "4"))
 
 q6_post_cross_tab_city_plot <- ggplot(q6_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q6)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
           drop=FALSE) +  
-  labs(title = "Majority agree that they learned user testing skills to develop their 
-solutions, with Miami strongly agreeing the most.",
+  labs(title = "Q6. I learned new skills in applying user testing feedback to shape the development of our solution.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -756,7 +755,7 @@ q15_cross_tab_city_df <- as.data.frame(q15_cross_tab_city)
 q15_cross_tab_city_df$q15 <- factor(q15_cross_tab_city_df$q15, levels = c("1", "2", "3", "4"))
 
 q15_post_cross_tab_city_plot <- ggplot(q15_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q15)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
@@ -823,7 +822,7 @@ q16_cross_tab_city_df <- as.data.frame(q16_cross_tab_city)
 q16_cross_tab_city_df$q16 <- factor(q16_cross_tab_city_df$q16, levels = c("1", "2", "3", "4"))
 
 q16_post_cross_tab_city_plot <- ggplot(q16_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q16)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
@@ -867,8 +866,8 @@ q9_post_frequency_plot <- ggplot(q9_frequency_df, aes(x = q9, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) + 
-  labs(title = "All respondents agree they learned different strategies to 
-brainstorm ideas based on community research insights.",
+  labs(title = "Q9. I learned different strategies to brainstorm many ideas
+based on the insights taken from the community research.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -892,13 +891,13 @@ q9_cross_tab_city_df <- as.data.frame(q9_cross_tab_city)
 q9_cross_tab_city_df$q9 <- factor(q9_cross_tab_city_df$q9, levels = c("1", "2", "3", "4"))
 
 q9_post_cross_tab_city_plot <- ggplot(q9_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q9)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
           drop=FALSE) +   
-  labs(title = "Majority agree that they learned different strategories to brainstorm 
-ideas using community research, but some disagree in Miami and Macon.",
+  labs(title = "Q9. I learned different strategies to brainstorm many ideas
+based on the insights taken from the community research.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -961,7 +960,7 @@ q10_cross_tab_city_df <- as.data.frame(q10_cross_tab_city)
 q10_cross_tab_city_df$q10 <- factor(q10_cross_tab_city_df$q10, levels = c("1", "2", "3", "4"))
 
 q10_post_cross_tab_city_plot <- ggplot(q10_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q10)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
@@ -1029,7 +1028,7 @@ q11_cross_tab_city_df <- as.data.frame(q11_cross_tab_city)
 q11_cross_tab_city_df$q11 <- factor(q11_cross_tab_city_df$q11, levels = c("1", "2", "3", "4"))
 
 q11_post_cross_tab_city_plot <- ggplot(q11_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q11)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
@@ -1098,7 +1097,7 @@ q12_cross_tab_city_df <- as.data.frame(q12_cross_tab_city)
 q12_cross_tab_city_df$q12 <- factor(q12_cross_tab_city_df$q12, levels = c("1", "2", "3", "4"))
 
 q12_post_cross_tab_city_plot <- ggplot(q12_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q12)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
@@ -1167,7 +1166,7 @@ q13_cross_tab_city_df <- as.data.frame(q13_cross_tab_city)
 q13_cross_tab_city_df$q13 <- factor(q13_cross_tab_city_df$q13, levels = c("1", "2", "3", "4"))
 
 q13_post_cross_tab_city_plot <- ggplot(q13_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q13)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
@@ -1238,7 +1237,7 @@ q14_cross_tab_city_df <- as.data.frame(q14_cross_tab_city)
 q14_cross_tab_city_df$q14 <- factor(q14_cross_tab_city_df$q14, levels = c("1", "2", "3", "4"))
 
 q14_post_cross_tab_city_plot <- ggplot(q14_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q14)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
@@ -1307,7 +1306,7 @@ q17_cross_tab_city_df <- as.data.frame(q17_cross_tab_city)
 q17_cross_tab_city_df$q17 <- factor(q17_cross_tab_city_df$q17, levels = c("1", "2", "3", "4"))
 
 q17_post_cross_tab_city_plot <- ggplot(q17_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q17)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
@@ -1378,7 +1377,7 @@ q20_cross_tab_city_df <- as.data.frame(q20_cross_tab_city)
 q20_cross_tab_city_df$q20 <- factor(q20_cross_tab_city_df$q20, levels = c("1", "2", "3", "4"))
 
 q20_post_cross_tab_city_plot <- ggplot(q20_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q20)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
@@ -1447,7 +1446,7 @@ q7_cross_tab_city_df <- as.data.frame(q7_cross_tab_city)
 q7_cross_tab_city_df$q7 <- factor(q7_cross_tab_city_df$q7, levels = c("1", "2", "3", "4"))
 
 q7_post_cross_tab_city_plot <- ggplot(q7_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q7)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
@@ -1519,7 +1518,7 @@ q21_cross_tab_city_df <- as.data.frame(q21_cross_tab_city)
 q21_cross_tab_city_df$q21 <- factor(q21_cross_tab_city_df$q21, levels = c("1", "2", "3", "4"))
 
 q21_post_cross_tab_city_plot <- ggplot(q21_cross_tab_city_df, aes(x = city_mapped, y = Freq, fill = q21)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),

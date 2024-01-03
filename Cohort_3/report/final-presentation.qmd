@@ -133,12 +133,12 @@ Show composition of interview participants based on city government, role, gende
 
 #### 4. Participant satisfaction and Intention to Action
 
-## Findings
+------------------------------------------------------------------------
 
 ::: panel-tabset
 ## Summary
 
-The survey results suggest a positive improvement in participants' self-reported familiarity with community research skills after the program, especially in Macon where all participants agreed unanimously on this skill. The results indicate the curriculum's effectiveness in equipping individuals with practical community research skills, regardless of their initial familiarity.
+The survey results suggest a positive shift in participants' self-reported familiarity with community research skills after the program, especially in Macon where all participants agreed unanimously on this skill. The results indicate the curriculum's effectiveness in equipping individuals with practical community research skills, regardless of their initial familiarity.
 
 The interviews TBD.
 
@@ -160,10 +160,48 @@ While these responses indicate perceived effectiveness of the program, without i
 :::
 
 ::: footer
-Key learning area: Community research
+KLA: Community research
 :::
 
 ------------------------------------------------------------------------
+
+::: panel-tabset
+## Summary
+
+Survey data indicates participants from all cities perceived an improvement in their ability to apply user testing feedback in developing solutions after the program, especially in Miami where the belief in skill enhancement was strongest. This perceived improvement, particularly where initial self-assessed expertise was low, suggests the program was effective in bridging knowledge gaps. It underscores the importance of practical, hands-on training in user testing methods, which can empower participants to more effectively iterate on community-based projects, enhancing the relevance and impact of their work.
+
+## Before
+
+![](images/q9_pre_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## After
+
+![](images/q6_post_cross_tab_city_plot-01.png){fig-align="center" width="80%"}
+
+## Data
+
+Weighted summary statistics. Median (standard deviation).
+
+::: callout-caution
+The weighted pre- and post-test summary statistics are not comparable because their questions and Likert scales are different. But, they provide general trends and patterns that are useful.
+:::
+
+| City    | Pre | Post         |
+|---------|-----|--------------|
+| Akron			   | 2   | 1.380131119  |
+| Detroit | 3   | NA           |
+| Macon   | 3   | 0.5773502692 |
+| Miami   | 4   | 0.5773502692 |
+
+## Quotes
+:::
+
+::: notes
+:::
+
+::: footer
+KLA: User Testing
+:::
 
 ## Recommendations {data-link="Recommendations"}
 
