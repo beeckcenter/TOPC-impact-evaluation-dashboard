@@ -642,8 +642,8 @@ q13_pre_frequency_plot <- ggplot(q13_frequency_df, aes(x = q13, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) + 
-  labs(title = "Majority of respondents believe they moderately or experienced in their 
-skills evaluating solutions based on community need.",
+  labs(title = "Q16. Evaluating ideas/solutions based on community need, feasibility, 
+or viability.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -673,8 +673,8 @@ q13_pre_cross_tab_city_plot <- ggplot(q13_cross_tab_city_df, aes(x = city_mapped
   expand_limits(y = c(0, total_sample)) + 
   scale_fill_manual(values = c("5" = "#041e42", "4" = "#6eaddc", "3" = "#da291c", "2" = "#1B786E", "1" = "#701C7F"),
                     drop=FALSE) +
-  labs(title = "The most experienced to this skill are city teams that have
-previously participated in the TOPC program.",
+  labs(title = "Q16. Evaluating ideas/solutions based on community need, feasibility, 
+or viability.",
        subtitle = paste("Rating Scale: 5 - Expert to 1 - New (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",

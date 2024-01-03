@@ -159,37 +159,37 @@ Please note that the absence of confidence intervals and standard errors for the
 #| label: q4-summary-statistics
 #| message: false
 
-# # Define the strata
-# strata <- c("Akron", "Detroit", "Macon", "Miami")
-# 
-# # Initialize a data frame to store the results for question q4
-# results_df <- data.frame(
-#     Stratum = character(),
-#     Median = numeric(),
-#     StandardDeviation = numeric(),
-#     stringsAsFactors = FALSE
-# )
-# 
-# # Calculate stats for question q4 across each stratum
-# for (stratum in strata) {
-#     stratum_design <- subset(design, city_mapped == stratum)
-#     median_val <- svyquantile(~q4, stratum_design, 0.5, na.rm = TRUE)
-#     sd_val <- sqrt(svyvar(~q4, stratum_design, na.rm = TRUE))
-# 
-#     # Extract the median and standard deviation values
-#     median_q4 <- median_val[1]  # Extracting the median value for q4
-#     sd_q4 <- sd_val[1]  # Extracting the SD value for q4
-# 
-#     # Append the results to the data frame
-#     results_df <- rbind(results_df, data.frame(
-#         Stratum = stratum,
-#         Median = median_q4,
-#         StandardDeviation = sd_q4
-#     ))
-# }
-# 
-# # Print the results for q4
-# print(results_df)
+# Define the strata
+strata <- c("Akron", "Detroit", "Macon", "Miami")
+
+# Initialize a data frame to store the results for question q4
+results_df <- data.frame(
+    Stratum = character(),
+    Median = numeric(),
+    StandardDeviation = numeric(),
+    stringsAsFactors = FALSE
+)
+
+# Calculate stats for question q4 across each stratum
+for (stratum in strata) {
+    stratum_design <- subset(design, city_mapped == stratum)
+    median_val <- svyquantile(~q4, stratum_design, 0.5, na.rm = TRUE)
+    sd_val <- sqrt(svyvar(~q4, stratum_design, na.rm = TRUE))
+
+    # Extract the median and standard deviation values
+    median_q4 <- median_val[1]  # Extracting the median value for q4
+    sd_q4 <- sd_val[1]  # Extracting the SD value for q4
+
+    # Append the results to the data frame
+    results_df <- rbind(results_df, data.frame(
+        Stratum = stratum,
+        Median = median_q4,
+        StandardDeviation = sd_q4
+    ))
+}
+
+# Print the results for q4
+print(results_df)
 ```
 
 ```{r}
@@ -993,8 +993,6 @@ ggsave("plots/q10_post_cross_tab_city_plot.png", q10_post_cross_tab_city_plot)
 # Single-variable frequency plot
 q11_frequency <- svytable(~q11, design = design)
 
-q11_frequency <- svytable(~q11, design = design)
-
 all_levels_df <- data.frame(q11 = factor(1:4, levels = 1:4), Freq = integer(4))
 
 q11_frequency_df <- merge(all_levels_df, as.data.frame(q11_frequency), by = "q11", all.x = TRUE)
@@ -1004,7 +1002,8 @@ q11_post_frequency_plot <- ggplot(q11_frequency_df, aes(x = q11, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) + 
-  labs(title = "All respondents agree they learned new skills to identify and evaluate data.",
+  labs(title = "Q11. I learned new skills in identifying and evaluating 
+data to support the digital solution.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -1033,8 +1032,8 @@ q11_post_cross_tab_city_plot <- ggplot(q11_cross_tab_city_df, aes(x = city_mappe
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
           drop=FALSE) +   
-  labs(title = "Majority agree that they learned new skills to identify and evaluate 
-data, with Miami and Detroit strongly agreeing the most.",
+  labs(title = "Q11. I learned new skills in identifying and evaluating 
+data to support the digital solution.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",

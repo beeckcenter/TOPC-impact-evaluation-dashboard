@@ -1122,7 +1122,7 @@ Miami     Miami                   4                    0.6726299</code></pre>
 <h4 class="anchored" data-anchor-id="product-stewardship"><strong>Product Stewardship</strong></h4>
 <p>Please rate your familiarity with the following skills.</p>
 <p><strong>Q16. Evaluating ideas/solutions based on community need, feasibility, or viability</strong></p>
-<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/q13-plots_db7c1bb48a67f537b1c93b2d0b362a29">
+<div class="cell" data-hash="cohort-3-analysis-pre_cache/html/q13-plots_1e3f3dd47de6c0f6b4f8377c5d9792a1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Single-variable frequency plot</span></span>
@@ -1137,8 +1137,8 @@ Miami     Miami                   4                    0.6726299</code></pre>
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"#041e42"</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, total_sample)) <span class="sc">+</span> </span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Majority of respondents believe they moderately or experienced in their </span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="st">skills evaluating solutions based on community need."</span>,</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Q16. Evaluating ideas/solutions based on community need, feasibility, </span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="st">or viability."</span>,</span>
 <span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Rating Scale: 5 - Expert to 1 - New (n ="</span>, total_sample, <span class="st">")"</span>),</span>
 <span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">""</span>,</span>
 <span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of Responses"</span>,</span>
@@ -1173,8 +1173,8 @@ Miami     Miami                   4                    0.6726299</code></pre>
 <span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, total_sample)) <span class="sc">+</span> </span>
 <span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"5"</span> <span class="ot">=</span> <span class="st">"#041e42"</span>, <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"#6eaddc"</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"#da291c"</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"#1B786E"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"#701C7F"</span>),</span>
 <span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">drop=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The most experienced to this skill are city teams that have</span></span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="st">previously participated in the TOPC program."</span>,</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Q16. Evaluating ideas/solutions based on community need, feasibility, </span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="st">or viability."</span>,</span>
 <span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Rating Scale: 5 - Expert to 1 - New (n ="</span>, total_sample, <span class="st">")"</span>),</span>
 <span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">""</span>,</span>
 <span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of Responses"</span>,</span>
