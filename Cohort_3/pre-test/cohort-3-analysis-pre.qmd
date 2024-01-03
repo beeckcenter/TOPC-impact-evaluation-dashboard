@@ -356,7 +356,7 @@ More than half respondents agree they learned new skills in community research p
 Akron is newest to community research skills, concepts and terminologies, with Miami and Macon most experienced.
 
 ```{r}
-#| label: q8-descriptive-stat-plot
+#| label: q8-single-variable-plot
 #| message: false
 
 # Single-variable frequency plot
@@ -388,11 +388,9 @@ ggsave("plots/q8_pre_frequency_plot.png", q8_pre_frequency_plot)
 # Cross-tabulation with cities
 q8_cross_tab_city <- svytable(~q8 + city_mapped, design = design)
 
-# Ensure that 'q8' is a factor with levels ordered from 1 to 5
 q8_levels_ordered <- as.factor(as.data.frame(q8_cross_tab_city)$q8)
 q8_levels_ordered <- factor(q8_levels_ordered, levels = c("1", "2", "3", "4", "5"))
 
-# Update the cross-tabulation data frame to use the ordered levels
 q8_cross_tab_city_df <- as.data.frame(q8_cross_tab_city)
 q8_cross_tab_city_df$q8 <- factor(q8_cross_tab_city_df$q8, levels = c("1", "2", "3", "4", "5"))
 
@@ -419,8 +417,6 @@ surveys, observations, etc.).",
 
 # Print the plot to display it in the document
 print(q8_pre_cross_tab_city_plot)
-
-# Use ggsave to save the plot
 ggsave("plots/q8_pre_cross_tab_city_plot.png", q8_pre_cross_tab_city_plot)
 ```
 
