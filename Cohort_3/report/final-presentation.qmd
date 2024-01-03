@@ -8,7 +8,7 @@ format:
     chalkboard: 
       buttons: false
     preview-links: auto
-    logo: images/topc.png
+    logo: images/topc-logo.png
     footer: Published on January 2, 2024
 editor: visual
 ---
@@ -115,7 +115,9 @@ To measure baseline knowledge, inform course corrections, change in participant 
 | 6-month follow-up | N/A         | 6-months after program               |
 | Learning session  | 4 - 18      | At the end of every learning session |
 
-------------------------------------------------------------------------
+Show composition of pre vs post surveys based on city government, role, gender, seniority, etc. Show total sample size + weighted sample
+
+Show composition of interview participants based on city government, role, gender, seniority, etc.
 
 | Interview | Sample Size | Timing                |
 |-----------|-------------|-----------------------|
@@ -123,24 +125,38 @@ To measure baseline knowledge, inform course corrections, change in participant 
 
 ## Insights
 
-#### Participant awareness and knowledge
+#### 1. Participant awareness and knowledge
 
-------------------------------------------------------------------------
+#### 2. Participant competencies and confidence (self-efficacy)
 
-#### Participant competencies and confidence (self-efficacy)
+#### 3. Participant recognition and application of methods
+
+#### 4. Participant satisfaction and Intention to Action
+
+## Findings
 
 ::: panel-tabset
-## Finding
+## Summary
 
-More than half of respondents agree they learned new skills in community research practices.
+The survey results suggest a positive improvement in participants' self-reported familiarity with community research skills after the program, especially in Macon where all participants agreed unanimously on this skill. The results indicate the curriculum's effectiveness in equipping individuals with practical community research skills, regardless of their initial familiarity.
+
+The interviews TBD.
 
 ## Before
 
-![](images/q8_pre_cross_tab_city_plot.png)
+![](images/q8_pre_cross_tab_city_plot.png){fig-align="center" width="90%"}
 
 ## After
 
+![](images/q4_post_cross_tab_city_plot-02.png){fig-align="center" width="80%"}
+
 ## Quotes
+:::
+
+::: notes
+The program has potential for replication and adaptation in diverse settings, emphasizes the importance of customizing educational approaches to cater to varying levels of baseline knowledge, to benefit broader community research initiatives through skilled practitioners.
+
+While these responses indicate perceived effectiveness of the program, without inferential statistical analysis, we cannot definitively conclude the program's impact. The data highlights the value of such training initiatives and supports the need for further analysis to understand the true extent of learning outcomes across different starting skill levels.
 :::
 
 ::: footer
@@ -148,28 +164,6 @@ Key learning area: Community research
 :::
 
 ------------------------------------------------------------------------
-
-#### Participant recognition and application of methods
-
-::: panel-tabset
-## Before
-
-```{r}
-#| child: Cohort_3/post-test/cohort-3-analysis-pre.qmd
-```
-
-## After
-
-## Quotes
-
-## Finding
-
-In general, there is a positive improvement in terms of competence and confidence (i.e. self efficacy of skills) towards community research. However, these results are not reflective of the general population, i.e. of all participants in the TOPC program.
-:::
-
-------------------------------------------------------------------------
-
-#### Participant satisfaction and Intention to Action
 
 ## Recommendations {data-link="Recommendations"}
 
