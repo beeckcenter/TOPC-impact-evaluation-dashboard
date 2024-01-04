@@ -1,0 +1,747 @@
+---
+title: "The Opportunity Project for Cities"
+subtitle: "Cohort 3 Impact Evaluation Report 2023"
+format:
+  revealjs:
+    slide-number: true
+    show-slide-number: all
+    chalkboard: 
+      buttons: false
+    preview-links: true
+    logo: images/topc-logo.png
+    footer: Published on January 2, 2024
+    controls: true
+editor: visual
+---
+
+## Acknowledgement
+
+We would like to thank the Knight Foundation, the Beeck Center for Social Impact and Innovation, Center for Public Impact, Google.org, and all participating city governments and their community partners.
+
+Your active engagement, insights, and commitment were pivotal in bringing this report to fruition.
+
+![](images/topc-partners.png)
+
+::: footer
+Learn more: [TOPC Partners](https://quarto.org/docs/output-formats/html-code.html#highlighting)
+:::
+
+## Executive Summary
+
+::: {.fragment .fade-in}
+**💡 To maximize critical thinking skill** development across varying expertise levels, adapt the program with specialized tracks for new learners and advanced practitioners.
+:::
+
+::: {.fragment .fade-in}
+**💡 To better align with participants'** pre-existing knowledge and reduce project timelines pressures, refine the program content to eliminate redundant content and introduce adaptive pacing.
+:::
+
+::: {.fragment .fade-in}
+**💡 To prevent skill plateauing** and foster continuous professional advancement, expand the curriculum with advanced HCD modules and a city maturity model.
+:::
+
+## **Overview**
+
+This report provides insights and recommendations into the learning outcomes of Cohort 3 participants, city governments, in The Opportunity Project for Cities (TOPC) in 2023. It evaluates the program's effectiveness in improving participants':
+
+-   Awareness and knowledge.
+
+-   Competencies and confidence (self-efficacy).
+
+-   Recognition and application of methods.
+
+-   Intention to action and overall satisfaction.
+
+## **Program Goals**
+
+The primary objectives of the TOPC program are to: 
+
+-   Enhance human-centered design, open data, and design sprint **competencies** across city governments.
+
+-   Connect human-centered design principles and methods through **peer-to-peer connections** and community partnerships.
+
+-   Deliver **products and services** grounded in practical strategies and approaches for solving a local challenge and implementing data-driven solution with the community.
+
+## **Success Outcomes**
+
+This report aims to evaluate the initial outcome from the following performance metrics:
+
+1.  Increase in public servants' capacity for community-centered digital innovation.
+
+2.  More effective government services and increased data use.
+
+3.  Improved government legitimacy.
+
+::: callout-note
+## Note
+
+The above outcomes are derived from the benchmarks set by the Knight Foundation.
+:::
+
+::: footer
+Learn more: [Program Outcomes](https://quarto.org/docs/output-formats/html-code.html#highlighting)
+:::
+
+## Evaluation Goals
+
+::: callout-note
+## Note
+
+The following five evaluation goals aim to measure Outcome #1 of the Success Metrics: Increase in public servants' capacity for community-centered digital innovation.
+:::
+
+-   **Goal 1:** Increase participants' **awareness and knowledge** of human-centered design principles to address local community challenges.
+
+------------------------------------------------------------------------
+
+-   **Goal 2:** Increase participant **competencies and confidence** in the intersections of human-centered design methods, community research, product stewardship, and partnerships for addressing local community challenges.
+
+-   **Goal 3**: Increase participants' **recognition and application** of human-centered design and design sprint techniques in their work in collaboration with their department teams, community partners, and residents.
+
+-   **Goal 4:** Measure **participant satisfaction** with program outcomes.
+
+-   **Goal 5:** Measure participant **intention toward action** after the program.
+
+## Evaluation Questions
+
+The evaluation questions that drive the analysis, insights, and recommendations are:
+
+-   **Goal 1:** To what extent has the program improved participants' awareness and knowledge of human-centered design in a local challenge in their communities?
+
+-   **Goal 2:** How have participants' competencies and confidence in understanding and applying the concepts of community research, product stewardship, and partnership improved to addressing local community challenges?
+
+------------------------------------------------------------------------
+
+-   **Goal 3**: How has the program increased participants' ability to recognize and apply methods and concepts in human-centered design and design sprints?
+
+-   **Goal 4:** How satisfied are participants with the outcomes of the program?
+
+-   **Goal 5:** What are the participants' intentions regarding applying the knowledge and skills gained in the program, particularly after the end of the program?
+
+## Methodology
+
+There is a total of **40 city governments employees** who participated in Cohort 3 of the TOPC program in 2023.
+
+**9-15 participants** (22.5-37.5%) engaged in evaluation activities.
+
+The data collection methods are:
+
+-   **Structured evaluations** through surveys and interviews at specific points in the program.
+
+-   **Ongoing feedback** with an Insights and testimonials form throughout the design sprint.
+
+------------------------------------------------------------------------
+
+## Surveys
+
+Surveys were collected and distributed via **Google Forms.** Learning session polls were collected and distributed **Zoom polls.**
+
+Data cleaning, wrangling and analysis were completed in **R.** Reports generated via **Quatro**.
+
+**Descriptive and exploratory analyses** were completed. Used sample design weights, stratification, and PSU (Primary Sampling Units) adjustments for robustness. Inferential analysis was not performed due to non-comparability in question design and response options between the pre- and post-test surveys.
+
+------------------------------------------------------------------------
+
+| Survey            | Sample Size | Timing                               |
+|-------------------|-------------|--------------------------------------|
+| Pre-test          | 15          | Before program                       |
+| Midpoint check-in | 9           | After 2-3 phases                     |
+| Post-test         | 13          | At the end of program                |
+| 6-month follow-up | N/A         | 6-months after program               |
+| Learning session  | 4 - 18      | At the end of every learning session |
+
+------------------------------------------------------------------------
+
+## Semi-structured Interviews
+
+Interviews were conducted and recorded via **Zoom Conferencing.**
+
+Qualitative data analysis is currently being completed in **atlas.ti.** Reports generated via **Quatro.**
+
+**Closed coding** is currently being completed for post-test interviews. A structured code book is being used. No pre-test interviews were conducted, limiting the ability to compare changes in participant experiences and journeys over time.
+
+------------------------------------------------------------------------
+
+| Interview | Sample Size | Timing                |
+|-----------|-------------|-----------------------|
+| Post-test | 9           | At the end of program |
+
+------------------------------------------------------------------------
+
+## Insights and Recommendations {data-link="Recommendations"}
+
+**💡 To maximize critical thinking skill** development across varying expertise levels, adapt the program with specialized tracks for new learners and advanced practitioners.
+
+**💡 To better align with participants'** pre-existing knowledge and reduce project timelines pressures, refine the program content to eliminate redundant content and introduce adaptive pacing.
+
+**💡 To prevent skill plateauing** and foster continuous professional advancement, expand the curriculum with advanced HCD modules and a city maturity model.
+
+------------------------------------------------------------------------
+
+### Insight #1 {data-link="Recommendations"}
+
+During the program, participants from various backgrounds engaged in a process to **improve their skills** in community engagement and digital product management. The positive shift in self-reported skills across multiple areas post-program suggests that the curriculum was effective in enhancing practical skills, such as community research, user testing, data evaluation, and managing digital products. However, participants experienced some challenges with **stakeholder engagement**, **technology alignment**, and the **pressure** of the sprint timeline.
+
+::: footer
+💡 Insight #1
+:::
+
+------------------------------------------------------------------------
+
+The variability in participants' prior experience led to differing levels of engagement and **perceived value** from the program's offerings. Cities with less initial expertise, like Akron, saw **more substantial gains**, indicating that the curriculum was particularly beneficial for those at the **earlier stages of skill development**. Participants were motivated to enhance their skill set but required different levels of support and **flexibility in the curriculum** to accommodate their varying levels of expertise and experience. The program's **"one-size-fits-all" approach** led to **mixed outcomes**, where some participants found certain elements redundant or less beneficial, while others experienced significant skill enhancement.
+
+::: footer
+💡 Insight #1
+:::
+
+------------------------------------------------------------------------
+
+::: callout-tip
+## Recommendation
+
+To address the diverse needs of participants, the program should provide a more **tailored curriculum** that offers flexibility and adapts to the varying skill levels of the participants. This could involve offering advanced modules for more experienced participants while reinforcing fundamental concepts for newcomers.
+
+Additionally, fostering a **hybrid collaborative environment** that accommodates both in-person and digital interaction can help mitigate zoom fatigue. Managing **expectations** for "repeat" participants can enhance stakeholder engagement.
+:::
+
+Relevant to [Finding 2.1] - [Finding 4.3].
+
+::: footer
+💡 Insight #1
+:::
+
+------------------------------------------------------------------------
+
+### Insight #2 {data-link="Recommendations"}
+
+The program brings together diverse participants to collaborate on community-centered projects, with the aim of i**mproving public service** through digital solutions. The findings indicate a **strong endorsement** of the **program's structure** and support mechanisms, with **facilitation and peer learning** highlighted as particularly beneficial.
+
+However, some participants found aspects of the process, such as **redundant training** and **bureaucratic hurdles,** to be less helpful.
+
+::: footer
+💡 Insight #2
+:::
+
+------------------------------------------------------------------------
+
+The repetition of content and the **rigid structure of the program** did not always align with participants' existing knowledge (and expectations) and the dynamic nature of project development.
+
+Participants were driven by the desire to create impactful community solutions but needed a **more responsive and adaptive** program structure to effectively leverage their skills and knowledge. The limited flexibility in the curriculum and the **intense pace of the sprint** sometimes created pressure and detracted from the overall learning experience, leading to **fatigue** and reduced effectiveness.
+
+::: footer
+💡 Insight #2
+:::
+
+------------------------------------------------------------------------
+
+::: callout-tip
+## Recommendation
+
+The program should streamline its content to **avoid repetition** and provide **more advanced options** for those with prior experience.
+
+It should also introduce mechanisms and practical resources to **navigate bureaucratic processes** more smoothly and build in more timeline flexibility to **account for setbacks.** The recommendation is to evaluate and refresh the curriculum regularly, considering participants' feedback to ensure relevance and engagement.
+:::
+
+Relevant to [Finding 2.1] - [Finding 4.3].
+
+::: footer
+💡 Insight #2
+:::
+
+------------------------------------------------------------------------
+
+### Insight #3 {data-link="Recommendations"}
+
+The program aims to foster a robust set of human-centered design (HCD) skills among participants to improve their ability to develop and manage community-facing products and services.
+
+While participants' self-reported skills improved in areas such as prioritizing product requirements and creating sustainability plans, some experienced a saturation point in their HCD skill development. There was also an indication that **expectations for the program varied**, affecting participants' perceived value and engagement.
+
+::: footer
+💡 Insight #3
+:::
+
+------------------------------------------------------------------------
+
+Participants with advanced HCD competencies reached a **plateau in skill advancement**, while others with less experience found the program to be significantly beneficial.
+
+All participants sought to advance their competencies in HCD, but their **different starting points** meant that their learning goals and the program's effectiveness varied.
+
+Participants with **higher levels of pre-existing HCD** competencies found some elements of the **program less bene**ficial, indicating a need for more advanced and differentiated learning paths.
+
+::: footer
+💡 Insight #3
+:::
+
+------------------------------------------------------------------------
+
+::: callout-tip
+## Recommendation
+
+For participants who have reached a **higher order of critical thinking skills** in HCD, the program should offer advanced opportunities for **peer teaching and mentorship**. This can prevent the **plateau effect** and ensure continuous professional growth.
+
+Additionally, crafting a **maturity model** and defining an **ideal city persona** can help in customizing the program to better fit the needs of participating cities at different stages of HCD maturity.
+:::
+
+Relevant to [Finding 2.1] - [Finding 4.3].
+
+::: footer
+💡 Insight #3
+:::
+
+------------------------------------------------------------------------
+
+## Findings
+
+#### 1. Participant knowledge and awareness
+
+The pre- and post-test surveys did not include questions designed to directly measure participants' knowledge and awareness.
+
+Future iterations will incorporate such queries to gauge participant understanding of key concepts.
+
+------------------------------------------------------------------------
+
+#### 2. Participant competencies and confidence (self-efficacy)
+
+Self-efficacy is measured against three types of skills:
+
+-   **Community research**, such as research, user testing, wireframing, ideation, brainstorming and prototyping.
+
+-   **Product stewardship**, such as data evaluation, product requirements, and sustainability.
+
+Findings includes: [Finding 2.1], [Finding 2.2], [Finding 2.3], [Finding 2.4], [Finding 2.5], [Finding 2.6], [Finding 2.7], [Finding 2.8], [Finding 2.8].
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 2.1
+
+The survey results suggest a positive shift in participants' self-reported familiarity with **community research skills** after the program, especially in Macon where all participants agreed unanimously on this skill. The results indicate the curriculum's effectiveness in equipping individuals with practical community research skills, regardless of their initial familiarity.
+
+## Before
+
+![](images/q8_pre_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## After
+
+![](images/q4_post_cross_tab_city_plot-02.png){fig-align="center" width="80%"}
+
+## Quotes
+:::
+
+::: notes
+The program has potential for replication and adaptation in diverse settings, emphasizes the importance of customizing educational approaches to cater to varying levels of baseline knowledge, to benefit broader community research initiatives through skilled practitioners.
+
+While these responses indicate perceived effectiveness of the program, without inferential statistical analysis, we cannot definitively conclude the program's impact. The data highlights the value of such training initiatives and supports the need for further analysis to understand the true extent of learning outcomes across different starting skill levels.
+:::
+
+::: footer
+KLA: Community research
+:::
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 2.2
+
+Survey data indicates a positive shift in self-reported **user testing skills** post-program. It suggests that participants believe the program has effectively taught them about user testing and applying feedback. The consistent responses in Detroit and the higher levels of agreement in Miami could reflect the quality of the program's training and its impact on participants with varying initial expertise levels.
+
+## Before
+
+![](images/q9_pre_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## After
+
+![](images/q6_post_cross_tab_city_plot-01.png){fig-align="center" width="80%"}
+
+## Quotes
+:::
+
+::: footer
+KLA: Community research
+:::
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 2.3
+
+The data suggests that participants from all cities felt they learned about brainstorming strategies, improving from their initial self-assessed skill levels in creating wireframes or prototypes, irrespective of their initial experience with this skill.
+
+This shift is particularly significant for Akron, which started with the lowest self-assessment.
+
+## Before
+
+![](images/q10_pre_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## After
+
+![](images/q9_post_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## Quotes
+:::
+
+::: footer
+KLA: Community research
+:::
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 2.4
+
+The survey results indicate a positive trend in participants' self-perceived skills in identifying and evaluating data to support digital solutions post-training, with all cities showing agreement or strong agreement on having learned new skills. Notably, Akron's unanimous post-test agreement is a significant shift from the pre-test where there was considerable variability in self-assessment. This change highlights the program's potential in equipping participants with practical evaluation skills, crucial for developing community-centered digital solutions.
+
+## Before
+
+![](images/q13_pre_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## After
+
+![](images/q11_post_cross_tab_city_plot-01.png){fig-align="center" width="80%"}
+
+## Quotes
+:::
+
+::: footer
+KLA: Community research
+:::
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 2.5
+
+The survey results indicate a general agreement among participants that they have defined a **community role in service design**, with Miami showing a stronger consensus on this capability. Notably, Akron shows improvement despite starting with less confidence. The change in standard deviation from pre-test to post-test across the cities suggests that the program may have had a harmonizing effect on participants' self-perceptions of their abilities to engage with community members in the design process. The data implies that participants might be leaving the program with a more aligned understanding of their skills and roles.
+
+## Before
+
+![](images/q14_pre_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## After
+
+![](images/q7_post_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## Quotes
+:::
+
+::: footer
+KLA: Community research
+:::
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 2.6
+
+The survey data reveals a positive shift across all participant cities in self-reported skills for **prioritizing digital product requirements.** Akron, which began with the lowest self-confidence, shows a notable increase in median score and a reduction in standard deviation, indicating a more unified positive self-assessment post-program. Detroit, while agreeing on learning new skills, exhibits a higher standard deviation post-program, suggesting a broader range of participant confidence levels. The data highlights the importance of starting with fundamental concepts for those with less experience and providing more advanced participants with opportunities to refine and expand their skills.
+
+## Before
+
+![](images/q15_pre_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## After
+
+![](images/q10_post_cross_tab_city_plot-01.png){fig-align="center" width="80%"}
+
+## Quotes
+:::
+
+::: footer
+KLA: Product stewardship
+:::
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 2.7
+
+The survey results indicates improved self-reported skills in **managing a community-facing digital product**, particularly in Akron, where there was a notable increase in median scores and a decrease in variability of responses. In contrast, Detroit displayed an increase in response variability post-program.
+
+These trends suggest the program was particularly beneficial to those starting with minimal expertise. The contrast in Detroit's results could be indicative of a need to investigate the program's varying impact or participants' expectations versus their experience.
+
+## Before
+
+![](images/q18_pre_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## After
+
+![](images/q12_post_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## Quotes
+:::
+
+::: footer
+KLA: Product stewardship
+:::
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 2.8
+
+The survey results indicate improved participants' skills in **creating sustainability plans for digital products**, particularly in Akron and Macon, where there is an improvement in consensus. Detroit's varied results hint at unmet training expectations, while Miami shows a shift from a wide range of initial self-assessments to a more confident and uniform response post-program. These findings underscore a program to address the diverse starting points and learning needs of participants. However, the self-reported nature of this data could mean these observations indicate perceived learning rather than conclusive evidence of actual skill acquisition.
+
+## Before
+
+![](images/q19_pre_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## After
+
+![](images/q13_post_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## Quotes
+:::
+
+::: footer
+KLA: Product stewardship
+:::
+
+------------------------------------------------------------------------
+
+#### 3. Participant recognition and application of methods
+
+Application of methods is measured against one type of skill:
+
+-   **Partnerships**, with community partners, internal stakeholders, and tech vendors.
+
+Findings includes: [Finding 3.1], [Finding 3.2], [Finding 3.3].
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 3.1
+
+The survey results suggests an improvement in participants' perceived ability to **collaborate with community organizations**, with Akron showing the most significant increase in consensus. Detroit's unanimous post-test agreement contrasts with the lack of pre-test variability data. Macon demonstrates a stable perception of skills. While the program had an impact in Miami, the extent of perceived skill enhancement varies among participants, possibly due to differing levels of engagement or prior experience. The program needs to cater to the varied needs and starting points of participants to maximize their effectiveness.
+
+## Before
+
+![](images/q21_pre_cross_tab_city_plot-01.png){fig-align="center" width="80%"}
+
+## After
+
+![](images/q15_post_cross_tab_city_plot-01.png){fig-align="center" width="80%"}
+
+## Quote
+:::
+
+::: footer
+KLA: Partnerships
+:::
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 3.2
+
+The survey results suggest a positive shift in participants across all cities building consensus and aligning **long-term plans with internal stakeholders.** While all cities started with a high level of self-reported expertise, the post-program data reflect a shared sense of skill enhancement. The reduction in SD in most cities post-training indicates a stronger consensus on these new abilities. These findings highlight the potential effectiveness of the program in improving collaborative competencies within city and county departments. Better-aligned teams ultimately benefit the communities they serve by fostering a more unified approach to public service.
+
+## Before
+
+![](images/q22_pre_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## After
+
+![](images/q16_post_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## Quotes
+:::
+
+::: footer
+KLA: Partnerships
+:::
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 3.3
+
+The survey results indicate that participants' confidence in **collaborating with technical partners**, especially in Akron, increased. Macon and Miami maintained their confidence levels with moderate agreement, while Detroit shows variability in participant responses, highlighting a potential area for investigation. The results suggest that this type skill can effectively increase the preparedness of individuals for technical collaborations, which is important for successful product delivery and launch with external vendors.
+
+## Before
+
+![](images/q23_pre_cross_tab_city_plot.png){fig-align="center" width="80%"}
+
+## After
+
+![](images/q17_post_cross_tab_city_plot-01.png){fig-align="center" width="80%"}
+
+## Quotes
+:::
+
+::: footer
+KLA: Partnerships
+:::
+
+------------------------------------------------------------------------
+
+#### 4. Participant satisfaction
+
+Satisfaction is measured against recommending the program to peers with relevant findings:
+
+-   **Areas for improvement**
+
+-   **Most helpful** aspect of the program
+
+-   **Least helpful** aspect of the program
+
+-   **Initial expectations** at the start of the program
+
+Findings includes: [Finding 4.1], [Finding 4.2], [Finding 4.3].
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 4.1
+
+Overall, participants across all cities would recommend the program to their peers, with Akron and Miami showing particularly strong endorsements. While the consensus is strong, there are some differing opinions on the strength of their recommendations.
+
+## After
+
+![](images/q21_post_cross_tab_city_plot-01.png){fig-align="center" width="80%"}
+:::
+
+::: footer
+Participant satisfaction
+:::
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 4.2
+
+## Improvements
+
+-   **Stakeholder engagement and preparation** around ensuring commitment from internal partners, scheduling key stakeholders, and including community partners from the start.
+
+-   **Methodology and execution** like aligning technology and user experience design early, maintaining consistent coaches, and simplifying ideas.
+
+-   **Collaboration and communication** with more in-person meetings and including more technical expertise.
+
+-   **Resource and tool management** by increasing familiarity with new tools and techniques and including more comprehensive workshops.
+
+## Most Helpful
+
+-   **Interactive learning and engagement** like in-person workshops, design phases, and the practice of creativity.
+
+-   **Program structure and support** such as coaches, learning session facilitators, and the organic development process.
+
+-   **Collaborative Environment and Peer Learning**: Involves learning from the experiences of other teams and effective communication within the group.
+
+## Least Helpful
+
+-   **Redundant training and repetitive content** with some content training was repetitive from previous sprints and not seen as beneficial. Familiarity with the design thinking process made some instructional meetings feel irrelevant.
+
+-   **Process management** encounteredbureaucratic hurdles and the pressure of the sprint timeline.
+
+-   **Zoom fatigue and meeting management** with concerns about the frequency of virtual meetings leading to fatigue.
+:::
+
+::: footer
+Participant satisfaction
+:::
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+## Finding 4.3
+
+Overall, the **expectations** **before starting the program** reflect a diverse range of learning goals, from acquiring specific technical skills to developing a deeper understanding of government-community interactions and improving collaboration abilities. There is a notable emphasis on human-centered approaches, whether in technology design, community engagement, or interdepartmental coordination. These goals indicate a desire to be more effective in public-facing roles, ensuring inclusivity and responsiveness to community needs.
+
+## Before
+
+**Q29. What are your personal learning goals for this project?**
+
+**Q30. What do you hope your team accomplishes during this project?**
+
+-   "My hope is that we learn to work together and increase the practice of collaboration adds to success."
+
+-   "A product that is used by the residents it was intended to help."
+
+-   "A better understanding of our problem in order to provide continuing support for the issue."
+:::
+
+::: footer
+Participant satisfaction
+:::
+
+------------------------------------------------------------------------
+
+#### 5. Intention to Action
+
+The pre- and post-test surveys did not include questions designed to directly measure participants\' intention to action towards HCD after the end of the program
+
+Future iterations will incorporate such queries to gauge participant willingness to apply HCD methods and skills in their work after the program ends.
+
+------------------------------------------------------------------------
+
+## Limitations
+
+::: callout-warning
+## Key Takeaway
+
+The analysis, while supported by survey sampling weights, comes with inherent limitations. While these weights and other statistical techniques help make the sample more reflective of the broader population, it's important to note that they cannot entirely compensate for all the limitations inherent in the data.
+
+To interpret the findings within the context of these methodological constraints, qualitative data from interviews provide the nuances of uncovering participant experiences.
+
+We strive for transparency and rigor, ensuring stakeholders are fully informed about the strengths and constraints of the findings.
+:::
+
+------------------------------------------------------------------------
+
+-   **Survey design data collection challenges:** The pre- and post-test surveys had question design errors which contributed to bias. Thus, the evaluation relied on descriptive data analysis and interviews for identifying trends and themes. Qualitative analysis of open-ended responses provided insights into changes in participants' experiences and perceptions.
+
+-   **Survey distribution and sample representation:** Incomplete or varying methods of survey distribution may have impacted the representativeness of results. Application of survey design weights attempted to correct for potential biases in sample size and results.
+
+------------------------------------------------------------------------
+
+-   **Challenges in data analysis:** Presence of a single primary sampling unit (PSU) in post-test data limited variance calculation. Alternatives like bootstrapping or jackknife methods were not used for causal inference due to it not being able to correct for existing bias in data collection.
+
+------------------------------------------------------------------------
+
+-   **Comparison of pre-test and post-test data:** Pre-test and post-test surveys are conceptually aligned but differed in both questions and scales: a 4-point Likert scale for pre-test (focusing on agreement) and a 5-point scale for post-test (assessing expertise levels). Shifts in response distributions were analyzed using non-parametric methods, focusing on overall trends with descriptive statistics to compare before and after without inferring statistical significance. They are not directly comparable, which means means a direct comparison or change analysis like a t-test is not straightforward.
+
+::: notes
+In our analysis of the survey data, we have applied survey sampling weights to adjust for disparities in response rates and representation across different city government groups. While these weights help in making our sample more reflective of the broader population, it's important to note that they cannot entirely compensate for all the limitations inherent in the data. Specifically, the non-random nature of our sampling method and the presence of biases in sample collection present challenges that weights alone may not fully address. As a result, while the weighted analysis offers valuable insights, the findings should be interpreted with an understanding of these constraints. We remain committed to transparency and rigor in our research and want to ensure that all stakeholders are aware of the nuances and limitations of the methods employed.
+:::
+
+------------------------------------------------------------------------
+
+-   **Nonresponse and uneven survey uptake across cities:** Response rates varied notably, with about 15 responses for the pre-test and 13 for the post-test. Uneven distribution of responses across cities, such as only one pre-test response from a specific city, complicated the analysis.
+
+-   **Participant drop offs and inconsistent engagement:** Role or organizational changes among participants led to data gaps, as those no longer in the program couldn't provide follow-up information.
+
+------------------------------------------------------------------------
+
+## FAQ
+
+TBD
+
+------------------------------------------------------------------------
+
+## Appendix
+
+-   Github repository
+
+-   Survey responses
+
+-   Interview recordings and analysis
+
+------------------------------------------------------------------------
+
+## Data
+
+::: panel-tabset
+## Pre-test
+
+Weighted summary statistics. Median (standard deviation).
+
+::: callout-caution
+The weighted pre- and post-test summary statistics are not comparable because their questions and Likert scales are different. But, they provide general trends and patterns that are useful.
+:::
+:::
+
+## References
+
+## Contact Us
+
+If you have questions or comments about this report, email Elham Ali, Researcher at the Beeck Center for Social Impact and Innovation, at [[elham.ali\@georgetown.edu]{.underline}](http://elham.ali@georgetown.edu/). 
