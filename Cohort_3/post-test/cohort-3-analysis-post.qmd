@@ -729,9 +729,8 @@ q15_post_frequency_plot <- ggplot(q15_frequency_df, aes(x = q15, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) + 
-  labs(title = "All respondents agree they learned new skills to collaborate 
-with a community organization from problem discovery to 
-solution co-design.",
+  labs(title = "Q15. I learned new skills in collaborating with a community organization 
+to research a problem and co-design a solution.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -760,8 +759,8 @@ q15_post_cross_tab_city_plot <- ggplot(q15_cross_tab_city_df, aes(x = city_mappe
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
           drop=FALSE) +  
-  labs(title = "Majority agree that they learned skills to collaborate with a community 
-organization, with Akron strongly agreeing the most.",
+  labs(title = "Q15. I learned new skills in collaborating with a community organization 
+to research a problem and co-design a solution.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -797,8 +796,8 @@ q16_post_frequency_plot <- ggplot(q16_frequency_df, aes(x = q16, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) + 
-  labs(title = "All respondents agree they learned news skills to build 
-consensus and align on long-term plans with internal stakeholders.",
+  labs(title = "Q16. I learned new skills in building consensus and aligning 
+on long-term plans with internal stakeholders.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -827,8 +826,8 @@ q16_post_cross_tab_city_plot <- ggplot(q16_cross_tab_city_df, aes(x = city_mappe
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
           drop=FALSE) +  
-  labs(title = "Majority agree that they learned skills to build build internal 
-consensus, with Detroit and Akron agreeing the most.",
+  labs(title = "Q16. I learned new skills in building consensus and aligning 
+on long-term plans with internal stakeholders.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -966,7 +965,7 @@ q10_post_cross_tab_city_plot <- ggplot(q10_cross_tab_city_df, aes(x = city_mappe
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
           drop=FALSE) +   
   labs(title = "Q10. I learned new skills in outlining and prioritizing requirements 
-       for the development of a digital product.",
+for the development of a digital product.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -1071,8 +1070,8 @@ q12_post_frequency_plot <- ggplot(q12_frequency_df, aes(x = q12, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) + 
-  labs(title = "Most respondents agree they learned new skills to manage
-developing a digital product.",
+  labs(title = "Q12. I learned new skills for managing the development 
+of a digital product.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -1101,8 +1100,8 @@ q12_post_cross_tab_city_plot <- ggplot(q12_cross_tab_city_df, aes(x = city_mappe
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
           drop=FALSE) +   
-  labs(title = "Majority agree that they learned new skills to manage developing 
-a digital product, but some disagree in Macon and Detroit.",
+  labs(title = "Q12. I learned new skills for managing the development 
+of a digital product.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -1140,8 +1139,8 @@ q13_post_frequency_plot <- ggplot(q13_frequency_df, aes(x = q13, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) + 
-  labs(title = "Most respondents agree they learned new skills to create a
-product sustainability plan.",
+  labs(title = "Q13. I learned new skills for creating a product sustainability 
+plan to ensure that product is improved and maintained.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -1170,8 +1169,8 @@ q13_post_cross_tab_city_plot <- ggplot(q13_cross_tab_city_df, aes(x = city_mappe
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
           drop=FALSE) +   
-  labs(title = "Majority agree that they learned new skills to create a product 
-sustainability plan, but some disagree in Detroit.",
+  labs(title = "Q13. I learned new skills for creating a product sustainability 
+plan to ensure that product is improved and maintained.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -1280,8 +1279,8 @@ q17_post_frequency_plot <- ggplot(q17_frequency_df, aes(x = q17, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) + 
-  labs(title = "Most respondents agree they feel confident working with technical
-partners to design a tool.",
+  labs(title = "Q17. I feel confident working with technical partners to design a tool 
+and advance the tool's development.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -1310,8 +1309,8 @@ q17_post_cross_tab_city_plot <- ggplot(q17_cross_tab_city_df, aes(x = city_mappe
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
           drop=FALSE) +   
-  labs(title = "Majority agree that they feel confident working with technical
-partners, but some disagree in Detroit.",
+  labs(title = "Q17. I feel confident working with technical partners to design a tool 
+and advance the tool's development.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -1420,8 +1419,8 @@ q7_post_frequency_plot <- ggplot(q7_frequency_df, aes(x = q7, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) + 
-  labs(title = "Most respondents agree their teams have defined a role for the 
-community to design services moving forward.",
+  labs(title = "Q7. My team has defined a role for residents or the community 
+in designing services moving forward.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -1450,9 +1449,8 @@ q7_post_cross_tab_city_plot <- ggplot(q7_cross_tab_city_df, aes(x = city_mapped,
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
           drop=FALSE) +   
-  labs(title = "Majority agree their teams have defined a role for the community to 
-design services moving forward, with Miami and Macon strongly 
-agreeing the most.",
+  labs(title = "Q7. My team has defined a role for residents or the community 
+in designing services moving forward.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -1492,8 +1490,7 @@ q21_post_frequency_plot <- ggplot(q21_frequency_df, aes(x = q21, y = Freq)) +
   geom_bar(stat = "identity", fill = "#041e42", width = 0.7) +
   coord_flip() +
   expand_limits(y = c(0, total_sample)) + 
-  labs(title = "All respondents agree they would recommend this program 
-to their peers.",
+  labs(title = "Q21. I would recommend this program to my peers.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
@@ -1522,8 +1519,7 @@ q21_post_cross_tab_city_plot <- ggplot(q21_cross_tab_city_df, aes(x = city_mappe
   expand_limits(y = c(0, total_sample)) +
   scale_fill_manual(values = c("4" = "#041e42", "3" = "#6eaddc", "2" = "#da291c", "1" = "#1B786E"),
           drop=FALSE) +   
-  labs(title = "Majority agree they would recommend this program to their peers, 
-with Miami and Akron strongly agreeing the most.",
+  labs(title = "Q21. I would recommend this program to my peers.",
        subtitle = paste("Rating Scale: 4 - Strongly Agree to 1 - Strongly Disagree (n =", total_sample, ")"),
        x = "",
        y = "Number of Responses",
